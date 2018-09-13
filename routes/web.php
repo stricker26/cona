@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+<<<<<<< HEAD
 
 Route::get('/geo', 'GeoLocationController@location');
 
@@ -23,3 +24,16 @@ Route::post('/register', [
 ]);
 
 Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
+=======
+Route::post('/register', [
+	'uses' => 'HomeController@register',
+	'as' => 'register',
+])->middleware('admin');
+
+Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
+
+Route::get('/dashboard', 'dashboardPageController@dashboard');
+Route::get('/nomination/pending', 'dashboardPageController@pending');
+Route::get('/nomination/approve', 'dashboardPageController@approve');
+Route::get('/nomination/reject', 'dashboardPageController@reject');
+>>>>>>> origin/dashboard-page
