@@ -1,0 +1,62 @@
+body {
+	background-color: #ededed;
+}
+
+.card {
+	padding: 20px 0;
+}
+
+.card-header {
+	background-color: #fff;
+	text-align: center;
+	color: #15140c;
+	font-size: 25px;
+	font-weight: 800;
+	border: none;
+}
+
+.card-body {
+	background-color: #fff;
+}
+
+.card-body label {
+	color: black;
+}
+
+.card-body input {
+	background-color: ##f7d116;
+}
+
+.btn-primary {
+	font-weight: bold;
+	background-color: #f7d116;
+	border: none;
+	color: #000000;
+}
+
+.btn-primary:hover {
+	background-color: #e9cc3e;
+	color: #000000;
+}
+
+.btn-link {
+	color: #15140c;
+}
+
+.btn-link:hover {
+	text-decoration: none;
+	color: #c4a925;
+}
+
+.auth-input {
+	width: 100%;
+	border-radius: 8px;
+	height: 35px;
+	padding: 5px 10px;
+	border: 1px solid #d0d0d0;
+	color: #54480f;
+}
+
+.auth-input:focus {
+	box-shadow: 0px 0px 5px 1px #c1c1c1;
+}
