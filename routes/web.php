@@ -21,7 +21,7 @@ Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
 
 Route::post('/candidate/add', [
 	'uses' => 'HomeController@register',
-	'as' => 'register',
+	'as' => 'candidate.register',
 ]);
 
 Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');

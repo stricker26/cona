@@ -20,7 +20,7 @@
                 {{\Session::get('success')}}
             </div>
         @endif
-        <form method="POST" class="getInfo" action="{{ route('register') }}">
+        <form method="POST" class="getInfo" action="{{ route('candidate.register') }}">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6 form-col">
