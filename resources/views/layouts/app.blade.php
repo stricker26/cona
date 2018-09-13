@@ -18,17 +18,22 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<<<<<<< HEAD
     
     <!-- JQuery -->
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{asset('js/scripts.js')}}" ></script>
+=======
+    <link href="{{ asset('css/x.css') }}" rel="stylesheet">
+>>>>>>> bc85da66b50c51db3d552f6e21e06b429605d594
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-dark navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Cona 2018') }}
+                <a class="navbar-brand" href="{{ url('/') }}" >
+                    <img src="{{ asset('img/LP_Logo.png')}}">
+                    <!--{{ config('app.name', 'Cona 2018') }}-->
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -77,6 +82,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="page-footer font-small">
+            <div class="footer-copyright text-center py-3">© 2018 Copyright
+            </div>
+        </footer>
     </div>
 </body>
 </html>
