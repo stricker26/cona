@@ -14,5 +14,9 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::post('/register', [
+	'uses' => 'HomeController@register',
+	'as' => 'register',
+])->middleware('admin');
 
 Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');

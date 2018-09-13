@@ -14,7 +14,7 @@
                         <h2>Personal Information</h2>
                     </div>
                     <div class="form-group">
-                        <label for="firstname">Firstname</label>
+                        <label for="firstname">Firstname <span>*</span></label>
                         <input type="text" name="firstname" class="form-control" id="firstname">
                     </div>
                     <div class="form-group">
@@ -22,19 +22,50 @@
                         <input type="text" name="middlename" class="form-control" id="middlename">
                     </div>
                     <div class="form-group">
-                        <label for="lastname">Last Name</label>
+                        <label for="lastname">Last Name <span>*</span></label>
                         <input type="text" name="lastname" class="form-control" id="lastname">
                     </div>
                     <div class="form-group">
-                        <label for="birthdate">Birthdate</label>
-                        <input type="text" name="birthdate" class="form-control" id="birthdate">
+                        <label for="birthdate">Birthdate <span>*</span></label>
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-control" id="birthmonth" name="birthmonth" required="required">
+                                    <option value="">MONTH</option>
+                                    <option value="1">January</option>
+                                    <option value="2">February</option>
+                                    <option value="3">March</option>
+                                    <option value="4">April</option>
+                                    <option value="5">May</option>
+                                    <option value="6">June</option>
+                                    <option value="7">July</option>
+                                    <option value="8">August</option>
+                                    <option value="9">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" id="birthday" name="birthday" placeholder="DAY" min="1" max="31" required="required">
+                            </div>
+                            <div class="col">
+                                <select class="form-control" id="birthyear" name="birthyear" required="required">
+                                    <option value="">YEAR</option>
+                                    <?php
+                                        for($year = 1911; $year <= 2000; $year++) { 
+                                            echo '<option value="'. $year .'">'. $year .'</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="address">Address</label>
+                        <label for="address">Address <span>*</span></label>
                         <input type="text" name="address" class="form-control" id="address">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email <span>*</span></label>
                         <input type="email" name="email" class="form-control" id="email">
                     </div>
                     <div class="form-group">
@@ -42,12 +73,72 @@
                         <input type="text" name="landline" class="form-control" id="landline">
                     </div>
                     <div class="form-group">
-                        <label for="mobile">Mobile</label>
+                        <label for="mobile">Mobile <span>*</span></label>
                         <input type="text" name="mobile" class="form-control" id="mobile">
+                    </div>
+                    <div class="form-group">
+                        <h2>Social Media Accounts</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="facebook">Facebook</span>
+                            </div>
+                            <input type="text" name="facebook" class="form-control" placeholder="Facebook Account" aria-label="Facebook" aria-describedby="social-media-accounts">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="facebook">Twitter</span>
+                            </div>
+                            <input type="text" name="twitter" class="form-control" placeholder="Twitter Account" aria-label="Twitter" aria-describedby="social-media-accounts">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="facebook">Instagram</span>
+                            </div>
+                            <input type="text" name="instagram" class="form-control" placeholder="Instagram Account" aria-label="Instagram" aria-describedby="social-media-accounts">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="facebook">Website</span>
+                            </div>
+                            <input type="text" name="website" class="form-control" placeholder="Website Account" aria-label="Website" aria-describedby="social-media-accounts">
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="col-md-6">
+                <div class="form-group">
+                    <h2>Candidacy Details</h2>
+                </div>
+                <div class="form-group">
+                    <label>Running a candidate for <span>*</span></label>
+                    <input type="text" name="position" class="form-control" id="position">
+                </div>
+                <div class="form-group">
+                    <label>Province <span>*</span></label>
+                    <select name="province" class="form-control">
+                        <option value="">Select Province</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>District <span>*</span></label>
+                    <select name="district" class="form-control">
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>City <span>*</span></label>
+                    <select name="city" class="form-control">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <h2>Chief of Staff Details</h2>
                 </div>
@@ -78,10 +169,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <h2>Candidacy Details</h2>
-                </div>
+            <div class="col text-center">
+                <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
             </div>
         </div>
     </div>
