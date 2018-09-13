@@ -20,16 +20,10 @@
                 {{\Session::get('success')}}
             </div>
         @endif
-<<<<<<< HEAD
         <form method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-6 pr-5">
-=======
-        <div class="row getInfo">
-            <div class="col-md-6 form-col">
-                <form>
->>>>>>> bc85da66b50c51db3d552f6e21e06b429605d594
                     <div class="form-group">
                         <h2>Personal Information</h2>
                     </div>
@@ -96,7 +90,7 @@
                         <label for="mobile">Mobile <span>*</span></label>
                         <input type="text" name="mobile" class="form-control" id="mobile">
                     </div>
-                    <div class="form-group a">
+                    <div class="form-group">
                         <h2>Social Media Accounts</h2>
                     </div>
                     <div class="form-group">
@@ -128,46 +122,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="facebook">Website</span>
                             </div>
-                            <input type="text" name="website" class="form-control" placeholder="Website URL" aria-label="Website" aria-describedby="social-media-accounts">
+                            <input type="text" name="website" class="form-control" placeholder="Website Account" aria-label="Website" aria-describedby="social-media-accounts">
                         </div>
                     </div>
-<<<<<<< HEAD
-=======
-                </form>
-            </div>
-            <div class="col-md-6 form-col">
-                <div class="form-group">
-                    <h2>Candidacy Details</h2>
-                </div>
-                <div class="form-group">
-                    <label>Running a candidate for <span>*</span></label>
-                    <input type="text" name="position" class="form-control" id="position">
-                </div>
-                <div class="form-group">
-                    <label>Province <span>*</span></label>
-                    <select name="province" class="form-control">
-                        <option value="">Select Province</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>District <span>*</span></label>
-                    <select name="district" class="form-control">
-                        <option value="">Select District</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>City <span>*</span></label>
-                    <select name="city" class="form-control">
-                        <option value="">Select City</option>
-                    </select>
-                </div>
-                <div class="form-group a">
-                    <h2>Chief of Staff Details</h2>
-                </div>
-                <div class="form-group">
-                    <label for="cos_name">Name of Chief of Staff</label>
-                    <input type="text" name="cos_name" class="form-control" id="cos_name">
->>>>>>> bc85da66b50c51db3d552f6e21e06b429605d594
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -225,13 +182,8 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
             <div class="row">
                 <div class="col text-center">
-=======
-            <div class="row col-sm-12 btn-submit">
-                <div class="col  text-center">
->>>>>>> bc85da66b50c51db3d552f6e21e06b429605d594
                     <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
                 </div>
             </div>
