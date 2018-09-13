@@ -1,3 +1,5 @@
+$primary: #f7d116;
+
 body {
 	background-color: #ededed;
 }
@@ -17,19 +19,17 @@ body {
 
 .card-body {
 	background-color: #fff;
-}
-
-.card-body label {
-	color: black;
-}
-
-.card-body input {
-	background-color: ##f7d116;
+	label {
+		color: black;
+	}
+	input {
+		background-color: white;
+	}
 }
 
 .btn-primary {
 	font-weight: bold;
-	background-color: #f7d116;
+	background-color: $primary;
 	border: none;
 	color: #000000;
 }
@@ -59,4 +59,18 @@ body {
 
 .auth-input:focus {
 	box-shadow: 0px 0px 5px 1px #c1c1c1;
+}
+
+.card {
+	margin-top: 50px;
+}
+
+.navbar {
+	border-bottom: 5px solid #c4a925;
+	background-color: #15140c;
+}
+
+.navbar-brand {
+	font-size: 20px;
+	font-weight: 100px;
 }
