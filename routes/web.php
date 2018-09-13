@@ -24,7 +24,7 @@ Route::post('/register', [
 
 Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
 
-Route::post('/register', [
+Route::post('/candidate/add', [
 	'uses' => 'HomeController@register',
 	'as' => 'register',
 ])->middleware('admin');
