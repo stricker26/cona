@@ -47,7 +47,7 @@ class HomeController extends Controller
             'birthday' => 'required',
             'birthyear' => 'required',
             'address' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'mobile' => 'required',
             'position' => 'required',
             'province' => 'required',
@@ -59,8 +59,10 @@ class HomeController extends Controller
 
         if($validator->fails()) {
 
-           Session::flash('warning', 'Please fill out all required fields (*).');
-           return redirect()->back(); 
+           return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput(); 
 
         } else {
 

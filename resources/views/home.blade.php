@@ -6,9 +6,13 @@
 
 @section('content')
     <div class="container">
-        @if(\Session::has('warning'))
+        @if ($errors->any())
             <div class="alert alert-danger">
-                {{\Session::get('warning')}}
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         @if(\Session::has('success'))
