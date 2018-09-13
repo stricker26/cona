@@ -1,15 +1,25 @@
+<?php
+    use App\Http\Controllers\GeoLocationController; 
+?>
+
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
-        @if(\Session::has('error'))
+        @if(\Session::has('warning'))
             <div class="alert alert-danger">
-                {{\Session::get('error')}}
+                {{\Session::get('warning')}}
             </div>
         @endif
-        <div class="row">
-            <div class="col-md-6 pr-5">
-                <form>
+        @if(\Session::has('success'))
+             <div class="alert alert-success">
+                {{\Session::get('success')}}
+            </div>
+        @endif
+        <form method="POST" action="{{ route('register') }}">
+            {{ csrf_field() }}
+            <div class="row">
+                <div class="col-md-6 pr-5">
                     <div class="form-group">
                         <h2>Personal Information</h2>
                     </div>
@@ -111,67 +121,68 @@
                             <input type="text" name="website" class="form-control" placeholder="Website Account" aria-label="Website" aria-describedby="social-media-accounts">
                         </div>
                     </div>
-                </form>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <h2>Candidacy Details</h2>
+                    </div>
+                    <div class="form-group">
+                        <label>Running a candidate for <span>*</span></label>
+                        <input type="text" name="position" class="form-control" id="position">
+                    </div>
+                    <div class="form-group">
+                        <label>Province <span>*</span></label>
+                        <select name="province" id="province" class="form-control">
+                            <option value="">Select Province</option>
+                            <?php echo GeoLocationController::getProvince() ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>District <span>*</span></label>
+                        <select name="district" id="district" class="form-control">
+                            <option value="">Select District</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>City <span>*</span></label>
+                        <select name="city" id="city" class="form-control">
+                            <option value="">Select City</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <h2>Chief of Staff Details</h2>
+                    </div>
+                    <div class="form-group">
+                        <label for="cos_name">Name of Chief of Staff</label>
+                        <input type="text" name="cos_name" class="form-control" id="cos_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="relation">Relation</label>
+                        <input type="text" name="relation" class="form-control" id="relation">
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" name="cos_position" class="form-control" id="position">
+                    </div>
+                    <div class="form-group">
+                        <label for="cos_address">Address</label>
+                        <input type="text" name="cos_address" class="form-control" id="cos_address">
+                    </div>
+                    <div class="form-group">
+                        <label for="cos_contact">Contact Numbers</label>
+                        <input type="text" name="cos_contact" class="form-control" id="cos_contact">
+                    </div>
+                    <div class="form-group">
+                        <label for="cos_email">Email Address</label>
+                        <input type="text" name="cos_email" class="form-control" id="cos_email">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <h2>Candidacy Details</h2>
-                </div>
-                <div class="form-group">
-                    <label>Running a candidate for <span>*</span></label>
-                    <input type="text" name="position" class="form-control" id="position">
-                </div>
-                <div class="form-group">
-                    <label>Province <span>*</span></label>
-                    <select name="province" class="form-control">
-                        <option value="">Select Province</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>District <span>*</span></label>
-                    <select name="district" class="form-control">
-                        <option value="">Select District</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>City <span>*</span></label>
-                    <select name="city" class="form-control">
-                        <option value="">Select City</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <h2>Chief of Staff Details</h2>
-                </div>
-                <div class="form-group">
-                    <label for="cos_name">Name of Chief of Staff</label>
-                    <input type="text" name="cos_name" class="form-control" id="cos_name">
-                </div>
-                <div class="form-group">
-                    <label for="relation">Relation</label>
-                    <input type="text" name="relation" class="form-control" id="relation">
-                </div>
-                <div class="form-group">
-                    <label for="position">Position</label>
-                    <input type="text" name="position" class="form-control" id="position">
-                </div>
-                <div class="form-group">
-                    <label for="cos_address">Address</label>
-                    <input type="text" name="cos_address" class="form-control" id="cos_address">
-                </div>
-                <div class="form-group">
-                    <label for="cos_contact">Contact Numbers</label>
-                    <input type="text" name="cos_contact" class="form-control" id="cos_contact">
-                </div>
-                <div class="form-group">
-                    <label for="cos_email">Email Address</label>
-                    <input type="text" name="cos_email" class="form-control" id="cos_email">
+            <div class="row">
+                <div class="col text-center">
+                    <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
-            </div>
-        </div>
+        </form>
     </div>
 @endsection
