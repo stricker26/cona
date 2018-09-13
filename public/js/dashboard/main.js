@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
 
 	$('#menuToggle').on('click', function(event) {
 		$('body').toggleClass('open');
+		$('.navbar-profile').toggle();
 	});
 
 	$('.search-trigger').on('click', function(event) {

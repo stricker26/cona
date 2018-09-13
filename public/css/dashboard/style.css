@@ -11,7 +11,6 @@
 * Tags: html, themplate, Sufee-Admin
 --------------------------------------------------------- */
 /* Bootstrap */
-@import url(../css/animate.css);
 .gaugejs-wrap {
   position: relative;
   margin: 0 auto; }
@@ -866,6 +865,12 @@ aside.left-panel {
     .navbar .navbar-brand span {
       font-weight: 600; }
     .navbar .navbar-brand img {
+      max-width: 200px; }
+    .navbar .navbar-brand-lec {
+      border: none;
+    }
+    .navbar .navbar-brand-lec img {
+      padding-top: 20px;
       max-width: 200px; }
     .navbar .navbar-brand.hidden {
       display: none; }
