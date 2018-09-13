@@ -7,6 +7,18 @@ body {
   background-color: #15140c;
 }
 
+.navbar .dropdown-menu {
+  padding: 0;
+}
+
+.navbar .dropdown-menu a {
+  border-radius: 5px;
+}
+
+.navbar .dropdown-menu a:hover {
+  background-color: #e4dfc9;
+}
+
 .navbar-brand {
   font-size: 20px;
   font-weight: 100px;
@@ -79,7 +91,7 @@ body {
 
 .getInfo {
   background-color: white;
-  padding: 30px 10px;
+  padding: 0px 10px 40px 10px;
   margin: 20px;
 }
 
@@ -87,6 +99,7 @@ body {
   font-weight: bold;
   border-bottom: 2px solid #f7d116;
   text-align: center;
+  margin-top: 40px;
 }
 
 .getInfo input,
@@ -113,12 +126,8 @@ body {
   padding: 0 30px;
 }
 
-.getInfo .a {
-  margin-top: 50px;
-}
-
-.btn-submit {
-  margin: 30px;
+.submit-button {
+  margin: 20px;
 }
 
 footer {

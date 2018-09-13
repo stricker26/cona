@@ -1,12 +1,12 @@
 .getInfo {
 	background-color: white;
-	padding: 30px 10px;
+	padding: 0px 10px 40px 10px;
 	margin: 20px;
 	h2 {
 		font-weight: bold;
 		border-bottom: 2px solid $primary;
 		text-align: center;
-		margin: 
+		margin-top: 40px;
 	}
 	input, select {
 		width: 100%;
@@ -26,11 +26,8 @@
 	.form-col {
 		padding: 0 30px;
 	}
-	.a {
-		margin-top: 50px;
-	}
 }
 
-.btn-submit {
+.submit-button {
 	margin: 20px;
 }

@@ -20,10 +20,10 @@
                 {{\Session::get('success')}}
             </div>
         @endif
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" class="getInfo" action="{{ route('register') }}">
             {{ csrf_field() }}
             <div class="row">
-                <div class="col-md-6 pr-5">
+                <div class="col-md-6 form-col">
                     <div class="form-group">
                         <h2>Personal Information</h2>
                     </div>
@@ -90,7 +90,7 @@
                         <label for="mobile">Mobile <span>*</span></label>
                         <input type="text" name="mobile" class="form-control" id="mobile">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group a">
                         <h2>Social Media Accounts</h2>
                     </div>
                     <div class="form-group">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 form-col">
                     <div class="form-group">
                         <h2>Candidacy Details</h2>
                     </div>
@@ -153,7 +153,7 @@
                             <option value="">Select City</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group a">
                         <h2>Chief of Staff Details</h2>
                     </div>
                     <div class="form-group">
@@ -182,7 +182,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row submit-button">
                 <div class="col text-center">
                     <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
                 </div>
