@@ -11,7 +11,7 @@
         <span><strong>Nominees</strong></span>
     </div>
     <div class="card-body">
-        <p>oh shit</p>
+        <p>lorem ipsum</p>
     </div>
 </div>
 @stop
