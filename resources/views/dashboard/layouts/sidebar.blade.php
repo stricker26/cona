@@ -19,9 +19,9 @@
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Nominations</a>
                     <ul class="sub-menu children dropdown-menu">
-                        <li><i class="far fa-clock"></i><a href="{{ route('/nomination/pending') }}">Pending</a></li>
-                        <li><i class="fas fa-check"></i><a href="{{ route('/nomination/approve') }}">Approved</a></li>
-                        <li><i class="fas fa-times"></i><a href="{{ route('/nomination/reject') }}">Rejeted</a></li>
+                        <li><i class="far fa-clock"></i><a href="/nomination/pending">Pending</a></li>
+                        <li><i class="fas fa-check"></i><a href="/nomination/approve">Approved</a></li>
+                        <li><i class="fas fa-times"></i><a href="/nomination/reject">Rejeted</a></li>
                     </ul>
                 </li>
             </ul>
