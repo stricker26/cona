@@ -18,7 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/x.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -75,6 +75,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer class="page-footer font-small">
+            <div class="footer-copyright text-center py-3">© 2018 Copyright
+            </div>
+        </footer>
     </div>
 </body>
 </html>

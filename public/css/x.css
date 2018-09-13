@@ -2,8 +2,19 @@ body {
   background-color: #ededed;
 }
 
+.navbar {
+  border-bottom: 5px solid #c4a925;
+  background-color: #15140c;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: 100px;
+}
+
 .card {
   padding: 20px 0;
+  margin-bottom: 100px;
 }
 
 .card-header {
@@ -66,13 +77,51 @@ body {
   margin-top: 50px;
 }
 
-.navbar {
-  border-bottom: 5px solid #c4a925;
-  background-color: #15140c;
+.getInfo {
+  background-color: white;
+  padding: 30px 10px;
+  margin: 20px;
 }
 
-.navbar-brand {
-  font-size: 20px;
-  font-weight: 100px;
+.getInfo h2 {
+  font-weight: bold;
+  border-bottom: 2px solid #f7d116;
+  text-align: center;
+}
+
+.getInfo input,
+.getInfo select {
+  width: 100%;
+  border-radius: 8px;
+  height: 35px;
+  padding: 5px 10px;
+  border: 1px solid #d0d0d0;
+  color: #54480f;
+}
+
+.getInfo input:focus {
+  -webkit-box-shadow: 0px 0px 5px 1px #c1c1c1;
+          box-shadow: 0px 0px 5px 1px #c1c1c1;
+}
+
+.getInfo .input-group-prepend {
+  border-radius: 8px 0 0 8px;
+  height: 35px;
+}
+
+.getInfo .form-col {
+  padding: 0 30px;
+}
+
+.getInfo .a {
+  margin-top: 50px;
+}
+
+.btn-submit {
+  margin: 30px;
+}
+
+footer {
+  color: #54480f;
 }
 

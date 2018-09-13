@@ -7,8 +7,8 @@
                 {{\Session::get('error')}}
             </div>
         @endif
-        <div class="row">
-            <div class="col-md-6 pr-5">
+        <div class="row getInfo">
+            <div class="col-md-6 form-col">
                 <form>
                     <div class="form-group">
                         <h2>Personal Information</h2>
@@ -76,7 +76,7 @@
                         <label for="mobile">Mobile <span>*</span></label>
                         <input type="text" name="mobile" class="form-control" id="mobile">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group a">
                         <h2>Social Media Accounts</h2>
                     </div>
                     <div class="form-group">
@@ -108,12 +108,12 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="facebook">Website</span>
                             </div>
-                            <input type="text" name="website" class="form-control" placeholder="Website Account" aria-label="Website" aria-describedby="social-media-accounts">
+                            <input type="text" name="website" class="form-control" placeholder="Website URL" aria-label="Website" aria-describedby="social-media-accounts">
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 form-col">
                 <div class="form-group">
                     <h2>Candidacy Details</h2>
                 </div>
@@ -139,7 +139,7 @@
                         <option value="">Select City</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group a">
                     <h2>Chief of Staff Details</h2>
                 </div>
                 <div class="form-group">
@@ -167,10 +167,10 @@
                     <input type="text" name="cos_email" class="form-control" id="cos_email">
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
+            <div class="row col-sm-12 btn-submit">
+                <div class="col  text-center">
+                    <button class="btn btn-primary pr-5 pl-5" type="submit">Register</button>
+                </div>
             </div>
         </div>
     </div>
