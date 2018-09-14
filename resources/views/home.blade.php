@@ -23,6 +23,11 @@
         <form method="POST" class="getInfo" action="{{ route('candidate.register') }}">
             {{ csrf_field() }}
             <div class="row">
+                <div class="col mt-5">
+                    <h1 class="text-center">CONA Application</h1>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 form-col">
                     <div class="form-group">
                         <h2>Personal Information</h2>
@@ -91,7 +96,7 @@
                         <input type="text" name="mobile" class="form-control" id="mobile">
                     </div>
                     <div class="form-group a">
-                        <h2>Social Media Accounts</h2>
+                        <h2>Public Social Media Accounts</h2>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -131,8 +136,21 @@
                         <h2>Candidacy Details</h2>
                     </div>
                     <div class="form-group">
-                        <label>Running a candidate for <span>*</span></label>
-                        <input type="text" name="position" class="form-control" id="position">
+                        <label>Position aspired for <span>*</span></label>
+                        <select class="form-control" id="position" name="position" required="required">
+                            <option value="">Position</option>
+                            <option value="Governor">Governor</option>
+                            <option value="Vice-Governor">Vice-Governor</option>
+                            <option value="Provincial Board Member">Provincial Board Member</option>
+                            <option value="Congressman">Congressman</option>
+                            <option value="HUC Congressman">HUC Congressman</option>
+                            <option value="City Mayor">City Mayor</option>
+                            <option value="City Vice Mayor">City Vice Mayor</option>
+                            <option value="City Councilor">City Councilor</option>
+                            <option value="Municipal Mayor">Municipal Mayor</option>
+                            <option value="Municipal Vice-Mayor">Municipal Vice-Mayor</option>
+                            <option value="Municipal Councilor">Municipal Councilor</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Province <span>*</span></label>
@@ -141,13 +159,13 @@
                             <?php echo GeoLocationController::getProvince() ?>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group district-wrapper">
                         <label>District <span>*</span></label>
                         <select name="district" id="district" class="form-control">
                             <option value="">Select District</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group city-wrapper">
                         <label>City <span>*</span></label>
                         <select name="city" id="city" class="form-control">
                             <option value="">Select City</option>

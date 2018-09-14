@@ -37,12 +37,12 @@ class HomeController extends Controller
             'birthday' => 'required',
             'birthyear' => 'required',
             'address' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:candidates',
             'mobile' => 'required',
             'position' => 'required',
             'province' => 'required',
-            'district' => 'required',
-            'city' => 'required',
+            // 'district' => 'required',
+            // 'city' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -55,6 +55,8 @@ class HomeController extends Controller
                 ->withInput(); 
 
         } else {
+
+            
 
             $cos_id = strftime(time());
 
