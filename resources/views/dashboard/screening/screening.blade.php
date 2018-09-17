@@ -20,7 +20,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th class="colTitle">Region</th>
+					<th class="colTitle">Name</th>
 					<th>Pending</th>
 					<th>Approved</th>
 					<th>Rejected</th>
