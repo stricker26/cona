@@ -38,3 +38,6 @@ Route::get('/nomination/reject', 'dashboardPageController@hq_reject');
 
 Route::get('/lec','dashboardPageController@lec_dashboard');
 Route::get('/lec/candidates','dashboardPageController@lec_candidates');
+
+Route::get('/screening', 'ScreeningController@screening');
+Route::get('/screening/{code}', 'ScreeningController@table');
