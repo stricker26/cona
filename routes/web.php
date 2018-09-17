@@ -27,6 +27,8 @@ Route::post('/candidate/add', [
 Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
 
 Route::get('/dashboard', 'dashboardPageController@hq_dashboard');
-
 Route::get('/lec','dashboardPageController@lec_dashboard');
 Route::get('/lec/candidates','dashboardPageController@lec_candidates');
+
+Route::get('/screening', 'ScreeningController@screening');
+Route::get('/screening/{code}', 'ScreeningController@table');

@@ -9,12 +9,20 @@ use DB;
 class ScreeningController extends Controller
 {
     public function screening() {
-    	$province = DB::table('province')->get();
-    	return view('dashboard.screening.screening', compact('province'));
+    	return view('dashboard.screening.screening');
     }
 
-    public function table($province_code) {
-    	$data = DB::table('district')->get()->where('province_code', '=', $province_code);
+    public function table($code) {
+    	$data = DB::table('province')->get()->where('region', '=', $code);
+    	if (count($data) == 0) {
+	    	$data = DB::table('district')->get()->where('province_code', '=', $code);
+	    	if (count($data) == 0) {
+	    		$data = DB::table('city')->get()->where('province_code', '=', $code);
+	    		if (count($data) == 0) {
+	    			$data = '';
+	    		}
+	    	}
+	    }
 		return $data;
     }
 }
