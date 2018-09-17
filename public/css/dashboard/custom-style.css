@@ -67,3 +67,81 @@
   max-height: 41px;
   height: 41px;
 }
+.fa-clock {
+  color: #ffc107;
+}
+.fa-check {
+  color: #28a745;
+}
+.fa-times {
+  color: #dc3545;
+}
+.dropdown-btn {
+  background: #15140c;
+  padding: 10px 0 10px 0;
+  outline: none;
+  border: 0;
+  color: #d7d9e3;
+  font-size: 15px;
+  text-align: left;
+  width: 52%;
+}
+.dropdown-btn:hover {
+  cursor: pointer;
+  color: #fff;
+}
+.stat-check {
+  font-size: 15px;
+  padding: 10px 0 10px 0;
+}
+.a-hover:hover {
+   color: #fff;
+}
+.dropdown-menu {
+  margin: 0;
+  padding: 0;
+  box-shadow: 0;
+  outline: none;
+  border: 0;
+  width: 100%;
+  position: relative;
+}
+.dropdown-submenu {
+  padding: 0;
+  background: #15140c;
+  color: #d7d9e3;
+  text-align: left;
+  padding: 0 0 5px 20px;
+}
+.dropdown-submenu a:hover {
+  cursor: pointer;
+}
+.dropdown-submenu .submenu a {
+  padding-top: 5px !important;
+  padding-bottom: 0 !important;
+  font-size: 15px !important;
+}
+
+.dropdown-submenu .submenu a:hover {
+  cursor: pointer;
+}
+.reg-stat {
+  font-size: 15px;
+  padding-top: 5px;
+  color: #c8c9ce;
+}
+.navbar-expand-sm .navbar-nav .dropdown-menu {
+  position: inherit !important;
+}
+i.fa-caret-down {
+  float: right;
+}
+.dropdown-btn i.fa-caret-down {
+  padding-top: 4px;
+}
+.dropdown-menu i.fa-caret-down {
+  padding: 8px 12px 0 0;
+}
+.prov-part {
+  max-width: 124px;
+}

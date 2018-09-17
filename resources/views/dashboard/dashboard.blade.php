@@ -5,8 +5,6 @@
 @section('styles')
 @stop
 
-@section('sub-page','Dashboard')
-
 @section('content')
 <div class="card">
     <div class="card-header">

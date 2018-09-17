@@ -12,18 +12,6 @@ class dashboardPageController extends Controller
     	return view('dashboard.dashboard');
     }
 
-    public function hq_pending() {
-    	return view('dashboard.nomination.pending');
-    }
-
-    public function hq_approve() {
-    	return view('dashboard.nomination.approve');
-    }
-
-    public function hq_reject() {
-        return view('dashboard.nomination.reject');
-    }
-
     public function lec_dashboard() {
         return view('lec.lec');
     }
