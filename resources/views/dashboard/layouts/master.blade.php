@@ -30,7 +30,7 @@
     {{-- Right Panel --}}
     <div id="right-panel" class="right-panel">
 
-        {{-- Header --}}
+        {{-- Header --}} 
         @include('dashboard.layouts.header')
         {{-- Header --}}
 
