@@ -47,8 +47,8 @@ $(document).ready( function () {
 
 	function loadTable(e, data) {
 		var keys = Object.keys(data);
-		/*
 		var y = keys.length - 1;
+		/*
 		var arr = [];
 		var z = 0;
 		console.log('length: ' + keys.length);
