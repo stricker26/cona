@@ -112,7 +112,7 @@ function searchData() {
       		} else {
         		tr[i].style.display = "none";
       		}
-    	} 
+    	}
   	}
 }
 
@@ -136,6 +136,7 @@ function loadPagination() {
         var endItem = startItem + rowsShown;
         $('#tableGeo tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
         css('display','table-row').animate({opacity:1}, 300);
+        return false;
     });
 }
 
