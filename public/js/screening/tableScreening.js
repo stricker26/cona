@@ -62,8 +62,11 @@ $(document).ready( function () {
 	function loadTable(e, data) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
+		var s = parseInt(keys[0]);
+		var d = parseInt(keys[y]);
 		$('tbody').html('');
-		for (var x=keys[0]; x <= keys[y]; x++) {
+		for (var x = s; x <= d; x++) {
+			console.log('key[x]: ' + x);
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
@@ -136,8 +139,10 @@ $(document).ready( function () {
 	function hucTable(e, data) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
+		var s = parseInt(keys[0]);
+		var d = parseInt(keys[y]);
 		$('tbody').html('');
-		for (var x=keys[0]; x <= keys[y]; x++) {
+		for (var x=s; x <= d; x++) {
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
@@ -156,8 +161,10 @@ $(document).ready( function () {
 	function districtTable(e, data) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
+		var s = parseInt(keys[0]);
+		var d = parseInt(keys[y]);
 		$('tbody').html('');
-		for (var x=keys[0]; x <= keys[y]; x++) {
+		for (var x=s; x <= d; x++) {
 			if (x != keys[0]) {
 				if (data[x].district != data[x-1].district) {
 					printRow(data, x);
@@ -172,8 +179,10 @@ $(document).ready( function () {
 	function municipalityTable(e, data, name) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
+		var s = parseInt(keys[0]);
+		var d = parseInt(keys[y]);
 		$('tbody').html('');
-		for (var x=keys[0]; x <= keys[y]; x++) {
+		for (var x=s; x <= d; x++) {
 			if (data[x].district == name) {
 				$('tbody').append(`
 						<tr class='item'>
@@ -194,7 +203,9 @@ $(document).ready( function () {
 	function cityTable(e, data, name) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
-		for (var x=keys[0]; x <= keys[y]; x++) {
+		var s = parseInt(keys[0]);
+		var d = parseInt(keys[y]);
+		for (var x=s; x <= d; x++) {
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
