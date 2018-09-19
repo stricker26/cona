@@ -7,4 +7,19 @@ jQuery(document).ready(function($){
 		e.stopPropagation();
 		e.preventDefault();
 	});
+
+	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
+		var dataProvince = $(this).data("value");
+		dataProvince = dataProvince.split(',');
+		$('.loaderGeo').show();
+
+		ajaxGet(dataProvince[0],dataProvince[1]);
+
+		$('#tableGeo').ready(function(){
+			$('.table-geo').show();
+			$('.loaderGeo').hide();
+			$('.bcrumbs p').remove();
+			$('.bcrumbs a').remove();
+		});
+	});
 });

@@ -2,6 +2,10 @@
   margin-left: calc(50vw - 102px);
   margin-top: calc(50vh - 20.5px);
 }
+.loaderGeo {
+  margin-top: calc(50vh - 20.5px);
+  margin-left: calc(50vw - 250px);
+}
 .lds-ellipsis {
   display: inline-block;
   position: relative;
@@ -144,4 +148,38 @@ i.fa-caret-down {
 }
 .prov-part {
   max-width: 124px;
+}
+#rejectsModal .modal-header {
+   background-color:#15140c;
+   color:#fff;
+   border-bottom:3px solid #c4a925;
+}
+#rejectsModal .modal-header .modal-title {
+  margin: 0 auto;
+}
+.picture-candidate {
+  margin-bottom: -96px;
+}
+.data-candidates {
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+.data-candidates table {
+  width: 100%;
+}
+.data-candidates table td {
+  width: 25%;
+}
+.data-candidates table th {
+  width: 25%;
+}
+.icons {
+  display: inline;
+}
+.prof-summary-data {
+  padding-top: 65px;
+  background-color: #dedede;
+  padding-bottom: 20px;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #808080;
 }

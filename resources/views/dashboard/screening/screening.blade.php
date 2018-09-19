@@ -1,21 +1,199 @@
 @extends('dashboard.layouts.master')
 
-@section('title','Screening')
-
-<meta name="csrf-token" content="{{ csrf_token() }}">
+@section('title','Dashboard')
 
 @section('styles')
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="{{ asset('css/table-screening.css') }}">
 @stop
 
-@section('sub-page','HQ Screening')
-
 @section('content')
-	<div class="container">
-		<div class="bcrumbs row">
-				<a href="" id="regionNum">PH</a>
+	<div class="modal fade" id="rejectsModal" tabindex="-1" role="dialog" aria-labelledby="rejectsModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="locationModal">Location</h2>
+				</div>
+				<div class="modal-body">
+					<form action="/dashboard/profile" method="POST">
+						@csrf
+						<div class="row pb-2 pt-2 pl-1">
+							<div class="col-sm-3"><span class="font-weight-bold">Governor:</span></div>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="gr">View Profile</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row pb-2 pt-2 pl-1">
+							<div class="col-sm-3"><span class="font-weight-bold">Vice Governor:</span></div>
+							<div class="col-sm-9">
+								<div class="row">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="vgr">View Profile</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row pt-2 pl-1">
+							<div class="col-sm-3"><span class="font-weight-bold">Board Members:</span></div>
+							<div class="col-sm-9">
+								<div class="row pb-3">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="bm1r">View Profile</button>
+									</div>
+								</div>
+								<div class="row pb-3">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="bm2r">View Profile</button>
+									</div>
+								</div>
+								<div class="row pb-3">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="bm3r">View Profile</button>
+									</div>
+								</div>
+								<div class="row pb-3">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="bm4r">View Profile</button>
+									</div>
+								</div>
+								<div class="row pb-3">
+									<div class="col-sm-9">Lorem ipsum dolor sit amet.</div>
+									<div class="col-sm-3">
+										<button type="submit" class="btn btn-success" name="screening_btn" value="bm5r">View Profile</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
 		</div>
+	</div>
+	<div class="container">
+		<div class="form-group mt-5">
+			<div class="row text-center pb-2">
+				<div class="col-sm-12">
+					<h3 class="screenLocation">LOCATION</h3>
+				</div>
+			</div>
+			<hr>
+			<div class="row pb-2 pt-2">
+				<div class="col-sm-3">
+					<h5 class="font-weight-bold">LEC:</h5>
+				</div>
+				<div class="col-sm-9"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+			</div>
+			<hr>
+			<form action="/dashboard/profile" method="POST">
+				@csrf
+				<div class="row pb-2 pt-2">
+					<div class="col-sm-3"><h5 class="font-weight-bold">Governor:</h5></div>
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="g">View Profile</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row pb-2 pt-2">
+					<div class="col-sm-3"><h5 class="font-weight-bold">Vice Governor:</h5></div>
+					<div class="col-sm-9">
+						<div class="row">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="vg">View Profile</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row pb-2 pt-2">
+					<div class="col-sm-3"><h5 class="font-weight-bold">Board Members:</h5></div>
+					<div class="col-sm-9">
+						<div class="row pb-3">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="bm1">View Profile</button>
+							</div>
+						</div>
+						<div class="row pb-3">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="bm2">View Profile</button>
+							</div>
+						</div>
+						<div class="row pb-3">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="bm3">View Profile</button>
+							</div>
+						</div>
+						<div class="row pb-3">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="bm4">View Profile</button>
+							</div>
+						</div>
+						<div class="row pb-3">
+							<div class="col-sm-7"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
+							<div class="col-sm-3">
+								<span class="badge badge-pill badge-success p-2">Approved</span>
+								<span class="badge badge-pill badge-warning p-2">Pending</span>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="bm5">View Profile</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="text-center pb-5">
+			<button type="button" class="w-100 btn btn-danger" data-toggle="modal" data-target="#rejectsModal">Rejects</button>
+		</div>
+		<div class="bcrumbs row"></div>
 		<table id="tableGeo" class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -27,136 +205,6 @@
 					<th>LEC</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td class="code">13</td>
-					<td class="description">NCR</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">01</td>
-					<td class="description">ILOCOS REGION</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">02</td>
-					<td class="description">CAGAYAN VALLEY</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">03</td>
-					<td class="description">CENTRAL LUZON</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">04</td>
-					<td class="description">CALABARZON</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">17</td>
-					<td class="description">SOUTHERN TAGALOG REGION</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">05</td>
-					<td class="description">BICOL REGION</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">06</td>
-					<td class="description">WESTERN VISAYAS</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">07</td>
-					<td class="description">CENTRAL VISAYAS</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">08</td>
-					<td class="description">EASTERN VISAYAS</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">09</td>
-					<td class="description">ZAMBOANGA PENINSULA</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">10</td>
-					<td class="description">NORTHERN MINDANAO</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">11</td>
-					<td class="description">DAVAO REGION</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">12</td>
-					<td class="description">SOCCSKSARGEN</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">16</td>
-					<td class="description">CARAGA REGION</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-				<tr>
-					<td class="code">15</td>
-					<td class="description">ARMM</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-				</tr>
-			</tbody>
 		</table>
 	</div>
 @stop

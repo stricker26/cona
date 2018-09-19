@@ -31,6 +31,7 @@
                     </div>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
+                            @if(!empty($regions))
                             @foreach($regions as $region)
                             <div class="float-right reg-stat">
                                 <div class="d-inline pr-2">
@@ -50,24 +51,25 @@
                                 <li class="dropdown-submenu submenu">
                                 @foreach($provinces as $province)
                                     @if($region === $province->region)
-                                            <div class="float-right reg-stat">
-                                                <div class="d-inline pr-2">
-                                                    <a href="#" class="a-hover" title="Pending - 2"><i class="far fa-clock pr-1"></i>2</a>
-                                                </div>
-                                                <div class="d-inline pr-2">
-                                                    <a href="#" class="a-hover" title="Pending - 5"><i class="fas fa-check pr-1"></i>5</a>
-                                                </div>
-                                                <div class="d-inline pr-1">
-                                                    <a href="#" class="a-hover" title="Pending - 1"><i class="fas fa-times pr-1"></i>1</a>
-                                                </div>
+                                        <div class="float-right reg-stat">
+                                            <div class="d-inline pr-2">
+                                                <a href="#Pending" class="a-hover" title="Pending - 2"><i class="far fa-clock pr-1"></i>2</a>
                                             </div>
-                                            <a href="/screening/{{ $province->code }}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->description)) }}</div></a>
-                                            <br>
+                                            <div class="d-inline pr-2">
+                                                <a href="#Approved" class="a-hover" title="Pending - 5"><i class="fas fa-check pr-1"></i>5</a>
+                                            </div>
+                                            <div class="d-inline pr-1">
+                                                <a href="#Rejected" class="a-hover" title="Pending - 1"><i class="fas fa-times pr-1"></i>1</a>
+                                            </div>
+                                        </div>
+                                        <a data-value="{{$province->code}},{{$province->description}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->description)) }}</div></a>
+                                        <br>
                                     @endif
                                 @endforeach
                                 </li>
                             </ul>
                             @endforeach
+                            @endif
                         </li>
                     </ul>
                 </li>

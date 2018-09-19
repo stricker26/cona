@@ -24,11 +24,12 @@ Route::post('/candidate/add', [
 	'as' => 'candidate.register',
 ]);
 
-Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
-
 Route::get('/dashboard', 'dashboardPageController@hq_dashboard');
 Route::get('/lec','dashboardPageController@lec_dashboard');
 Route::get('/lec/candidates','dashboardPageController@lec_candidates');
 
 Route::get('/screening', 'ScreeningController@screening');
 Route::get('/screening/{code}', 'ScreeningController@table');
+
+Route::get('/dashboard/profile', 'profileController@profile');
+Route::post('/dashboard/profile/sent', 'profileController@sent');

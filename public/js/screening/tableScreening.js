@@ -10,6 +10,7 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		$(this).nextAll().remove();
+		alert("wow");
 		if (code == 'regionNum') {
 			location.reload();
 		} else {
@@ -63,7 +64,6 @@ function ajaxGet(e, name) {
 		url: '/screening/' + e,
 		success:function(data)  
     	{
-    		console.log(data);
     		if (data == '') {
     		} else  {
     			if (name != undefined) {
@@ -71,6 +71,8 @@ function ajaxGet(e, name) {
     			}
     			loadTable(data);
     		}
+    		$('.screenLocation').html(name.toUpperCase());
+    		$('#locationModal').html(name.toUpperCase());
     	} 
 	});
 }
