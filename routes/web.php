@@ -31,6 +31,7 @@ Route::get('/lec/candidates','dashboardPageController@lec_candidates');
 Route::get('/screening', 'ScreeningController@screening');
 Route::get('/screening/{code}', 'ScreeningController@table');
 
+Route::post('/dashboard/profile', 'profileController@profile');
 Route::get('/dashboard/profile', 'profileController@profile');
 Route::post('/dashboard/profile/sent', 'profileController@sent');
 

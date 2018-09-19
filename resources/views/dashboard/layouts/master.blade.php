@@ -40,33 +40,11 @@
             {{-- Header --}}
 
             {{-- content --}}
-            <div class="content pl-3 pr-3">
-                <div class="col-sm-12">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <span class="badge badge-pill badge-danger">Failed</span> You successfully read this important alert message.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div> 
-
-            <div class="content pl-3 pr-3">
-                <div class="col-sm-12">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <span class="badge badge-pill badge-warning">Warning</span> You successfully read this important alert message.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {{-- content --}}
-
             <div class="content mt-3 pl-4 pr-4">
                 @yield('content')
             </div>
-
+            {{-- content --}}
+            
         </div>
         {{-- Right Panel --}}
     </div>

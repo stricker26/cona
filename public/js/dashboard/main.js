@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		if($('body').hasClass('open')){
 			$('.right-panel').css("width","calc(100vw - 90px)");
 		} else {
-			$('.right-panel').css("width","calc(100vw - 350px)");
+			$('.right-panel').css("width","calc(100vw - 420px)");
 		}
 	});
 

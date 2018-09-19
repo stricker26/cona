@@ -3,7 +3,14 @@ jQuery(document).ready(function($){
 	$('.body-toload').show("fast");
 
 	$('.dropdown-submenu a.test').on("click", function(e){
-		$(this).next('ul').toggle();
+		if($(this).next('ul').hasClass('click')){
+			$(this).next('ul').hide().removeClass('click');
+		} else {
+			$('.dropdown-submenu').find('ul').each(function(){
+				$(this).hide().removeClass('click');
+			});
+			$(this).next('ul').show().addClass('click');
+		}
 		e.stopPropagation();
 		e.preventDefault();
 	});
@@ -11,15 +18,6 @@ jQuery(document).ready(function($){
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
 		var dataProvince = $(this).data("value");
 		dataProvince = dataProvince.split(',');
-		$('.loaderGeo').show();
-
-		ajaxGet(dataProvince[0],dataProvince[1]);
-
-		$('#tableGeo').ready(function(){
-			$('.table-geo').show();
-			$('.loaderGeo').hide();
-			$('.bcrumbs p').remove();
-			$('.bcrumbs a').remove();
-		});
+		console.log(this);
 	});
 });

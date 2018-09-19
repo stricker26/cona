@@ -104,7 +104,7 @@ aside.left-panel {
   min-height: 100%;
   padding: 0 25px;
   vertical-align: top;
-  width: 350px;
+  width: 420px;
   transition: width 0.3s ease; }
 
 .navbar {
@@ -346,7 +346,7 @@ body.open .navbar .navbar-brand.hidden {
 /* Right panel */
 .right-panel {
   display: table-cell;
-  width: calc(100vw - 350px);
+  width: calc(100vw - 420px);
   padding-left: 0 !important;
   -webkit-transition: all .35s ease;
   -moz-transition: all .35s ease;

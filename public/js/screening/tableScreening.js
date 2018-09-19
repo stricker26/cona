@@ -94,6 +94,8 @@ $(document).ready( function () {
 		    			}
 		    			loadTable(e, data);
 		    		}
+		    		$('#locationModal').html(name);
+		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}
@@ -128,6 +130,8 @@ $(document).ready( function () {
 		    			}
 		    			//loadTable(e, data);
 		    		}
+		    		$('#locationModal').html(name);
+		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}

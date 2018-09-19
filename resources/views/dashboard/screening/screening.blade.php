@@ -2,8 +2,6 @@
 
 @section('title','Screening')
 
-@section('subpage','HQ Screening')
-
 @section('styles')
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" href="{{ asset('css/table-screening.css') }}">
@@ -102,7 +100,7 @@
 				<div class="col-sm-9"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
 			</div>
 			<hr>
-			<form action="/dashboard/profile" method="POST">
+			<form action="/dashboard/profile" method="post">
 				@csrf
 				<div class="row pb-2 pt-2">
 					<div class="col-sm-3"><h5 class="font-weight-bold">Governor:</h5></div>
@@ -191,8 +189,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 		<div class="text-center pb-5">
 			<button type="button" class="w-100 btn btn-danger" data-toggle="modal" data-target="#rejectsModal">Rejects</button>
 		</div>
@@ -212,6 +210,144 @@
 					<th style="display:none;">TYPE</th>
 				</tr>
 			</thead>
+			<tbody>
+				<tr class="item">
+					<td class="code">NCR</td>
+					<td class="description">National Capital Region</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">I</td>
+					<td class="description">ILOCOS REGION</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">CAR</td>
+					<td class="description">Cordillera Administrative Region</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">II</td>
+					<td class="description">CAGAYAN VALLEY</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">III</td>
+					<td class="description">CENTRAL LUZON</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">IV-A</td>
+					<td class="description">CALABARZON</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">IV-B</td>
+					<td class="description">SOUTHERN TAGALOG REGION</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">V</td>
+					<td class="description">BICOL REGION</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">VI</td>
+					<td class="description">WESTERN VISAYAS</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">VII</td>
+					<td class="description">CENTRAL VISAYAS</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">VIII</td>
+					<td class="description">EASTERN VISAYAS</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">IX</td>
+					<td class="description">ZAMBOANGA PENINSULA</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">X</td>
+					<td class="description">NORTHERN MINDANAO</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">XI</td>
+					<td class="description">DAVAO REGION</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">XII</td>
+					<td class="description">SOCCSKSARGEN</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">XVIII</td>
+					<td class="description">CARAGA REGION</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+				<tr class="item">
+					<td class="code">ARMM</td>
+					<td class="description">Autonomous Region in Muslim Mindanao</td>
+					<td>0</td>
+					<td>0</td>
+					<td>0</td>
+					<td>Lorem Ipsum</td>
+				</tr>
+			</tbody>
 		</table>
 		<div id="nav"></div>
 	</div>

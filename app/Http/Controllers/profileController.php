@@ -8,7 +8,7 @@ use DB;
 
 class profileController extends Controller
 {
-    public function profile(/*Request $request*/) {
+    public function profile(Request $request) {
     	// $profile = $request->screening_btn;
     	$candidate = DB::table('candidates')->first();
 
