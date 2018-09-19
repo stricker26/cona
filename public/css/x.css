@@ -98,7 +98,7 @@ body {
 .getInfo h2 {
   font-weight: bold;
   border-bottom: 2px solid #f7d116;
-  text-align: center;
+  text-align: left;
   margin-top: 40px;
 }
 
@@ -120,6 +120,7 @@ body {
 .getInfo .input-group-prepend {
   border-radius: 8px 0 0 8px;
   height: 35px;
+  width: 100px;
 }
 
 .getInfo .form-col {

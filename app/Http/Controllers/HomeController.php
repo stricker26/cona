@@ -40,7 +40,7 @@ class HomeController extends Controller
             'email' => 'required|email|unique:candidates',
             'mobile' => 'required',
             'position' => 'required',
-            'province' => 'required',
+            //'province' => 'required',
             // 'district' => 'required',
             // 'city' => 'required',
         );
@@ -56,8 +56,6 @@ class HomeController extends Controller
 
         } else {
 
-            
-
             $cos_id = strftime(time());
 
             $smaObj = array(
@@ -68,6 +66,12 @@ class HomeController extends Controller
             );
 
             $sma = json_encode($smaObj);
+
+            if(empty($request->input('city'))) {
+                $city = $request->input('huc_city');
+            } else {
+                $city = $request->input('city');
+            }
 
             $candidate = Candidate::create([
                 'firstname' => $request->input('firstname'),
@@ -82,7 +86,7 @@ class HomeController extends Controller
                 'sma' => $sma,
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
-                'city_id' => $request->input('city'),
+                'city_id' => $city,
                 'cos_id' => $cos_id,
             ]);
 

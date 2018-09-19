@@ -8,82 +8,205 @@
 			}
 		});
 
-		jQuery('#position').change(function() {
+		jQuery('#position').on("change", function(event) {
 
 			var position = jQuery(this).val();
+			var groupType = jQuery('option:selected',this).data('group');
 
-			if(position == 'Governor' || position == 'Vice-Governor' || position == 'Provincial Board Member') {
+			jQuery('.region-wrapper').fadeOut(500);
+			jQuery('.province-wrapper').fadeOut(500);
+			jQuery('.city-wrapper').fadeOut(500);
+			jQuery('.district-wrapper').fadeOut(500);
+			jQuery('.huc-city-wrapper').fadeOut(500);
 
+			if(position != 'Senator') {
+				jQuery('.region-wrapper').fadeIn(500);
+				jQuery('#region').attr('required', 'required');
+				jQuery('#region').removeAttr('required');
+			} else {
+				jQuery('.region-wrapper').fadeOut(500);
+				jQuery('.province-wrapper').fadeOut(500);
+				jQuery('.city-wrapper').fadeOut(500);
 				jQuery('.district-wrapper').fadeOut(500);
-				jQuery('.city-wrapper').fadeOut(500);
-				jQuery('#district').removeAttr('required');
-				jQuery('#city').removeAttr('required');
-				jQuery('#district').html('<option value="">Select District *</option>');
-				jQuery('#city').html('<option value="">Select City *</option>');
+				jQuery('.huc-city-wrapper').fadeOut(500);
+				jQuery('#region').attr('required', 'required');
+			}
 
-			} else if(position == 'Congressman') {
+		});
 
-				jQuery('.district-wrapper').fadeIn(500);
-				jQuery('.city-wrapper').fadeOut(500);
-				jQuery('#district').attr('required', 'required');
-				jQuery('#city').removeAttr('required');
+		jQuery('#region').change(function() {
 
-			} else if(position == 'HUC Congressman') {
+			var region = jQuery(this).val();
+			var position = jQuery('#position').val();
+			var groupType = jQuery('option:selected', jQuery('#position')).data('group');
 
-			} else if(position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor') {
+			jQuery('.province-wrapper').fadeIn(500);
+			jQuery('#province').html('<option>Loading...</option>');
 
-				jQuery('.district-wrapper').fadeIn(500);
-				jQuery('.city-wrapper').fadeIn(500);
-				jQuery('#city').attr('required', 'required');
-				jQuery('#district').attr('required', 'required');
+			if(groupType == 'PROV') {
 
-			} else if(position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
+				$.ajax({
+					url: '/geo',
+						method: 'GET',
+						data: {requestType: 'province', requestValue: region},
+						success: function(data) {
+							jQuery('#province').html(data);
+						},
+						error: function(data) {
+							console.log(data);
+						}
+				});
+
+			} else {
+
+				if(region != 'NCR' && (position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor')) {
+
+					$.ajax({
+						url: '/geo',
+							method: 'GET',
+							data: {requestType: 'province', requestValue: region},
+							success: function(data) {
+								jQuery('#province').html(data);
+							},
+							error: function(data) {
+								console.log(data);
+							}
+					});
+
+				} else {
+
+					$.ajax({
+						url: '/geo',
+							method: 'GET',
+							data: {requestType: 'huc_province', requestValue: region},
+							success: function(data) {
+								jQuery('#province').html(data);
+							},
+							error: function(data) {
+								console.log(data);
+							}
+					});
+				}
 
 			}
 
 		});
 
-		jQuery('#province').change(function(event) {
+		jQuery('#province').change(function() {
 
 			var provinceID = jQuery(this).val();
+			var groupType = jQuery('option:selected', jQuery('#position')).data('group');
 
-			jQuery('#district').html('<option>Loading...</option>');
+			if(groupType == 'HUC') {
+				var requestType = 'huc_district';
+				if(jQuery('#position').val() == 'HUC Congressman') {
+					jQuery('.district-wrapper').fadeIn(500);
+					var target = '#district';
+				} else {
+					if(jQuery('#region').val() != 'NCR') {
+						var requestType = 'component_city';
+						var target = '#huc-city';
+						jQuery('.huc-city-wrapper').fadeIn(500);
+					} else {
+						jQuery('.huc-city-wrapper').fadeOut(500);
+					}
+				}
+			} else {
+				var requestType = 'district';
+				var target = '#district';
+				var position = jQuery('#position').val();
+				if(position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
+					jQuery('.district-wrapper').fadeIn(500);
+					jQuery('#district').html('<option>Loading...</option>');
+				} else {
+					jQuery('.district-wrapper').fadeOut(500);
+				}
+				
+			}
 
 			$.ajax({
 				url: '/geo',
 				method: 'GET',
-				data: {requestType: 'district', requestValue: provinceID},
+				data: {requestType: requestType, requestValue: provinceID},
 				success: function(data) {
-					jQuery('#district').html(data);
+					jQuery(target).html(data);
 				},
 				error: function(data) {
 					console.log(data);
 				}
 			});
 
-			event.preventDefault();
+		});
+
+		jQuery('#huc-city').change(function() {
+
+			
+			var city = jQuery(this).val();
+			var region = jQuery(this).val();
+			var position = jQuery('#position').val();
+
+			if(region != 'NCR' && (position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor')) {
+
+				jQuery('.district-wrapper').fadeOut(500);
+
+			} else {
+
+				jQuery('.district-wrapper').fadeIn(500);
+				jQuery('#district').html('<option>Loading...</option>');
+
+				$.ajax({
+					url: '/geo',
+					method: 'GET',
+					data: {requestType: 'huc_district', requestValue: city},
+					success: function(data) {
+						jQuery('#district').html(data);
+					},
+					error: function(data) {
+						console.log(data);
+					}
+				});
+			}
 
 		});
 
 		jQuery('#district').change(function() {
 
 			var district = jQuery(this).val();
+			var province_code = jQuery('option:selected',this).data('province');
+			var position = jQuery('#position').val();
+			var groupType = jQuery('option:selected', jQuery('#position')).data('group');
 
-			jQuery('#city').html('<option>Loading...</option>');
+			if(groupType == 'HUC') {
 
-			$.ajax({
-				url: '/geo',
-				method: 'GET',
-				data: {requestType: 'city', requestValue: district},
-				success: function(data) {
-					jQuery('#city').html(data);
-				},
-				error: function(data) {
-					console.log(data);
+				jQuery('.city-wrapper').fadeOut(500);
+
+			} else {
+
+				jQuery('#city').html('<option>Loading...</option>');
+
+				if(position == 'Congressman') {
+					jQuery('.city-wrapper').fadeOut(500);
+				} else {
+
+					if(position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor') {
+						jQuery('.city-wrapper').fadeOut(500);
+					} else {
+						jQuery('.city-wrapper').fadeIn(500);
+					}
+
+					$.ajax({
+						url: '/geo',
+						method: 'GET',
+						data: {requestType: 'city', requestValue: district, provinceCode: province_code},
+						success: function(data) {
+							jQuery('#city').html(data);
+						},
+						error: function(data) {
+							console.log(data);
+						}
+					});
 				}
-			});
-
-			event.preventDefault();
+			}
 
 		});
 
