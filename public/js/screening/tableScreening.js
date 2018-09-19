@@ -143,18 +143,34 @@ $(document).ready( function () {
 		var d = parseInt(keys[y]);
 		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].district + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
-						<td class="type" style="display:none;">` + data[x].type + `</td>
-					</tr>
-			`);
-			loadPagination();
+			if (data[x].district == '') {
+				$('tbody').append(`
+						<tr class='item'>
+							<td class="code">` + data[x].province_code + `</td>
+							<td class="description">` + data[x].city + `</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>Lorem Ipsum</td>
+							<td class="type" style="display:none;">` + data[x].type + `</td>
+						</tr>
+				`);
+				loadPagination();
+			}
+			else {
+				$('tbody').append(`
+						<tr class='item'>
+							<td class="code">` + data[x].province_code + `</td>
+							<td class="description">` + data[x].district + `</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>Lorem Ipsum</td>
+							<td class="type" style="display:none;">` + data[x].type + `</td>
+						</tr>
+				`);
+				loadPagination();
+			}
 		}
 	}
 
