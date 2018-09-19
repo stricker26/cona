@@ -72,7 +72,7 @@ $(document).ready( function () {
 						<td>0</td>
 						<td>0</td>
 						<td>Lorem Ipsum</td>
-						<td class="type">` + data[x].type + `</td>
+						<td class="type" style="display:none;">` + data[x].type + `</td>
 					</tr>
 				`);
 			loadPagination();
@@ -221,7 +221,7 @@ function printRow(data, x) {
 				<td>0</td>
 				<td>0</td>
 				<td>Lorem Ipsum</td>
-				<td class="type">DISTRICT</td>
+				<td class="type" style="display:none;">DISTRICT</td>
 			</tr>
 	`);
 	loadPagination();
