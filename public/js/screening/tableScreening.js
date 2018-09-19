@@ -3,28 +3,42 @@ $(document).ready( function () {
     $('#tableGeo').delegate('tbody > tr', 'click', function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
-    	ajaxGet(e, name);
-		
+    	var type = $(this).find(".type").html();
+    	if (type == 'DISTRICT') {
+    		ajaxGet(e, name, 'MUNICIPALITY');
+    	}
+    	else if (type == 'PROVINCE') {
+    		ajaxGet(e, name, type);
+    		ajaxGet(e, name, 'CITY');
+    	}
+    	else {
+    		ajaxGet(e, name, type);
+    	}
 	});
 
 	$('.bcrumbs').on('click', 'a', function(e) {
 		e.preventDefault();
 		var code = $(this).attr('id');
+		var type = $(this).attr('class');
+		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		if (code == 'regionNum') {
 			location.reload();
 		} else {
-			ajaxGet(code);
+			ajaxGet(code, '', type);
+			if (type == 'PROVINCE') {
+				ajaxGet(code, '', 'CITY');
+			}
+			
 		}
 	});
 
 	$('#tableGeo').delegate('tbody > tr', 'mouseenter', function () {
-		$(this).css({'font-weight': 'bold',
-					'cursor': 'pointer'});
+		$(this).addClass('table-hover');
 	});
 
 	$('#tableGeo').delegate('tbody > tr', 'mouseleave', function () {
-		$(this).css('font-weight', 'normal');
+		$(this).removeClass('table-hover');
 	});
 
 	$('th').click(function() {
@@ -48,50 +62,170 @@ $(document).ready( function () {
 	function loadTable(e, data) {
 		var keys = Object.keys(data);
 		var y = keys.length - 1;
-		/*
-		var arr = [];
-		var z = 0;
-		console.log('length: ' + keys.length);
-		for (var x=0; x < keys.length; x++) {
-			z = keys[x];
-			arr[x] = data[z];
-		}
-		arr.sort(SortByDescription);
-		*/
 		$('tbody').html('');
 		for (var x=keys[0]; x <= keys[y]; x++) {
 			$('tbody').append(`
 					<tr class='item'>
-						<td class="code">` + data[x].code + `</td>
-						<td class="description">` + data[x].description + `</td>
+						<td class="code">` + data[x].province_code + `</td>
+						<td class="description">` + data[x].lgu + `</td>
 						<td>0</td>
 						<td>0</td>
 						<td>0</td>
 						<td>Lorem Ipsum</td>
+						<td class="type">` + data[x].type + `</td>
 					</tr>
 				`);
 			loadPagination();
 		}
 	}
 
-	function ajaxGet(e, name) {
-		$.ajax({
-			method: 'GET',
-			url: '/screening/' + e,
-			success:function(data)  
-	    	{
-	    		if (data == '') {
-	    		}
-	    		else  {
-	    			if (name != undefined) {
-	    				$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '">' + name + '</a>');
-	    			}
-	    			loadTable(e, data);
-	    		}
-	    	} 
-		});
+	function ajaxGet(e, name, type) {
+		if (type == null || type == undefined || type == '') {
+			$.ajax({
+				method: 'GET',
+				url: '/screening/' + e,
+				success:function(data)  
+		    	{
+		    		if (data == '') {
+		    		}
+		    		else  {
+		    			if (name != undefined && name != '') {
+		    				$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="">' + name + '</a>');
+		    			}
+		    			loadTable(e, data);
+		    		}
+		    	} 
+			});
+		}
+		else {
+			$.ajax({
+				method: 'GET',
+				url: '/screening/' + type + '/' + e,
+				success:function(data)  
+		    	{
+		    		console.log(data);
+		    		if (data == '') {
+		    		}
+		    		else  {
+		    			if (name != undefined && name != '') {
+		    				if (type != 'CITY') {
+		    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    				}
+		    			}
+		    			switch (type) {
+		    				case 'HUC':
+		    					hucTable(e, data);
+		    				break;
+		    				case 'PROVINCE':
+		    					districtTable(e, data);
+		    				break;
+		    				case 'MUNICIPALITY':
+		    					municipalityTable(e, data, name);
+		    				break;
+		    				case 'CITY':
+		    					cityTable(e, data, name);
+		    				break;
+		    			}
+		    			//loadTable(e, data);
+		    		}
+		    	} 
+			});
+		}
 	}
+
+	function hucTable(e, data) {
+		var keys = Object.keys(data);
+		var y = keys.length - 1;
+		$('tbody').html('');
+		for (var x=keys[0]; x <= keys[y]; x++) {
+			$('tbody').append(`
+					<tr class='item'>
+						<td class="code">` + data[x].province_code + `</td>
+						<td class="description">` + data[x].district + `</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>Lorem Ipsum</td>
+						<td class="type" style="display:none;">` + data[x].type + `</td>
+					</tr>
+			`);
+			loadPagination();
+		}
+	}
+
+	function districtTable(e, data) {
+		var keys = Object.keys(data);
+		var y = keys.length - 1;
+		$('tbody').html('');
+		for (var x=keys[0]; x <= keys[y]; x++) {
+			if (x != keys[0]) {
+				if (data[x].district != data[x-1].district) {
+					printRow(data, x);
+				}
+			}
+			else {
+				printRow(data, x);
+			}
+		}
+	}
+
+	function municipalityTable(e, data, name) {
+		var keys = Object.keys(data);
+		var y = keys.length - 1;
+		$('tbody').html('');
+		for (var x=keys[0]; x <= keys[y]; x++) {
+			if (data[x].district == name) {
+				$('tbody').append(`
+						<tr class='item'>
+							<td class="code">` + data[x].province_code + `</td>
+							<td class="description">` + data[x].municipality + `</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>Lorem Ipsum</td>
+							<td class="type" style="display:none;">` + data[x].type + `</td>
+						</tr>
+				`);
+				loadPagination();
+			}
+		}
+	}
+
+	function cityTable(e, data, name) {
+		var keys = Object.keys(data);
+		var y = keys.length - 1;
+		for (var x=keys[0]; x <= keys[y]; x++) {
+			$('tbody').append(`
+					<tr class='item'>
+						<td class="code">` + data[x].province_code + `</td>
+						<td class="description">` + data[x].city + `</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>Lorem Ipsum</td>
+						<td class="type" style="display:none;">` + data[x].type + `</td>
+					</tr>
+			`);
+			loadPagination();
+		}
+	}
+
 });
+
+function printRow(data, x) {
+	$('tbody').append(`
+			<tr class='item'>
+				<td class="code">` + data[x].province_code + `</td>
+				<td class="description">` + data[x].district + `</td>
+				<td>0</td>
+				<td>0</td>
+				<td>0</td>
+				<td>Lorem Ipsum</td>
+				<td class="type">DISTRICT</td>
+			</tr>
+	`);
+	loadPagination();
+}
 
 function searchData() {
 	// Declare variables 
@@ -139,14 +273,3 @@ function loadPagination() {
         return false;
     });
 }
-
-
-/***
-function SortByID(x,y) {
-	return x.ID - y.ID; 
-}
-
-function SortByDescription(x,y) {
-    return ((x.Description == y.Description) ? 0 : ((x.Description > y.Description) ? 1 : -1 ));
-}
-***/

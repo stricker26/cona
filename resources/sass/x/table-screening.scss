@@ -36,3 +36,12 @@
 		border: 1px solid #d0d0d0;
 	}
 }
+
+tr{
+	border-bottom: 4px solid transparent;
+}
+
+.table-hover {
+	border-bottom: 4px solid #f7d116;
+	cursor: pointer;
+}
