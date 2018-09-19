@@ -2,6 +2,8 @@
 
 @section('title','Dashboard')
 
+@section('subpage','HQ Screening')
+
 @section('styles')
 @stop
 

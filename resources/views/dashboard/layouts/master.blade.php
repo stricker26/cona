@@ -9,6 +9,7 @@
     <title>CONA &#8211; @yield('title')</title>
     <meta name="description" content="CONA">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -31,28 +32,14 @@
         @include('dashboard.layouts.sidebar')
         {{-- Left Panel --}}
 
-
-
         {{-- Right Panel --}}
         <div id="right-panel" class="right-panel">
 
-            {{-- Header --}}
+            {{-- Header --}} 
             @include('dashboard.layouts.header')
             {{-- Header --}}
 
             {{-- content --}}
-            @if(!empty($error_mess))
-            <div class="content mt-3 pl-3 pr-3">
-                <div class="col-sm-12">
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                      <span class="badge badge-pill badge-success">Success</span> You successfully wwwread this important alert message.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-            </div> 
-
             <div class="content pl-3 pr-3">
                 <div class="col-sm-12">
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -74,7 +61,6 @@
                     </div>
                 </div>
             </div>
-            @endif
             {{-- content --}}
 
             <div class="content mt-3 pl-4 pr-4">
