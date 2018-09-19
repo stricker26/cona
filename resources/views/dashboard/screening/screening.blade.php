@@ -198,7 +198,7 @@
 			<a href="" id="regionNum">PH</a>
 		</div>
 		<input type="text" id="searchBar" class="form-control pull-right" onkeyup="searchData()" placeholder="SEARCH">
-		<table id="tableGeo" class="table table-striped table-bordered">
+		<table id="tableGeo" class="table table-bordered">
 			<thead>
 				<tr>
 					<th class="colNum" onclick="w3.sortHTML('#tableGeo', '.item', '.code')" style="cursor:pointer">#<i class="sort fa fa-sort-amount-asc pull-right"></i></th>
