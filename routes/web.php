@@ -24,12 +24,17 @@ Route::post('/candidate/add', [
 	'as' => 'candidate.register',
 ]);
 
-Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
-
+Route::post('/sidebar', 'dashboardPageController@screening');
 Route::get('/dashboard', 'dashboardPageController@hq_dashboard');
-Route::get('/nomination/pending', 'dashboardPageController@hq_pending');
-Route::get('/nomination/approve', 'dashboardPageController@hq_approve');
-Route::get('/nomination/reject', 'dashboardPageController@hq_reject');
-
 Route::get('/lec','dashboardPageController@lec_dashboard');
 Route::get('/lec/candidates','dashboardPageController@lec_candidates');
+
+Route::get('/screening', 'ScreeningController@screening');
+
+Route::post('/screening/profile', 'profileController@profile');
+//Route::post('/dashboard/profile/sent', 'profileController@sent');
+
+Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
+Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
+Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');

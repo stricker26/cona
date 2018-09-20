@@ -9,6 +9,7 @@
     <title>CONA &#8211; @yield('title')</title>
     <meta name="description" content="CONA">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -17,91 +18,43 @@
     <link rel="stylesheet" href="../css/dashboard/style.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/dashboard/custom-style.css">
     @yield('styles')
 
 </head>
 <body>
-    {{-- left Panel --}}
-    @include('dashboard.layouts.sidebar')
-    {{-- Left Panel --}}
-
-
-
-    {{-- Right Panel --}}
-    <div id="right-panel" class="right-panel">
-
-        {{-- Header --}}
-        @include('dashboard.layouts.header')
-        {{-- Header --}}
-
-        {{-- content --}}
-        <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>@yield('title')</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            <li class="active">@yield('sub-page')</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="content mt-3">
-            <div class="col-sm-12">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  <span class="badge badge-pill badge-success">Success</span> You successfully read this important alert message.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div> 
-
-        <div class="content">
-            <div class="col-sm-12">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                  <span class="badge badge-pill badge-danger">Failed</span> You successfully read this important alert message.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div> 
-
-        <div class="content">
-            <div class="col-sm-12">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                  <span class="badge badge-pill badge-warning">Warning</span> You successfully read this important alert message.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        {{-- content --}}
-
-        <div class="content mt-3">
-            @yield('content')
-        </div>
-
+    <div class="loader">
+        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
-    {{-- Right Panel --}}
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <div class="body-toload" style="display: none;">
+        {{-- left Panel --}}
+        @include('dashboard.layouts.sidebar')
+        {{-- Left Panel --}}
+
+        {{-- Right Panel --}}
+        <div id="right-panel" class="right-panel">
+
+            {{-- Header --}} 
+            @include('dashboard.layouts.header')
+            {{-- Header --}}
+
+            {{-- content --}}
+            <div class="content mt-3 pl-4 pr-4">
+                @yield('content')
+            </div>
+            {{-- content --}}
+            
+        </div>
+        {{-- Right Panel --}}
+    </div>
+    
+    {{-- Right Panel --}}
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="../js/dashboard/plugins.js"></script>
     <script src="../js/dashboard/main.js"></script>
-
-    <script src="../js/dashboard/dashboard.js"></script>
+    <script src="../js/dashboard/custom-script.js"></script>
 
     @yield('scripts')
 
