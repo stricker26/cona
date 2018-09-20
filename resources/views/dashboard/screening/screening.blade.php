@@ -210,6 +210,8 @@
 					<th style="display:none;">TYPE</th>
 				</tr>
 			</thead>
+			<tbody>
+			</tbody>
 		</table>
 		<div id="nav"></div>
 	</div>
