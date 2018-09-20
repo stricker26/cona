@@ -24,7 +24,6 @@ class dashboardPageController extends Controller
     public function screening(Request $request) {
         $data_province = $request->dataProvince;
         $data_province = explode(",", $data_province);
-        $data = object[];
         if($data_province === 'HUC'){
             $loc = DB::table('huc')->get()->where('province_code', '=', $data_province[0]);
             return $loc;

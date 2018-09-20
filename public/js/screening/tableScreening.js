@@ -1,6 +1,24 @@
-$(document).ready( function () {
+var url_string = window.location.href;
+var url = new URL(url_string);
+var urlCode = url.searchParams.get('e');
+var urlName = url.searchParams.get('name');
+var urlType = url.searchParams.get('type');
+window.history.replaceState(null, null, window.location.pathname);
 
-    $('#tableGeo').delegate('tbody > tr', 'click', function () {
+$(document).ready( function () {
+	if (urlCode != null || urlCode != undefined || urlCode != '') {
+		if (urlType == 'DISTRICT') {
+    		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
+    	}
+    	else if (urlType == 'PROVINCE') {
+    		ajaxGet(urlCode, urlName, urlType);
+    		ajaxGet(urlCode, urlName, 'CITY');
+    	}
+    	else {
+    		ajaxGet(urlCode, urlName, urlType);
+    	}
+	}
+	$('#tableGeo').delegate('tbody > tr', 'click', function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
