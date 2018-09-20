@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
+                                    <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}},{{$province->region}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
                                     @endif
                                 @endforeach
                                 </li>

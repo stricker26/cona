@@ -22,27 +22,28 @@ jQuery(document).ready(function($){
 		var e = data[0];
 		var name = data[2];
 		var type = data[1];
+		var region = data[3];
 		if (path == '/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
 	    	}
 	    	else if (type == 'PROVINCE') {
-	    		ajaxGet(e, name, type);
+	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'CITY');
 	    	}
 	    	else {
-	    		ajaxGet(e, name, type);
+	    		ajaxGet(e, name, type, region);
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
 	    }
 	    else {
-	    	window.location.href = '/screening?e=' + e + '&name=' + name + '&type=' + type ;
+	    	window.location.href = '/screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	});
 
-	function ajaxGet(e, name, type) {
+	function ajaxGet(e, name, type, region) {
 		$.ajax({
 			method: 'GET',
 			url: '/screening/' + type + '/' + e,
@@ -54,7 +55,12 @@ jQuery(document).ready(function($){
 	    		else  {
 	    			if (name != undefined && name != '') {
 	    				if (type != 'CITY') {
-	    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+	    					if (type == 'PROVINCE' || type == 'HUC') {
+		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    				}
+		    				else {
+		    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    				}
 	    				}
 	    			}
 	    			switch (type) {

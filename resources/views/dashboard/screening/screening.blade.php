@@ -195,7 +195,7 @@
 			<button type="button" class="w-100 btn btn-danger" data-toggle="modal" data-target="#rejectsModal">Rejects</button>
 		</div>
 		<div class="bcrumbs row">
-			<a href="" id="regionNum">PH</a>
+			
 		</div>
 		<input type="text" id="searchBar" class="form-control pull-right" onkeyup="searchData()" placeholder="SEARCH">
 		<table id="tableGeo" class="table table-bordered">

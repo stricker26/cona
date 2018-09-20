@@ -3,6 +3,7 @@ var url = new URL(url_string);
 var urlCode = url.searchParams.get('e');
 var urlName = url.searchParams.get('name');
 var urlType = url.searchParams.get('type');
+var urlRegion = url.searchParams.get('region');
 window.history.replaceState(null, null, window.location.pathname);
 
 $(document).ready( function () {
@@ -11,26 +12,27 @@ $(document).ready( function () {
     		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
     	}
     	else if (urlType == 'PROVINCE') {
-    		ajaxGet(urlCode, urlName, urlType);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY');
     	}
     	else {
-    		ajaxGet(urlCode, urlName, urlType);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion);
     	}
 	}
 	$('#tableGeo').delegate('tbody > tr', 'click', function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
+    	var region = $(this).find(".region").html();
     	if (type == 'DISTRICT') {
     		ajaxGet(e, name, 'MUNICIPALITY');
     	}
     	else if (type == 'PROVINCE') {
-    		ajaxGet(e, name, type);
+    		ajaxGet(e, name, type, region);
     		ajaxGet(e, name, 'CITY');
     	}
     	else {
-    		ajaxGet(e, name, type);
+    		ajaxGet(e, name, type, region);
     	}
 	});
 
@@ -40,14 +42,9 @@ $(document).ready( function () {
 		var type = $(this).attr('class');
 		console.log('Type: ' + type);
 		$(this).nextAll().remove();
-		if (code == 'regionNum') {
-			location.reload();
-		} else {
-			ajaxGet(code, '', type);
-			if (type == 'PROVINCE') {
-				ajaxGet(code, '', 'CITY');
-			}
-			
+		ajaxGet(code, '', type);
+		if (type == 'PROVINCE') {
+			ajaxGet(code, '', 'CITY');
 		}
 	});
 
@@ -97,13 +94,14 @@ $(document).ready( function () {
 						<td>0</td>
 						<td>Lorem Ipsum</td>
 						<td class="type">` + type + `</td>
+						<td class="region">` + data[x].region + `</td>
 					</tr>
 				`);
 			loadPagination();
 		}
 	}
 
-	function ajaxGet(e, name, type) {
+	function ajaxGet(e, name, type, region) {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
@@ -135,7 +133,12 @@ $(document).ready( function () {
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
-		    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					if (type == 'PROVINCE' || type == 'HUC') {
+		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					}
+		    					else {
+		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					}
 		    				}
 		    			}
 		    			switch (type) {
@@ -151,6 +154,8 @@ $(document).ready( function () {
 		    				case 'CITY':
 		    					cityTable(e, data, name);
 		    				break;
+		    				default:
+		    					loadTable(e, data);
 		    			}
 		    			//loadTable(e, data);
 		    		}

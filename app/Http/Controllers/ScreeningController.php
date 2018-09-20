@@ -32,6 +32,11 @@ class ScreeningController extends Controller
     	return $data;
     }
 
+    public function region($code) {
+        $data = DB::table('province')->get()->where('region', '=', $code);
+        return $data;
+    }
+
     public function table($code) {
     	$data = DB::table('province')->get()->where('region', '=', $code);
     	if (count($data) == 0) {

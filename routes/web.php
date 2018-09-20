@@ -38,3 +38,4 @@ Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
 Route::get('/screening/CITY/{code}', 'ScreeningController@city');
 Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
+Route::get('/screening/REGION/{code}', 'ScreeningController@region');
