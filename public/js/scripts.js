@@ -64,7 +64,7 @@
 					$.ajax({
 						url: '/geo',
 							method: 'GET',
-							data: {requestType: 'province', requestValue: region},
+							data: {requestType: 'hybrid_province', requestValue: region},
 							success: function(data) {
 								jQuery('#province').html(data);
 							},
@@ -95,21 +95,25 @@
 		jQuery('#province').change(function() {
 
 			var provinceID = jQuery(this).val();
+			var region = jQuery('#region').val();
 			var groupType = jQuery('option:selected', jQuery('#position')).data('group');
 
-			if(groupType == 'HUC') {
+			if(groupType == 'HUC' && region == 'NCR') {
 				var requestType = 'huc_district';
 				if(jQuery('#position').val() == 'HUC Congressman') {
 					jQuery('.district-wrapper').fadeIn(500);
+					jQuery('.huc-city-wrapper').fadeOut(500);
 					var target = '#district';
 				} else {
-					if(jQuery('#region').val() != 'NCR') {
-						var requestType = 'component_city';
-						var target = '#huc-city';
-						jQuery('.huc-city-wrapper').fadeIn(500);
-					} else {
-						jQuery('.huc-city-wrapper').fadeOut(500);
-					}
+					jQuery('.huc-city-wrapper').fadeOut(500);
+				}
+			} else if(groupType == 'HUC' && region != 'NCR') {
+				if(jQuery('#position').val() == 'HUC Congressman') {
+					jQuery('.huc-city-wrapper').fadeOut(500);
+				} else {
+					var requestType = 'cc_huc';
+					var target = '#huc-city';
+					jQuery('.huc-city-wrapper').fadeIn(500);
 				}
 			} else {
 				var requestType = 'district';

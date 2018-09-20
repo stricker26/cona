@@ -58,10 +58,29 @@ class GeoLocationController extends Controller
 
 				case 'province':
 
+					$query = DB::table('province')
+						->select('lgu', 'province_code')
+						->where('region', '=', $requestValue)
+						->where('type', '=', 'PROVINCE')
+						->get();
+
+					$out .= '<option value="">Select Province <span>*</span></option>';
+
+					foreach ($query as $rows => $row) {
+
+						$out .= '<option value="'. $row->province_code .'">'. $row->lgu .'</option>';	
+					
+					}
+
+				break;
+
+				case 'hybrid_province':
+
 					$query = DB::table('city AS ct')
 						->join('province AS pv', 'ct.province_code', '=', 'pv.province_code')
 						->select('pv.lgu', 'ct.province_code')
 						->where('ct.region', '=', $requestValue)
+						->where('ct.province_code', '=', DB::raw("(SELECT province_code FROM province WHERE province_code = ct.province_code)"))
 						->groupBy('ct.province_code', 'pv.lgu')
 						->get();
 
@@ -145,19 +164,34 @@ class GeoLocationController extends Controller
 
 				break;
 
-				case 'component_city':
+				case 'cc_huc':
 
-					$query = DB::table('city')
+					$queryCity = DB::table('city')
 						->select('city')
-						->where('province_code', '=', $requestValue)
-						->distinct('city')
+						->where('province_code', '=', $requestValue);
+
+					$query = DB::table('huc')
+						->select('city')
+						->where('parent_province_code', '=', $requestValue)
+						->union($queryCity)
 						->get();
 
 					$out .= '<option value="">Select City <span>*</span></option>';
 
+					$cities = array();
+
 					foreach ($query as $rows => $row) {
 
-						$out .= '<option value="'. $row->city .'">'. $row->city .'</option>';	
+						if(!in_array($row->city, $cities)) {
+							$cities[] = $row->city;
+						}
+
+					}
+
+					foreach ($cities as $cts => $ct) {
+
+						$out .= '<option value="'. $ct .'">'. $ct .'</option>';
+
 					}
 
 				break;

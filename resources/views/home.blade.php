@@ -161,7 +161,7 @@
                         </select>
                     </div>
                     <div class="form-group province-wrapper">
-                        <label>Province / HUC / CC <span>*</span></label>
+                        <label>Province / HUC / ICC <span>*</span></label>
                         <select name="province" id="province" class="form-control">
                             <option value="">Select Province</option>
                         </select>
