@@ -29,6 +29,7 @@ jQuery(document).ready(function($){
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
+	    		ajaxGet(e, name, 'HUC');
 	    		ajaxGet(e, name, 'CITY');
 	    	}
 	    	else {

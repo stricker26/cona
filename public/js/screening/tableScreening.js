@@ -24,11 +24,13 @@ $(document).ready( function () {
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
     	var region = $(this).find(".region").html();
+		$('tbody').html('');
     	if (type == 'DISTRICT') {
     		ajaxGet(e, name, 'MUNICIPALITY');
     	}
     	else if (type == 'PROVINCE') {
     		ajaxGet(e, name, type, region);
+    		ajaxGet(e, name, 'HUC');
     		ajaxGet(e, name, 'CITY');
     	}
     	else {
@@ -43,6 +45,7 @@ $(document).ready( function () {
 		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		ajaxGet(code, '', type);
+		$('tbody').html('');
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'CITY');
 		}
@@ -79,25 +82,26 @@ $(document).ready( function () {
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x = s; x <= d; x++) {
-			var type = '';
-			if (data[x].type != undefined) {
-				type = data[x].type;
+			if (data[x] != undefined) {
+				var type = '';
+				if (data[x].type != undefined) {
+					type = data[x].type;
+				}
+				$('tbody').append(`
+						<tr class='item'>
+							<td class="code">` + data[x].province_code + `</td>
+							<td class="description">` + data[x].lgu + `</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
+							<td>Lorem Ipsum</td>
+							<td class="type">` + type + `</td>
+							<td class="region" style="display:none;">` + data[x].region + `</td>
+						</tr>
+					`);
+				loadPagination();
 			}
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].lgu + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
-						<td class="type">` + type + `</td>
-						<td class="region">` + data[x].region + `</td>
-					</tr>
-				`);
-			loadPagination();
 		}
 	}
 
@@ -171,39 +175,40 @@ $(document).ready( function () {
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
-			var type = 'DISTRICT';
-			if (data[x].type != undefined) {
-				type = data[x].type;
-			}
-			if (data[x].district == '') {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].city + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-			else {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].district + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-						</tr>
-				`);
-				loadPagination();
+			if (data[x] != undefined) {
+				var type = 'DISTRICT';
+				if (data[x].type != undefined) {
+					type = data[x].type;
+				}
+				if (data[x].district == '') {
+					$('tbody').append(`
+							<tr class='item'>
+								<td class="code">` + data[x].province_code + `</td>
+								<td class="description">` + data[x].city + `</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>Lorem Ipsum</td>
+								<td class="type">` + type + `</td>
+							</tr>
+					`);
+					loadPagination();
+				}
+				else {
+					$('tbody').append(`
+							<tr class='item'>
+								<td class="code">` + data[x].province_code + `</td>
+								<td class="description">` + data[x].district + `</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>Lorem Ipsum</td>
+								<td class="type">` + type + `</td>
+							</tr>
+					`);
+					loadPagination();
+				}
 			}
 		}
 	}
@@ -213,7 +218,6 @@ $(document).ready( function () {
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
 			if (x != keys[0]) {
 				if (data[x].district != data[x-1].district) {
@@ -231,7 +235,6 @@ $(document).ready( function () {
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
 			if (data[x].district == name) {
 				var type = 'MUNICIPAL';
