@@ -16,7 +16,7 @@
 					<h2 class="modal-title" id="locationModal">Location</h2>
 				</div>
 				<div class="modal-body">
-					<form action="/dashboard/profile" method="POST">
+					<form action="/screening/profile" method="POST">
 						@csrf
 						<div class="row pb-2 pt-2 pl-1">
 							<div class="col-sm-3"><span class="font-weight-bold">Governor:</span></div>
@@ -77,8 +77,8 @@
 								</div>
 							</div>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
