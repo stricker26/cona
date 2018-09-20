@@ -100,7 +100,7 @@
 				<div class="col-sm-9"><h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5></div>
 			</div>
 			<hr>
-			<form action="/dashboard/profile" method="post">
+			<form action="/screening/profile" method="post">
 				@csrf
 				<div class="row pb-2 pt-2">
 					<div class="col-sm-3"><h5 class="font-weight-bold">Governor:</h5></div>
