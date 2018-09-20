@@ -1,4 +1,4 @@
-.container {
+.body {
 	padding-bottom: 50px;
 }
 
@@ -34,6 +34,22 @@
 		color: #303030;
 		border-radius: 3px;
 		border: 1px solid #d0d0d0;
+	}
+}
+
+.sticky-top {
+	background: rgba(241, 242, 247, 0.9);
+	padding-top: 10px;
+	a {
+		color: #2d2a1c;
+		font-weight: bold;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	p {
+		color: #f7d116;
+		font-weight: bold;
 	}
 }
 

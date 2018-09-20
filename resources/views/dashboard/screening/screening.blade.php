@@ -9,6 +9,11 @@
 @stop
 
 @section('content')
+	<div class="sticky-top">
+		<div class="container">
+			<div class="bcrumbs row"></div>
+		</div>
+	</div>
 	<div class="modal fade" id="rejectsModal" tabindex="-1" role="dialog" aria-labelledby="rejectsModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -85,7 +90,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container body">
 		<div class="form-group mt-5">
 			<div class="row text-center pb-2">
 				<div class="col-sm-12">
@@ -193,9 +198,6 @@
 		</div>
 		<div class="text-center pb-5">
 			<button type="button" class="w-100 btn btn-danger" data-toggle="modal" data-target="#rejectsModal">Rejects</button>
-		</div>
-		<div class="bcrumbs row">
-			
 		</div>
 		<input type="text" id="searchBar" class="form-control pull-right" onkeyup="searchData()" placeholder="SEARCH">
 		<table id="tableGeo" class="table table-bordered">
