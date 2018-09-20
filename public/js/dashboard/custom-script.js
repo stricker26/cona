@@ -23,14 +23,15 @@ jQuery(document).ready(function($){
 		var name = data[2];
 		var type = data[1];
 		var region = data[3];
+		$('tbody').html('');
 		if (path == '/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
-	    		ajaxGet(e, name, 'HUC');
-	    		ajaxGet(e, name, 'CITY');
+	    		ajaxGet(e, name, 'HUC', region);
+	    		ajaxGet(e, name, 'CITY', region);
 	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region);
@@ -88,9 +89,8 @@ jQuery(document).ready(function($){
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
-			var type = 'DISTRICT';
+			var type = 'HUC';
 			if (data[x].type != undefined) {
 				type = data[x].type;
 			}
@@ -130,7 +130,6 @@ jQuery(document).ready(function($){
 		var y = keys.length - 1;
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
-		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
 			if (x != keys[0]) {
 				if (data[x].district != data[x-1].district) {

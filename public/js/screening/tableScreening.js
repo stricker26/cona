@@ -177,7 +177,7 @@ $(document).ready( function () {
 		var d = parseInt(keys[y]);
 		for (var x=s; x <= d; x++) {
 			if (data[x] != undefined) {
-				var type = 'DISTRICT';
+				var type = 'HUC';
 				if (data[x].type != undefined) {
 					type = data[x].type;
 				}
