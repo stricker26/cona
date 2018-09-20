@@ -17,7 +17,22 @@ jQuery(document).ready(function($){
 
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
 		var dataProvince = $(this).data("value");
-		dataProvince = dataProvince.split(',');
-		console.log(this);
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: '/sidebar',
+			type: 'POST',
+			data: {
+				'dataProvince': dataProvince
+			},
+			success: function(data){
+				window.location.href = '/dashboard';
+			}, error: function(data){
+				alert('error');
+			}
+		});
 	});
 });

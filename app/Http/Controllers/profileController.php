@@ -14,20 +14,20 @@ class profileController extends Controller
 
     	$province = DB::table('province')
     					->select('lgu')
-    					->where('province_code',$candidate->province_id)
+    					->where('province_code','=',$candidate->province_id)
     					->first();
 
     	$district = DB::table('municipality')
     					->select('municipality','district')
-    					->where('province_code',$candidate->province_id)
+    					->where('province_code','=',$candidate->province_id)
     					->first();
 
     	$city = DB::table('city')
     				->select('city')
-    				->where('province_code',$candidate->province_id)
+    				->where('province_code','=',$candidate->province_id)
     				->first();
 
-    	$cos = DB::table('chief_of_staff')->where('cos_id',$candidate->cos_id)->first();
+    	$cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
 
     	return view('dashboard.screening.profile', compact('candidate','province','district','city','cos'));
     }
@@ -51,7 +51,7 @@ class profileController extends Controller
     		'updated_at' => $date_now
     	);
 
-    	$update = DB::table('candidates')->where('id',$candidate_id)->update($data_update);
+    	$update = DB::table('candidates')->where('id','=',$candidate_id)->update($data_update);
 
     	if($update) {
     		$alert = 'Success';

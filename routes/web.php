@@ -24,6 +24,7 @@ Route::post('/candidate/add', [
 	'as' => 'candidate.register',
 ]);
 
+Route::post('/sidebar', 'dashboardPageController@screening');
 Route::get('/dashboard', 'dashboardPageController@hq_dashboard');
 Route::get('/lec','dashboardPageController@lec_dashboard');
 Route::get('/lec/candidates','dashboardPageController@lec_candidates');
