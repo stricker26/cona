@@ -83,6 +83,10 @@ jQuery(document).ready(function($){
 		var d = parseInt(keys[y]);
 		$('tbody').html('');
 		for (var x=s; x <= d; x++) {
+			var type = 'DISTRICT';
+			if (data[x].type != undefined) {
+				type = data[x].type;
+			}
 			if (data[x].district == '') {
 				$('tbody').append(`
 						<tr class='item'>
@@ -92,7 +96,7 @@ jQuery(document).ready(function($){
 							<td>0</td>
 							<td>0</td>
 							<td>Lorem Ipsum</td>
-							<td class="type" style="display:none;">` + data[x].type + `</td>
+							<td class="type">` + type + `</td>
 						</tr>
 				`);
 				loadPagination();
@@ -106,7 +110,7 @@ jQuery(document).ready(function($){
 							<td>0</td>
 							<td>0</td>
 							<td>Lorem Ipsum</td>
-							<td class="type" style="display:none;">` + data[x].type + `</td>
+							<td class="type">` + type + `</td>
 						</tr>
 				`);
 				loadPagination();
@@ -138,6 +142,10 @@ jQuery(document).ready(function($){
 		var s = parseInt(keys[0]);
 		var d = parseInt(keys[y]);
 		for (var x=s; x <= d; x++) {
+			var type = 'CC';
+			if (data[x].type != undefined) {
+				type = data[x].type;
+			}
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
@@ -146,7 +154,7 @@ jQuery(document).ready(function($){
 						<td>0</td>
 						<td>0</td>
 						<td>Lorem Ipsum</td>
-						<td class="type" style="display:none;">` + data[x].type + `</td>
+						<td class="type">` + type + `</td>
 					</tr>
 			`);
 			loadPagination();
@@ -162,7 +170,7 @@ jQuery(document).ready(function($){
 				<td>0</td>
 				<td>0</td>
 				<td>Lorem Ipsum</td>
-				<td class="type" style="display:none;">DISTRICT</td>
+				<td class="type">DISTRICT</td>
 			</tr>
 	`);
 	loadPagination();
