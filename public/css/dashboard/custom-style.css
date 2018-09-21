@@ -61,15 +61,13 @@
     transform: translate(calc(125px - 66px), 0);
   }
 }
-.navbar-profile {
-  padding-top: 10px;
-  padding-bottom: 20px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid #4e4e52;
-}
 .header-lp-logo img {
   max-height: 41px;
   height: 41px;
+}
+.navbar-lec {
+  color: #d7d9e3;
+  padding-bottom: 20px;
 }
 .fa-clock {
   color: #ffc107;
@@ -200,7 +198,7 @@ i.fa-caret-down {
   border-radius: 0.25rem;
   padding-bottom: 15px;
   padding-top: 19px;
-  background: #15140c;
+  /*background: #15140c;*/
 }
 .checkbox label:after {
   content: '';
@@ -229,10 +227,10 @@ i.fa-caret-down {
   line-height: 0;
   top: 50%;
   left: 15%;
-}
+}/*
 .checkbox label {
   color: #fff;
-}
+}*/
 .checkbox label:hover {
   cursor: pointer;
 }
