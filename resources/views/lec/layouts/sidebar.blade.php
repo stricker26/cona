@@ -30,7 +30,11 @@
                     <a href="/lec/candidates"><i class="fas fa-user pr-4 pl-3"></i>Candidates </a>
                 </div>
                 <div class="row pb-2">
-                    <a href="#"><i class="fa fa-power-off pr-4 pl-3"></i>Logout</a>
+                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
