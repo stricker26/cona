@@ -1,3 +1,9 @@
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
 $(document).ready(function(){
 	var a_href_id = ['prof_fb','prof_twitter','prof_ig','prof_website'];
 	$('#edit_btn').on('click', function(){
@@ -23,7 +29,7 @@ $(document).ready(function(){
 
 		$('#approve_btn').hide();
 		$('#reject_btn').hide();
-
+		$('#download_btn').hide();
 		$('#save_btn').show();
 		$('#close_btn').show();
 		$(this).hide();
@@ -54,7 +60,7 @@ $(document).ready(function(){
 
 		$('#approve_btn').show();
 		$('#reject_btn').show();
-
+		$('#download_btn').show();
 		$('#save_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
@@ -97,38 +103,38 @@ $(document).ready(function(){
 
 		$('#approve_btn').show();
 		$('#reject_btn').show();
-
+		$('#download_btn').show();
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
-
-		// $.ajaxSetup({
-		// 	headers: {
-		// 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		// 	}
-		// });
-
-		// $.ajax({
-		// 	method: 'POST',
-		// 	url: '/dashboard/profile/sent',
-		// 	data: objectData,
-		// 	success:function(alert){
-	 //    		$('#alert-handler').show().delay(2000).fadeOut();
-	 //    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
-	 //    	},
-	 //    	error:function(alert){
-	 //    		$('#alert-handler').show().delay(2000).fadeOut();
-	 //    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
-	 //    	}
-		// });
 	});
 
 	$('#approve_btn').on('click', function(){
-		alert("approved!");
+		$.ajax({
+			method: 'POST',
+			url: 'profile/approve',
+			success:function(data)  
+	    	{
+	    		console.log(data);
+	    		location.reload();
+	    	} 
+		});
 	});
 
 	$('#reject_btn').on('click', function(){
-		alert("reject!");
+		$.ajax({
+			method: 'POST',
+			url: 'profile/reject',
+			success:function(data)  
+	    	{
+	    		console.log(data);
+	    		location.reload();
+	    	} 
+		});
+	});
+
+	$('#download_btn').on('click', function() {
+		alert('Download CONA');
 	});
 });
 

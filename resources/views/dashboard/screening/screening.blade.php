@@ -21,7 +21,7 @@
 					<h2 class="modal-title" id="locationModal">Location</h2>
 				</div>
 				<div class="modal-body">
-					<form action="/screening/profile" method="POST">
+					<form action="screening/profile" method="POST">
 						@csrf
 						<div class="gov-governor" style="display: none;">
 							<div class="row pb-2 pt-2">
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 			<hr>
-			<form action="/screening/profile" method="post">
+			<form action="screening/profile" method="post">
 				@csrf
 				<div class="gov-governor" style="display: none;">
 					<div class="row pb-2 pt-2">

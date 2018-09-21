@@ -6,6 +6,34 @@
 @stop
 
 @section('content')
+	<!-- APPROVE AND REJECT MODALS -->
+	<div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Approve Candidate" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+		      	<div class="modal-body">
+		        	Are you sure you want to approve this candidate?
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		      	</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="modal fade" id="modalReject" tabindex="-1" role="dialog" aria-labelledby="Reject Candidate" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+		      	<div class="modal-body">
+		        	Are you sure you want to reject this candidate?
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		      	</div>
+	    	</div>
+	  	</div>
+	</div>
+	<!-- END OF APPROVE AND REJECT MODALS -->
 	<div class="container pb-5">
 		<div id="alert-handler" style="display: none;">
 			<div class="content mt-3 pl-3 pr-3 success-alert" style="display: none;">
@@ -38,7 +66,7 @@
 		<div class="row picture-candidate pb-5">
 			<div class="col-sm-5"></div>
 			<div class="col-sm-2 text-center">
-				<img class="rounded-circle" src="../img/dashboard/admin.png" alt="User Avatar">
+				<img class="rounded-circle" src="{{ asset('img/dashboard/admin.png') }}" alt="User Avatar">
 			</div>
 			<div class="col-sm-5"></div>
 		</div>
@@ -56,6 +84,13 @@
 						</div>
 						<div class="text-center">
 							<h3>{{$candidate->candidate_for}}</h3>
+						</div>
+						<div>
+								@if ($candidate->signed_by_lp == 1)
+									<span class="text-success">Approved</span>
+								@elseif ($candidate->signed_by_lp ==2)
+									<span class="text-danger">Rejected</span>
+								@endif
 						</div>
 					</div>
 				</div>
@@ -341,12 +376,18 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			<div class="d-inline pr-2">
-				<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
-			</div>
-			<div class="d-inline pr-2">
-				<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
-			</div>
+			@if ($candidate->signed_by_lp == null)
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
+				</div>
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject">Reject</button>
+				</div>
+			@else
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-warning" id="download_btn">Download CONA</button>
+				</div>
+			@endif
 		</div>
 	</div>
 @stop
