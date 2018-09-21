@@ -172,17 +172,6 @@
                         </select>
                     </div>
                     <div class="form-group district-wrapper">
-                        <label>Running a candidate for <span>*</span></label>
-                        <input type="text" name="position" class="form-control" id="position">
-                    </div>
-                    <div class="form-group">
-                        <label>Province <span>*</span></label>
-                        <select name="province" id="province" class="form-control">
-                            <option value="">Select Province</option>
-                            <?php echo GeoLocationController::getProvince() ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label>District <span>*</span></label>
                         <select name="district" id="district" class="form-control">
                             <option value="">Select District</option>
@@ -192,10 +181,6 @@
                         <label>Municipality <span>*</span></label>
                         <select name="city" id="city" class="form-control">
                             <option value="">Select Municipality</option>
-                    <div class="form-group">
-                        <label>City <span>*</span></label>
-                        <select name="city" id="city" class="form-control">
-                            <option value="">Select City</option>
                         </select>
                     </div>
                     <div class="form-group a">
@@ -212,8 +197,6 @@
                     <div class="form-group">
                         <label for="cos_position">Position</label>
                         <input type="text" name="cos_position" class="form-control" id="cos_position">
-                        <label for="position">Position</label>
-                        <input type="text" name="cos_position" class="form-control" id="position">
                     </div>
                     <div class="form-group">
                         <label for="cos_address">Address</label>
