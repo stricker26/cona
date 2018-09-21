@@ -14,28 +14,28 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-
 Route::get('/geo', 'GeoLocationController@location');
-
-Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
-
 Route::post('/candidate/add', [
 	'uses' => 'HomeController@register',
 	'as' => 'candidate.register',
 ]);
 
-Route::post('/sidebar', 'dashboardPageController@screening');
-Route::get('/dashboard', 'dashboardPageController@hq_dashboard');
-Route::get('/lec','dashboardPageController@lec_dashboard');
-Route::get('/lec/candidates','dashboardPageController@lec_candidates');
+Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
+	Route::get('/dashboard', [
+		'uses' => 'dashboardPageController@hq_dashboard',
+		'as' => 'hqPanel',
+	]);
+	Route::post('/sidebar', 'dashboardPageController@screening');
+	Route::get('/screening', 'ScreeningController@screening');
+	Route::post('/screening/profile', 'profileController@profile');
+	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
+	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
+	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
+	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
+});
 
-Route::get('/screening', 'ScreeningController@screening');
-
-Route::post('/screening/profile', 'profileController@profile');
-//Route::post('/dashboard/profile/sent', 'profileController@sent');
-
-Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
-Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
-Route::get('/screening/CITY/{code}', 'ScreeningController@city');
-Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
-Route::get('/screening/REGION/{code}', 'ScreeningController@region');
+Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
+	Route::get('/','LECController@lec_dashboard');
+	Route::get('/candidates','LECController@lec_candidates');
+});

@@ -22,12 +22,6 @@ class HomeController extends Controller
 
     }
 
-    public function admin() {
-
-        return view('hq.admin');
-
-    }
-
     public function register(Request $request) {
 
         $rules = array(
@@ -37,12 +31,9 @@ class HomeController extends Controller
             'birthday' => 'required',
             'birthyear' => 'required',
             'address' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:candidates',
             'mobile' => 'required',
             'position' => 'required',
-            'province' => 'required',
-            'district' => 'required',
-            'city' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -67,6 +58,12 @@ class HomeController extends Controller
 
             $sma = json_encode($smaObj);
 
+            if(empty($request->input('city'))) {
+                $city = $request->input('huc_city');
+            } else {
+                $city = $request->input('city');
+            }
+
             $candidate = Candidate::create([
                 'firstname' => $request->input('firstname'),
                 'middlename' => $request->input('middlename'),
@@ -80,7 +77,7 @@ class HomeController extends Controller
                 'sma' => $sma,
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
-                'city_id' => $request->input('city'),
+                'city_id' => $city,
                 'cos_id' => $cos_id,
             ]);
 

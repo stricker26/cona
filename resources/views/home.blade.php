@@ -23,6 +23,11 @@
         <form method="POST" class="getInfo" action="{{ route('candidate.register') }}">
             {{ csrf_field() }}
             <div class="row">
+                <div class="col mt-5">
+                    <h1 class="text-center">CONA Application</h1>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 form-col">
                     <div class="form-group">
                         <h2>Personal Information</h2>
@@ -91,7 +96,7 @@
                         <input type="text" name="mobile" class="form-control" id="mobile">
                     </div>
                     <div class="form-group a">
-                        <h2>Social Media Accounts</h2>
+                        <h2>Public Social Media Accounts</h2>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -131,26 +136,51 @@
                         <h2>Candidacy Details</h2>
                     </div>
                     <div class="form-group">
-                        <label>Running a candidate for <span>*</span></label>
-                        <input type="text" name="position" class="form-control" id="position">
-                    </div>
-                    <div class="form-group">
-                        <label>Province <span>*</span></label>
-                        <select name="province" id="province" class="form-control">
-                            <option value="">Select Province</option>
-                            <?php echo GeoLocationController::getProvince() ?>
+                        <label>Position aspired for <span>*</span></label>
+                        <select class="form-control" id="position" name="position" required="required">
+                            <option value="">Position</option>
+                            <option data-group="PROV" value="Senator">Senator</option>
+                            <option data-group="PROV" value="Governor">Governor</option>
+                            <option data-group="PROV" value="Vice-Governor">Vice-Governor</option>
+                            <option data-group="PROV" value="Provincial Board Member">Provincial Board Member</option>
+                            <option data-group="PROV" value="Congressman">Congressman</option>
+                            <option data-group="HUC" value="HUC Congressman">HUC Congressman</option>
+                            <option data-group="HUC" value="City Mayor">City Mayor</option>
+                            <option data-group="HUC" value="City Vice Mayor">City Vice Mayor</option>
+                            <option data-group="HUC" value="City Councilor">City Councilor</option>
+                            <option data-group="PROV" value="Municipal Mayor">Municipal Mayor</option>
+                            <option data-group="PROV" value="Municipal Vice-Mayor">Municipal Vice-Mayor</option>
+                            <option data-group="PROV" value="Municipal Councilor">Municipal Councilor</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group region-wrapper">
+                        <label>Region <span>*</span></label>
+                        <select name="region" id="region" class="form-control">
+                            <option value="">Select Region <span>*</span></option>
+                            <?php echo GeoLocationController::getRegion(); ?>
+                        </select>
+                    </div>
+                    <div class="form-group province-wrapper">
+                        <label>Province / HUC / ICC <span>*</span></label>
+                        <select name="province" id="province" class="form-control">
+                            <option value="">Select Province</option>
+                        </select>
+                    </div>
+                    <div class="form-group huc-city-wrapper">
+                        <label>City <span>*</span></label>
+                        <select name="huc_city" id="huc-city" class="form-control">
+                        </select>
+                    </div>
+                    <div class="form-group district-wrapper">
                         <label>District <span>*</span></label>
                         <select name="district" id="district" class="form-control">
                             <option value="">Select District</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>City <span>*</span></label>
+                    <div class="form-group city-wrapper">
+                        <label>Municipality <span>*</span></label>
                         <select name="city" id="city" class="form-control">
-                            <option value="">Select City</option>
+                            <option value="">Select Municipality</option>
                         </select>
                     </div>
                     <div class="form-group a">
@@ -165,8 +195,8 @@
                         <input type="text" name="relation" class="form-control" id="relation">
                     </div>
                     <div class="form-group">
-                        <label for="position">Position</label>
-                        <input type="text" name="cos_position" class="form-control" id="position">
+                        <label for="cos_position">Position</label>
+                        <input type="text" name="cos_position" class="form-control" id="cos_position">
                     </div>
                     <div class="form-group">
                         <label for="cos_address">Address</label>

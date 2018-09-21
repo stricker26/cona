@@ -14,7 +14,6 @@ class ScreeningController extends Controller
 
     public function huc($code) {
     	$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
-        //->orWhere('parent_province_code', '=', $code)
     	return $data;
     }
 

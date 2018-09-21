@@ -119,7 +119,7 @@
 						<span class="font-weight-bold">Email :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{$candidate->email}}</span>
+						<span class="wrap">{{$candidate->email}}</span>
 						<input type="text" class="form-control" id="prof_email" style="display:none;" value="{{$candidate->email}}">
 					</div>
 				</div>
@@ -168,7 +168,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<div>
-							<a style="color:#212529;" href="#twitter"><i><span>{{$arraySMA[1]}}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{$arraySMA[1]}}">
+							<a style="color:#212529;" href="#twitter"><i><span class="wrap">{{$arraySMA[1]}}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{$arraySMA[1]}}">
 						</div>
 					</div>
 				</div>
@@ -181,7 +181,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<div>
-							<a style="color:#212529;" href="#instagram"><i><span>{{$arraySMA[2]}}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{$arraySMA[2]}}">
+							<a style="color:#212529;" href="#instagram"><i><span class="wrap">{{$arraySMA[2]}}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{$arraySMA[2]}}">
 						</div>
 					</div>
 				</div>
@@ -194,7 +194,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<div>
-							<a style="color:#212529;" href="#website"><i><span>{{$arraySMA[3]}}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{$arraySMA[3]}}">
+							<a style="color:#212529;" href="#website"><i><span class="wrap">{{$arraySMA[3]}}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{$arraySMA[3]}}">
 						</div>
 					</div>
 				</div>
@@ -211,7 +211,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{ucwords(strtolower($province->lgu))}}</span>
-						<input type="text" class="form-control" id="prof_province" style="display:none;" value="{{ucwords(strtolower($province->lgu))}}">
+						<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="{{ucwords(strtolower($province->lgu))}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -220,7 +220,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{ucwords(strtolower($city->city))}}</span>
-						<input type="text" class="form-control" id="prof_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -229,7 +229,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{ucwords(strtolower($district->district))}}</span>
-						<input type="text" class="form-control" id="prof_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -238,7 +238,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{ucwords(strtolower($district->municipality))}}</span>
-						<input type="text" class="form-control" id="prof_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
 					</div>
 				</div>
 				<div class="row mt-5">
@@ -261,7 +261,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{$cos->relationship}}</span>
-						<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{ucwords(strtolower($cos->relationship))}}">
+						<input type="text" class="form-control" id="prof_cos_relationship" style="display:none;" value="{{ucwords(strtolower($cos->relationship))}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -270,7 +270,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{$cos->address}}</span>
-						<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{$cos->address}}">
+						<input type="text" class="form-control" id="prof_cos_address" style="display:none;" value="{{$cos->address}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -279,7 +279,7 @@
 					</div>
 					<div class="col-sm-6 row-content">
 						<span>{{$cos->contact}}</span>
-						<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{$cos->contact}}">
+						<input type="text" class="form-control" id="prof_cos_contact" style="display:none;" value="{{$cos->contact}}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -287,9 +287,45 @@
 						<span class="font-weight-bold">Email :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{$cos->email}}</span>
-						<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{$cos->email}}">
+						<span class="wrap">{{$cos->email}}</span>
+						<input type="text" class="form-control" id="prof_cos_email" style="display:none;" value="{{$cos->email}}">
 					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row comment-part">
+			<div class="col-sm-12">
+				<textarea class="form-control d-inline" id="prof_comment" rows="4" placeholder="Comments.."></textarea>
+			</div>
+		</div>
+		<div class="row checkbox-part">
+			<div class="col-sm-12">
+				<div class="col-sm-12 checkbox text-center">
+					<label>
+						<input type="checkbox" id="prof_cb_lpmember">
+						<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+						LP member
+					</label>
+					<label>
+						<input type="checkbox" id="prof_cb_paid">
+						<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+						Paid Membership Dues
+					</label>
+					<label>
+						<input type="checkbox" id="prof_cb_yearmember">
+						<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+						Member more than a year
+					</label>
+					<label>
+						<input type="checkbox" id="prof_cb_chapmember">
+						<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+						Chapter Member
+					</label>
+					<label>
+						<input type="checkbox" id="prof_cb_lpsignmanifesto">
+						<span class="cr"><i class="cr-icon fa fa-check"></i></span>
+						Signed LP Manifesto
+					</label>
 				</div>
 			</div>
 		</div>

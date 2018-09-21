@@ -10,31 +10,57 @@ $(document).ready( function () {
 	if (urlCode != null || urlCode != undefined || urlCode != '') {
 		if (urlType == 'DISTRICT') {
     		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
     	}
     	else if (urlType == 'PROVINCE') {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
     		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-governor').show(500);
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
     	}
 	}
 	$('#tableGeo').delegate('tbody > tr', 'click', function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
+<<<<<<< HEAD
     	var region = $(this).find(".region").html();
     	switch (type) {
     		case 'DISTRICT':
     			$('tbody').html('');
     			ajaxGet(e, name, 'MUNICIPALITY');
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('.gov-governor').hide(500);
     		break;
     		case 'PROVINCE':
     			$('tbody').html('');
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUC', region);
 	    		ajaxGet(e, name, 'CITY', region);
+	    		$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').hide(500);
+	    		$('.gov-governor').show(500);
     		break;
     		case 'MUNICIPAL':
     			alert('Last heirarchy. [municipality function goes here]');
@@ -48,6 +74,11 @@ $(document).ready( function () {
     		default:
     			$('tbody').html('');
     			ajaxGet(e, name, type, region);
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('.gov-governor').hide(500);
     	}
 	});
 
@@ -63,7 +94,26 @@ $(document).ready( function () {
 			ajaxGet(code, '', 'CITY');
 			ajaxGet(code, '', 'HUC');
 		}
-		//wont show HUCs
+		var name = $(this).html();
+		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+		} else if(type == 'PROVINCE' || type == 'CITY') {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-governor').show(500);
+		} else {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+		}
 	});
 
 	$('#tableGeo').delegate('tbody > tr', 'mouseenter', function () {
@@ -107,8 +157,6 @@ $(document).ready( function () {
 		    			}
 		    			loadTable(e, data);
 		    		}
-		    		$('#locationModal').html(name);
-		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}
@@ -118,7 +166,6 @@ $(document).ready( function () {
 				url: '/screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
-		    		console.log(data);
 		    		if (data == '') {
 		    		}
 		    		else  {
@@ -157,6 +204,7 @@ $(document).ready( function () {
 			});
 		}
 	}
+<<<<<<< HEAD
 });
 
 function loadTable(e, data) {

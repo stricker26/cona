@@ -1,19 +1,25 @@
 var path = window.location.pathname;
 jQuery(document).ready(function($){
-	$('.loader').hide("fast");
-	$('.body-toload').show("fast");
+	$('.loader').hide();
+	$('.body-toload').show();
 
 	$('.dropdown-submenu a.test').on("click", function(e){
 		if($(this).next('ul').hasClass('click')){
-			$(this).next('ul').hide().removeClass('click');
+			$(this).next('ul').hide("fast").removeClass('click');
 		} else {
 			$('.dropdown-submenu').find('ul').each(function(){
 				$(this).hide().removeClass('click');
 			});
-			$(this).next('ul').show().addClass('click');
+			$(this).next('ul').show(500).addClass('click');
 		}
 		e.stopPropagation();
 		e.preventDefault();
+	});
+
+	$('.checkbox label').hover(function(){
+		$(this).find('.cr').css("borderColor","#c4a925");
+	}, function(){
+		$(this).find('.cr').css("borderColor","#808080");
 	});
 
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
@@ -27,21 +33,30 @@ jQuery(document).ready(function($){
 		if (path == '/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('.gov-governor').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUC', region);
 	    		ajaxGet(e, name, 'CITY', region);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').hide(500);
+	    		$('.gov-governor').show(500);
 	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('.gov-governor').hide(500);
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
 	    }
 	    else {
-	    	window.location.href = '/screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
+	    	window.location.href = 'hq/screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	});
 
@@ -51,7 +66,6 @@ jQuery(document).ready(function($){
 			url: '/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
-	    		console.log(data);
 	    		if (data == '') {
 	    		}
 	    		else  {
@@ -84,5 +98,4 @@ jQuery(document).ready(function($){
 	    	} 
 		});
 	}
-
 });

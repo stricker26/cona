@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -25,7 +26,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected function authenticated(Request $request, $user) {
+        //if(auth()->user()->isAdmin == 1){
+        if ( $user->isAdmin == 1 ) {// do your margic here
+            return redirect()->route('hqPanel');
+        }
+
+        return redirect('/lec');
+    }
 
     /**
      * Create a new controller instance.
