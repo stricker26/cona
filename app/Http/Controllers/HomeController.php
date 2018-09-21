@@ -34,9 +34,6 @@ class HomeController extends Controller
             'email' => 'required|email|unique:candidates',
             'mobile' => 'required',
             'position' => 'required',
-            //'province' => 'required',
-            // 'district' => 'required',
-            // 'city' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);

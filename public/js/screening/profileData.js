@@ -122,6 +122,14 @@ $(document).ready(function(){
 	 //    	}
 		// });
 	});
+
+	$('#approve_btn').on('click', function(){
+		alert("approved!");
+	});
+
+	$('#reject_btn').on('click', function(){
+		alert("reject!");
+	});
 });
 
 function capitalizeFirstLetter(string) {

@@ -1,18 +1,73 @@
-$(document).ready( function () {
+var url_string = window.location.href;
+var url = new URL(url_string);
+var urlCode = url.searchParams.get('e');
+var urlName = url.searchParams.get('name');
+var urlType = url.searchParams.get('type');
+window.history.replaceState(null, null, window.location.pathname);
 
-    $('#tableGeo').delegate('tbody > tr', 'click', function () {
+$(document).ready( function () {
+	if (urlCode != null || urlCode != undefined || urlCode != '') {
+		var name = urlName;
+		if (urlType == 'DISTRICT') {
+    		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+    	}
+    	else if (urlType == 'PROVINCE') {
+    		ajaxGet(urlCode, urlName, urlType);
+    		ajaxGet(urlCode, urlName, 'CITY');
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-governor').show(500);
+    	}
+    	else {
+    		ajaxGet(urlCode, urlName, urlType);
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+    	}
+	}
+	$('#tableGeo').delegate('tbody > tr', 'click', function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
     	if (type == 'DISTRICT') {
     		ajaxGet(e, name, 'MUNICIPALITY');
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
     	}
     	else if (type == 'PROVINCE') {
     		ajaxGet(e, name, type);
     		ajaxGet(e, name, 'CITY');
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-governor').show(500);
     	}
     	else {
     		ajaxGet(e, name, type);
+
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
     	}
 	});
 
@@ -20,7 +75,6 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
-		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		if (code == 'regionNum') {
 			location.reload();
@@ -29,7 +83,27 @@ $(document).ready( function () {
 			if (type == 'PROVINCE') {
 				ajaxGet(code, '', 'CITY');
 			}
-			
+		}
+
+		var name = $(this).html();
+		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+		} else if(type == 'PROVINCE' || type == 'CITY') {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-governor').show(500);
+		} else {
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
 		}
 	});
 
@@ -66,7 +140,6 @@ $(document).ready( function () {
 		var d = parseInt(keys[y]);
 		$('tbody').html('');
 		for (var x = s; x <= d; x++) {
-			console.log('key[x]: ' + x);
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
@@ -97,8 +170,6 @@ $(document).ready( function () {
 		    			}
 		    			loadTable(e, data);
 		    		}
-		    		$('#locationModal').html(name);
-		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}
@@ -108,7 +179,6 @@ $(document).ready( function () {
 				url: '/screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
-		    		console.log(data);
 		    		if (data == '') {
 		    		}
 		    		else  {
@@ -133,8 +203,6 @@ $(document).ready( function () {
 		    			}
 		    			//loadTable(e, data);
 		    		}
-		    		$('#locationModal').html(name);
-		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}

@@ -10477,23 +10477,3 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.container form .row .district-wrapper {
-  display: none;
-}
-
-.container form .row .province-wrapper {
-  display: none;
-}
-
-.container form .row .huc-city-wrapper {
-  display: none;
-}
-
-.container form .row .city-wrapper {
-  display: none;
-}
-
-.container form .row .region-wrapper {
-  display: none;
-}
-
