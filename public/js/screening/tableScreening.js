@@ -49,7 +49,9 @@ $(document).ready( function () {
 		$('tbody').html('');
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'CITY');
+			ajaxGet(code, '', 'HUC');
 		}
+		//wont show HUCs
 	});
 
 	$('#tableGeo').delegate('tbody > tr', 'mouseenter', function () {
@@ -204,8 +206,14 @@ function hucTable(e, data, region) {
 				printRow(data, x, 'city', type);
 			}
 			else if (region != 'NCR') {
-				if (x == s) {
-					printRow(data, x, 'city', type);
+				console.log($('.bcrumbs a').length);
+				if ($('.bcrumbs a').length <= 2) {
+					if (x == s) {
+						printRow(data, x, 'city', type);
+					}
+				}
+				else {
+					printRow(data, x, 'district', type);
 				}
 			}
 			else {
