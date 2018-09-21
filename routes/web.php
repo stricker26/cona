@@ -17,7 +17,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/geo', 'GeoLocationController@location');
 
-Route::get('hq/dashboard', 'HomeController@admin')->middleware('admin');
+Route::get('hq/dashboard', [
+	'uses' => 'HQController@admin',
+	'as' => 'hqPanel',
+]);
 
 Route::post('/candidate/add', [
 	'uses' => 'HomeController@register',
@@ -32,7 +35,6 @@ Route::get('/lec/candidates','dashboardPageController@lec_candidates');
 Route::get('/screening', 'ScreeningController@screening');
 
 Route::post('/screening/profile', 'profileController@profile');
-//Route::post('/dashboard/profile/sent', 'profileController@sent');
 
 Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
