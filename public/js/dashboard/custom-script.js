@@ -38,7 +38,7 @@ jQuery(document).ready(function($){
 		var type = data[1];
 		var region = data[3];
 		$('tbody').html('');
-		if (path == '/screening') {
+		if (path == '/hq/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
 	    		$('.list-candidates').show();
@@ -63,6 +63,9 @@ jQuery(document).ready(function($){
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
 	    }
+	    else if (path == '/hq/screening/profile') {
+	    	window.location.href = '../screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
+	    }
 	    else {
 	    	window.location.href = 'screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
@@ -71,7 +74,7 @@ jQuery(document).ready(function($){
 	function ajaxGet(e, name, type, region) {
 		$.ajax({
 			method: 'GET',
-			url: 'screening/' + type + '/' + e,
+			url: '/hq/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
 	    		if (data == '') {

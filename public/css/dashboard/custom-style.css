@@ -65,10 +65,13 @@
   max-height: 41px;
   height: 41px;
 }
+<<<<<<< HEAD
+=======
 .navbar-lec {
   color: #d7d9e3;
   padding-bottom: 20px;
 }
+>>>>>>> origin/staging
 .fa-clock {
   color: #ffc107;
 }
@@ -88,13 +91,7 @@
   text-align: left;
   width: 59.5%;
 }
-#left-panel #main-menu .stat-check span,
-#left-panel #main-menu .dropdown-menu .reg-stat span  {
-  color: #d7d9e3;
-}
-.dropdown-btn:hover,
-#left-panel #main-menu .stat-check span:hover,
-#left-panel #main-menu .dropdown-menu .reg-stat span:hover {
+.dropdown-btn:hover {
   cursor: pointer;
   color: #fff;
 }
@@ -166,6 +163,11 @@ i.fa-caret-down {
   margin-bottom: -96px;
 }
 .data-candidates {
+<<<<<<< HEAD
+  padding-bottom: 40px;
+  padding-top: 20px;
+}
+=======
   padding-bottom: 20px;
   padding-top: 20px;
 }
@@ -176,6 +178,7 @@ i.fa-caret-down {
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
+>>>>>>> origin/staging
 .data-candidates table {
   width: 100%;
 }
@@ -194,6 +197,8 @@ i.fa-caret-down {
   padding-bottom: 20px;
   border-top: 1px solid #808080;
   border-bottom: 1px solid #808080;
+<<<<<<< HEAD
+=======
 }
 .checkbox-part {
   padding-top: 20px;
@@ -257,4 +262,5 @@ i.fa-caret-down {
 }
 .comment-part textarea {
   border: 1px solid #808080;
+>>>>>>> origin/staging
 }

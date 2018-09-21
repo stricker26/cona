@@ -107,21 +107,6 @@ $(document).ready(function(){
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
-
-		$.ajax({
-			method: 'POST',
-			url: '/dashboard/profile/sent',
-			data: objectData,
-			success:function(alert){
-	    		$('#alert-handler').show().delay(2000).fadeOut();
-	    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
-	    	},
-	    	error:function(alert){
-	    		$('#alert-handler').show().delay(2000).fadeOut();
-	    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
-	    	}
-		});
-
 	});
 
 	$('#approve_btn').on('click', function(){

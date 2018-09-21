@@ -1,42 +1,38 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
-        <div class="navbar-header mb-2">
+
+        <div class="navbar-header">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <div class="navbar-brand navbar-brand-lec">
-                <img class="user-avatar rounded-circle" src="../img/dashboard/admin.png" alt="Logo">
-            </div>
-            <div class="navbar-lec">
-                <div class="pb-3">
-                    <span><h4>LEC Admin</h4></span>
-                </div>
+            <a class="navbar-brand navbar-brand-lec" href="index.html">
                 <div>
-                    <span><small>(Assigned Place)</small></span>
+                    <img src="../img/dashboard/admin.png" alt="Logo">
                 </div>
-                <div>
-                    <span>Lanao Del Sur</span>
-                </div>
+            </a>
+            <div class="navbar-profile" style="color:#fff;">
+                <span>User Admin</span>
             </div>
-            <a class="navbar-brand hidden" href="/lec"><img class="user-avatar rounded-circle" src="../img/dashboard/admin.png" alt="User Avatar"></a>
+            <a class="navbar-brand hidden" href="index.html"><img class="user-avatar rounded-circle" src="../img/dashboard/admin.png" alt="User Avatar"></a>
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse">
-            <div class="col">
-                <div class="row pb-2">
+            <ul class="nav navbar-nav">
+                <li class="active">
                     <a href="/lec"><i class="far fa-user pr-4 pl-3"></i>Profile </a>
-                </div>
-                <div class="row pb-2">
                     <a href="/lec/candidates"><i class="fas fa-user pr-4 pl-3"></i>Candidates </a>
-                </div>
-                <div class="row pb-2">
-                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a>
-
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </div>
+                    <a href="#"><i class="fa fa-power-off pr-4 pl-3"></i>Logout</a>
+                </li>
+                {{-- <h3 class="menu-title">MENU</h3>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Nominations</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="far fa-clock"></i><a href="/nomination/pending">Pending</a></li>
+                        <li><i class="fas fa-check"></i><a href="/nomination/approve">Approved</a></li>
+                        <li><i class="fas fa-times"></i><a href="/nomination/reject">Rejeted</a></li>
+                    </ul>
+                </li> --}}
+            </ul>
         </div>
     </nav>
 </aside>
