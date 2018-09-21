@@ -100,7 +100,7 @@
 
 			if(groupType == 'HUC' && region == 'NCR') {
 				var requestType = 'huc_district';
-				if(jQuery('#position').val() == 'HUC Congressman') {
+				if(jQuery('#position').val() == 'HUC Congressman' || jQuery('#position').val() == 'City Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('.huc-city-wrapper').fadeOut(500);
 					var target = '#district';

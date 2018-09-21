@@ -272,7 +272,7 @@
 						<div class="col-sm-9">
 							<div class="row">
 								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
+									<h5 class="font-weight-normal" id="huc-mayor">Lorem ipsum dolor sit amet.</h5>
 								</div>
 								<div class="col-sm-3">
 									<span class="badge badge-pill badge-success p-2">Approved</span>
@@ -292,7 +292,7 @@
 						<div class="col-sm-9">
 							<div class="row">
 								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
+									<h5 class="font-weight-normal" id="huc-vmayor">Lorem ipsum dolor sit amet.</h5>
 								</div>
 								<div class="col-sm-3">
 									<span class="badge badge-pill badge-success p-2">Approved</span>

@@ -55,4 +55,38 @@ class ScreeningController extends Controller
 	    }
 		return $data;
     }
+
+    public function candidate(Request $request) {
+
+        if($request->ajax()) {
+
+            $provinceCode = $request->input('provinceCode');
+            $requesType = $request->input('requesType');
+
+            if($requesType == 'HUC') {
+                $query = DB::table('candidates')
+                    ->where('province_id', '=', $provinceCode)
+                    ->get();
+
+                //$mayor = array();
+
+                foreach ($query as $rows => $row) {
+                    if($row->candidate_for == 'City Mayor') {
+                        $mayor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
+                    } elseif ($row->candidate_for == 'City Vice Mayor') {
+                        $vmayor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
+                    } else {
+                        $councilor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
+                    }
+                }
+
+                return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
+
+            } else {
+
+            }
+
+        }
+
+    }
 }

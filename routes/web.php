@@ -33,6 +33,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
 	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
+	Route::get('/screening/candidate', 'ScreeningController@candidate');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {

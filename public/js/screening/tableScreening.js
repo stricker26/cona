@@ -378,5 +378,18 @@ function loadPagination() {
 }
 
 function getCandidate(provinceCode, type) {
-	
+
+	$.ajax({
+		url: '/hq/screening/candidate',
+		method: 'GET',
+		data: {provinceCode: provinceCode, requesType: type},
+		dataType: 'json',
+		success: function(data) {
+			jQuery('#huc-mayor').html(data.mayor);
+			jQuery('#huc-vmayor').html(data.vmayor);
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
 }
