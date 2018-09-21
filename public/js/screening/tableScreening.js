@@ -25,17 +25,29 @@ $(document).ready( function () {
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
     	var region = $(this).find(".region").html();
-		$('tbody').html('');
-    	if (type == 'DISTRICT') {
-    		ajaxGet(e, name, 'MUNICIPALITY');
-    	}
-    	else if (type == 'PROVINCE') {
-    		ajaxGet(e, name, type, region);
-    		ajaxGet(e, name, 'HUC', region);
-    		ajaxGet(e, name, 'CITY', region);
-    	}
-    	else {
-    		ajaxGet(e, name, type, region);
+    	switch (type) {
+    		case 'DISTRICT':
+    			$('tbody').html('');
+    			ajaxGet(e, name, 'MUNICIPALITY');
+    		break;
+    		case 'PROVINCE':
+    			$('tbody').html('');
+	    		ajaxGet(e, name, type, region);
+	    		ajaxGet(e, name, 'HUC', region);
+	    		ajaxGet(e, name, 'CITY', region);
+    		break;
+    		case 'MUNICIPAL':
+    			alert('Last heirarchy. [municipality function goes here]');
+    		break;
+    		case 'HUC DISTRICT':
+    			alert('Last heirarchy. [district function goes here]');
+    		break;
+    		case 'CC':
+    			alert('Last heirarchy. [cc function goes here]');
+    		break;
+    		default:
+    			$('tbody').html('');
+    			ajaxGet(e, name, type, region);
     	}
 	});
 
@@ -213,10 +225,12 @@ function hucTable(e, data, region) {
 					}
 				}
 				else {
+					type = 'HUC DISTRICT'
 					printRow(data, x, 'district', type);
 				}
 			}
 			else {
+				type = 'HUC DISTRICT'
 				printRow(data, x, 'district', type);
 			}
 		}
