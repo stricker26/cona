@@ -6,7 +6,7 @@
                 <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href="/dashboard"><img src="{{ asset('img/LP_Logo.png') }}" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="/dashboard"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="{{ route('hqPanel') }}"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
         </div>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse pt-2">

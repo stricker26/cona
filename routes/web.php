@@ -28,6 +28,8 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::post('/sidebar', 'dashboardPageController@screening');
 	Route::get('/screening', 'ScreeningController@screening');
 	Route::post('/screening/profile', 'profileController@profile');
+	Route::post('/screening/profile/approve', 'profileController@approve');
+	Route::post('/screening/profile/reject', 'profileController@reject');
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');

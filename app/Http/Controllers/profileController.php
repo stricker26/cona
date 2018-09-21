@@ -63,6 +63,33 @@ class profileController extends Controller
         return response()->json(['response'=> $alert]);
     }
 
+    public function approve(Request $data_candidate) {
+        //$candidate_id = $data_candidate->id;
+        $candidate_id = 9;
+        $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '1']);
+        if($approve) {
+            $alert = 'Approved';
+        }
+        else {
+            $alert = 'Fail';
+        }
+        return $alert;
+    }
+
+    public function reject(Request $data_candidate) {
+        //$candidate_id = $data_candidate->id;
+        $candidate_id = 9;
+        $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2']);
+        if($reject) {
+            $alert = 'Rejected';
+        }
+        else {
+            $alert = 'Fail';
+        }
+        return $alert;
+    }
+
+
     public function redirect(){
         return redirect()->action('ScreeningController@screening');
     }
