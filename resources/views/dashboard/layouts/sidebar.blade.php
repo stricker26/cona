@@ -52,7 +52,10 @@
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu submenu">
                                 @foreach($provinces as $province)
-                                    @if($region === $province->region)
+                                    @if(($region === $province->region &&
+                                        $province->type != 'HUC') ||
+                                        ($region === $province->region &&
+                                        $region == 'NCR'))
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
@@ -66,7 +69,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
+                                    <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}},{{$province->region}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
                                     @endif
                                 @endforeach
                                 </li>

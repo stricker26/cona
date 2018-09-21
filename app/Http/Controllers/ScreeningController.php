@@ -13,7 +13,7 @@ class ScreeningController extends Controller
     }
 
     public function huc($code) {
-    	$data = DB::table('huc')->get()->where('province_code', '=', $code);
+    	$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
     	return $data;
     }
 
@@ -30,6 +30,16 @@ class ScreeningController extends Controller
     public function city($code) {
     	$data = DB::table('city')->get()->where('province_code', '=', $code);
     	return $data;
+    }
+
+    public function region($code) {
+        if ($code == 'NCR') {
+            $data = DB::table('province')->get()->where('region', '=', $code);
+        }
+        else {
+            $data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC');
+        }
+        return $data;
     }
 
     public function table($code) {

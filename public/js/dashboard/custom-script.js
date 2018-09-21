@@ -28,6 +28,8 @@ jQuery(document).ready(function($){
 		var e = data[0];
 		var name = data[2];
 		var type = data[1];
+		var region = data[3];
+		$('tbody').html('');
 		if (path == '/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
@@ -36,14 +38,15 @@ jQuery(document).ready(function($){
 	    		$('.gov-governor').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
-	    		ajaxGet(e, name, type);
-	    		ajaxGet(e, name, 'CITY');
+	    		ajaxGet(e, name, type, region);
+	    		ajaxGet(e, name, 'HUC', region);
+	    		ajaxGet(e, name, 'CITY', region);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
 	    	}
 	    	else {
-	    		ajaxGet(e, name, type);
+	    		ajaxGet(e, name, type, region);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
@@ -53,11 +56,11 @@ jQuery(document).ready(function($){
 		    }, 1000);
 	    }
 	    else {
-	    	window.location.href = 'screening?e=' + e + '&name=' + name + '&type=' + type ;
+	    	window.location.href = 'hq/screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	});
 
-	function ajaxGet(e, name, type) {
+	function ajaxGet(e, name, type, region) {
 		$.ajax({
 			method: 'GET',
 			url: '/screening/' + type + '/' + e,
@@ -68,12 +71,18 @@ jQuery(document).ready(function($){
 	    		else  {
 	    			if (name != undefined && name != '') {
 	    				if (type != 'CITY') {
-	    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+	    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    				}
+		    				else {
+		    					if ($('#' + e).length == 0)
+		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    				}
 	    				}
 	    			}
 	    			switch (type) {
 	    				case 'HUC':
-	    					hucTable(e, data);
+	    					hucTable(e, data, region);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
@@ -88,97 +97,5 @@ jQuery(document).ready(function($){
 	    		$('.screenLocation').html(name);
 	    	} 
 		});
-	}
-
-	function hucTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		$('tbody').html('');
-		for (var x=s; x <= d; x++) {
-			if (data[x].district == '') {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].city + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type" style="display:none;">` + data[x].type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-			else {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].district + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type" style="display:none;">` + data[x].type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-		}
-	}
-
-	function districtTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		$('tbody').html('');
-		for (var x=s; x <= d; x++) {
-			if (x != keys[0]) {
-				if (data[x].district != data[x-1].district) {
-					printRow(data, x);
-				}
-			}
-			else {
-				printRow(data, x);
-			}
-		}
-	}
-
-	function cityTable(e, data, name) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].city + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
-						<td class="type" style="display:none;">` + data[x].type + `</td>
-					</tr>
-			`);
-			loadPagination();
-		}
-	}
-
-	function printRow(data, x) {
-		$('tbody').append(`
-				<tr class='item'>
-					<td class="code">` + data[x].province_code + `</td>
-					<td class="description">` + data[x].district + `</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>Lorem Ipsum</td>
-					<td class="type" style="display:none;">DISTRICT</td>
-				</tr>
-		`);
-		loadPagination();
 	}
 });
