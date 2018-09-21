@@ -38,7 +38,7 @@
 		<div class="row picture-candidate pb-5">
 			<div class="col-sm-5"></div>
 			<div class="col-sm-2 text-center">
-				<img class="rounded-circle" src="../img/dashboard/admin.png" alt="User Avatar">
+				<img class="rounded-circle" src="{{ asset('img/dashboard/admin.png') }}" alt="User Avatar">
 			</div>
 			<div class="col-sm-5"></div>
 		</div>
