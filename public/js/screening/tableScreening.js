@@ -39,7 +39,6 @@ $(document).ready( function () {
     	var e = $(this).find(".code").html();
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
-<<<<<<< HEAD
     	var region = $(this).find(".region").html();
     	switch (type) {
     		case 'DISTRICT':
@@ -204,7 +203,6 @@ $(document).ready( function () {
 			});
 		}
 	}
-<<<<<<< HEAD
 });
 
 function loadTable(e, data) {
