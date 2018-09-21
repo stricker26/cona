@@ -22,7 +22,7 @@ class Admin
                 return redirect('/')->with('error', 'You have not admin access');
             }
         } else {
-            return redirect('/')->with('error', 'You have not admin access');
+            return redirect('/login')->with('error', 'You have not admin access');
         }
         
     }

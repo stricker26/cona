@@ -7,18 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 class dashboardPageController extends Controller
 {
-    //
+   
+    public function __construct() {
+        $this->middleware('admin');
+    }
+         
     public function hq_dashboard() {
     	return view('dashboard.dashboard');
-    }
-
-    public function lec_dashboard() {
-        return view('lec.lec');
-    }
-
-    public function lec_candidates() {
-        $candidates_db = DB::table('candidates')->get();
-    	return view('lec.candidates', compact('candidates_db'));
     }
     
     public function screening(Request $request) {
