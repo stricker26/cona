@@ -57,17 +57,18 @@ jQuery(document).ready(function($){
 	    		else  {
 	    			if (name != undefined && name != '') {
 	    				if (type != 'CITY') {
-	    					if (type == 'PROVINCE' || type == 'HUC') {
+	    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
 		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    				}
 		    				else {
-		    					$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					if ($('#' + e).length == 0)
+		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    				}
 	    				}
 	    			}
 	    			switch (type) {
 	    				case 'HUC':
-	    					hucTable(e, data);
+	    					hucTable(e, data, region);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
@@ -82,104 +83,6 @@ jQuery(document).ready(function($){
 	    		$('.screenLocation').html(name);
 	    	} 
 		});
-	}
-
-	function hucTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			var type = 'HUC';
-			if (data[x].type != undefined) {
-				type = data[x].type;
-			}
-			if (data[x].district == '') {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].city + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-			else {
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].district + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-		}
-	}
-
-	function districtTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			if (x != keys[0]) {
-				if (data[x].district != data[x-1].district) {
-					printRow(data, x);
-				}
-			}
-			else {
-				printRow(data, x);
-			}
-		}
-	}
-
-	function cityTable(e, data, name) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			var type = 'CC';
-			if (data[x].type != undefined) {
-				type = data[x].type;
-			}
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].city + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
-						<td class="type">` + type + `</td>
-					</tr>
-			`);
-			loadPagination();
-		}
-	}
-
-	function printRow(data, x) {
-	$('tbody').append(`
-			<tr class='item'>
-				<td class="code">` + data[x].province_code + `</td>
-				<td class="description">` + data[x].district + `</td>
-				<td>0</td>
-				<td>0</td>
-				<td>0</td>
-				<td>Lorem Ipsum</td>
-				<td class="type">DISTRICT</td>
-			</tr>
-	`);
-	loadPagination();
 	}
 
 });

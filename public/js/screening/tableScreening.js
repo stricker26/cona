@@ -13,7 +13,8 @@ $(document).ready( function () {
     	}
     	else if (urlType == 'PROVINCE') {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
-    		ajaxGet(urlCode, urlName, 'CITY');
+    		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
+    		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
@@ -30,8 +31,8 @@ $(document).ready( function () {
     	}
     	else if (type == 'PROVINCE') {
     		ajaxGet(e, name, type, region);
-    		ajaxGet(e, name, 'HUC');
-    		ajaxGet(e, name, 'CITY');
+    		ajaxGet(e, name, 'HUC', region);
+    		ajaxGet(e, name, 'CITY', region);
     	}
     	else {
     		ajaxGet(e, name, type, region);
@@ -77,34 +78,6 @@ $(document).ready( function () {
 
 	loadPagination();
 
-	function loadTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x = s; x <= d; x++) {
-			if (data[x] != undefined) {
-				var type = '';
-				if (data[x].type != undefined) {
-					type = data[x].type;
-				}
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].lgu + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-							<td class="region" style="display:none;">` + data[x].region + `</td>
-						</tr>
-					`);
-				loadPagination();
-			}
-		}
-	}
-
 	function ajaxGet(e, name, type, region) {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
@@ -137,17 +110,18 @@ $(document).ready( function () {
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
-		    					if (type == 'PROVINCE' || type == 'HUC') {
+		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
-		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						if ($('#' + e).length == 0)
+		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    				}
 		    			}
 		    			switch (type) {
 		    				case 'HUC':
-		    					hucTable(e, data);
+		    					hucTable(e, data, region);
 		    				break;
 		    				case 'PROVINCE':
 		    					districtTable(e, data);
@@ -169,131 +143,119 @@ $(document).ready( function () {
 			});
 		}
 	}
+});
 
-	function hucTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			if (data[x] != undefined) {
-				var type = 'HUC';
-				if (data[x].type != undefined) {
-					type = data[x].type;
-				}
-				if (data[x].district == '') {
-					$('tbody').append(`
-							<tr class='item'>
-								<td class="code">` + data[x].province_code + `</td>
-								<td class="description">` + data[x].city + `</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>Lorem Ipsum</td>
-								<td class="type">` + type + `</td>
-							</tr>
-					`);
-					loadPagination();
-				}
-				else {
-					$('tbody').append(`
-							<tr class='item'>
-								<td class="code">` + data[x].province_code + `</td>
-								<td class="description">` + data[x].district + `</td>
-								<td>0</td>
-								<td>0</td>
-								<td>0</td>
-								<td>Lorem Ipsum</td>
-								<td class="type">` + type + `</td>
-							</tr>
-					`);
-					loadPagination();
-				}
-			}
-		}
-	}
-
-	function districtTable(e, data) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			if (x != keys[0]) {
-				if (data[x].district != data[x-1].district) {
-					printRow(data, x);
-				}
-			}
-			else {
-				printRow(data, x);
-			}
-		}
-	}
-
-	function municipalityTable(e, data, name) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			if (data[x].district == name) {
-				var type = 'MUNICIPAL';
-				if (data[x].type != undefined) {
-					type = data[x].type;
-				}
-				$('tbody').append(`
-						<tr class='item'>
-							<td class="code">` + data[x].province_code + `</td>
-							<td class="description">` + data[x].municipality + `</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td>Lorem Ipsum</td>
-							<td class="type">` + type + `</td>
-						</tr>
-				`);
-				loadPagination();
-			}
-		}
-	}
-
-	function cityTable(e, data, name) {
-		var keys = Object.keys(data);
-		var y = keys.length - 1;
-		var s = parseInt(keys[0]);
-		var d = parseInt(keys[y]);
-		for (var x=s; x <= d; x++) {
-			var type = 'CC';
+function loadTable(e, data) {
+	var keys = Object.keys(data);
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	for (var x = s; x <= d; x++) {
+		if (data[x] != undefined) {
+			var type = '';
 			if (data[x].type != undefined) {
 				type = data[x].type;
 			}
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].city + `</td>
+						<td class="description">` + data[x].lgu + `</td>
 						<td>0</td>
 						<td>0</td>
 						<td>0</td>
 						<td>Lorem Ipsum</td>
 						<td class="type">` + type + `</td>
+						<td class="region" style="display:none;">` + data[x].region + `</td>
 					</tr>
-			`);
+				`);
 			loadPagination();
 		}
 	}
+}
 
-});
+function municipalityTable(e, data, name) {
+	var keys = Object.keys(data);
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	for (var x=s; x <= d; x++) {
+		if (data[x].district == name) {
+			var type = 'MUNICIPAL';
+			if (data[x].type != undefined) {
+				type = data[x].type;
+			}
+			printRow(data, x, 'municipality', type);
+		}
+	}
+}
 
-function printRow(data, x) {
+function hucTable(e, data, region) {
+	var keys = Object.keys(data);
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	for (var x=s; x <= d; x++) {
+		if (data[x] != undefined) {
+			var type = 'HUC';
+			if (data[x].type != undefined) {
+				type = data[x].type;
+			}
+			if (data[x].district == '') {
+				printRow(data, x, 'city', type);
+			}
+			else if (region != 'NCR') {
+				if (x == s) {
+					printRow(data, x, 'city', type);
+				}
+			}
+			else {
+				printRow(data, x, 'district', type);
+			}
+		}
+	}
+}
+
+function districtTable(e, data) {
+	var keys = Object.keys(data);
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	for (var x=s; x <= d; x++) {
+		if (x != keys[0]) {
+			if (data[x].district != data[x-1].district) {
+				printRow(data, x, 'district', 'DISTRICT');
+			}
+		}
+		else {
+			printRow(data, x, 'district', 'DISTRICT');
+		}
+	}
+}
+
+function cityTable(e, data, name) {
+	var keys = Object.keys(data);
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	for (var x=s; x <= d; x++) {
+		var type = 'CC';
+		if (data[x].type != undefined) {
+			type = data[x].type;
+		}
+		printRow(data, x, 'city', type);
+	}
+}
+
+function printRow(data, x, name, type) {
 	$('tbody').append(`
 			<tr class='item'>
 				<td class="code">` + data[x].province_code + `</td>
-				<td class="description">` + data[x].district + `</td>
+				<td class="description">` + data[x][name] + `</td>
 				<td>0</td>
 				<td>0</td>
 				<td>0</td>
 				<td>Lorem Ipsum</td>
-				<td class="type">DISTRICT</td>
+				<td class="type">` + type + `</td>
 			</tr>
 	`);
 	loadPagination();
