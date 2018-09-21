@@ -5,9 +5,14 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="/dashboard"><img src="../img/LP_Logo.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="/dashboard"><img src="../img/dashboard/logo-sidebar2.png" alt="Logo"></a>
+            <a class="navbar-brand" href="/dashboard"><img src="{{asset('/img/LP_Logo.png')}}" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="/dashboard"><img src="{{asset('/img/dashboard/logo-sidebar2.png')}}" alt="Logo"></a>
         </div>
+
+        <form action="/hq/dashboard/status" id="statusCandidates" method="POST">
+            @csrf
+            <input type="hidden" id="statusData" name="statusData" value="">
+        </form>
 
         <div id="main-menu" class="main-menu collapse navbar-collapse pt-2">
             <ul class="nav navbar-nav">
@@ -17,13 +22,13 @@
                 <li class="pl-2">
                     <div class="float-right stat-check">
                         <div class="d-inline pr-2 pl-1">
-                            <a href="#" class="a-hover" title="Pending - 10"><i class="far fa-clock pr-1"></i>10</a>
+                            <span data-value="0,ph" class="a-hover" title="Pending - 10"><i class="far fa-clock pr-1"></i>10</span>
                         </div>
                         <div class="d-inline pr-2">
-                            <a href="#" class="a-hover" title="Approved - 22"><i class="fas fa-check pr-1"></i>22</a>
+                            <span data-value="1,ph" class="a-hover" title="Approved - 22"><i class="fas fa-check pr-1"></i>22</span>
                         </div>
                         <div class="d-inline pr-1">
-                            <a href="#" class="a-hover" title="Rejected - 15"><i class="fas fa-times pr-1"></i>15</a>
+                            <span data-value="2,ph" class="a-hover" title="Rejected - 15"><i class="fas fa-times pr-1"></i>15</span>
                         </div>
                     </div>
                     <button class="dropdown-toggle dropdown-btn" type="button" data-toggle="dropdown">
@@ -36,13 +41,13 @@
                             <div>
                                 <div class="float-right reg-stat">
                                     <div class="d-inline pr-2">
-                                        <a href="#" class="a-hover" title="Pending - 22"><i class="far fa-clock pr-1"></i>22</a>
+                                        <span data-value="0,ph" class="a-hover" title="Pending - 22"><i class="far fa-clock pr-1"></i>22</span>
                                     </div>
                                     <div class="d-inline pr-2">
-                                        <a href="#" class="a-hover" title="Pending - 44"><i class="fas fa-check pr-1"></i>44</a>
+                                        <span data-value="1,ph" class="a-hover" title="Pending - 44"><i class="fas fa-check pr-1"></i>44</span>
                                     </div>
                                     <div class="d-inline pr-1">
-                                        <a href="#" class="a-hover" title="Pending - 22"><i class="fas fa-times pr-1"></i>22</a>
+                                        <span data-value="2,ph" class="a-hover" title="Pending - 22"><i class="fas fa-times pr-1"></i>22</span>
                                     </div>
                                 </div>
                             </div>
@@ -56,13 +61,13 @@
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
-                                                <a href="#Pending" class="a-hover" title="Pending - 2"><i class="far fa-clock pr-1"></i>2</a>
+                                                <span data-value="0,ph" class="a-hover" title="Pending - 2"><i class="far fa-clock pr-1"></i>2</span>
                                             </div>
                                             <div class="d-inline pr-2">
-                                                <a href="#Approved" class="a-hover" title="Pending - 5"><i class="fas fa-check pr-1"></i>5</a>
+                                                <span data-value="1,ph" class="a-hover" title="Pending - 5"><i class="fas fa-check pr-1"></i>5</span>
                                             </div>
                                             <div class="d-inline pr-1">
-                                                <a href="#Rejected" class="a-hover" title="Pending - 1"><i class="fas fa-times pr-1"></i>1</a>
+                                                <span data-value="2,ph" class="a-hover" title="Pending - 1"><i class="fas fa-times pr-1"></i>1</span>
                                             </div>
                                         </div>
                                     </div>
