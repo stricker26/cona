@@ -24,6 +24,5 @@ class Admin
         } else {
             return redirect('/login')->with('error', 'You have not admin access');
         }
-        
     }
 }

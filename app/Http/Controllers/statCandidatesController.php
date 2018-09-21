@@ -21,6 +21,7 @@ class statCandidatesController extends Controller
     	} else {
     		$candidates = 'empty';
     	}
+        
     	if($status == '0'){
     		return view('dashboard.status.pending', compact('candidates'));
     	} elseif($status == '1') {

@@ -102,7 +102,6 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="facebook">Facebook</span>
-                            </div>
                             <input type="text" name="facebook" class="form-control" placeholder="Facebook Account" aria-label="Facebook" aria-describedby="social-media-accounts" value="{{ old('facebook') }}">
                         </div>
                     </div>

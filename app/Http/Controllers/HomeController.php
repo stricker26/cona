@@ -22,6 +22,12 @@ class HomeController extends Controller
 
     }
 
+    public function admin() {
+
+        return view('hq.admin');
+
+    }
+
     public function register(Request $request) {
 
         $rules = array(

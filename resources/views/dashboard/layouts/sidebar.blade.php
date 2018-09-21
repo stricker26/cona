@@ -25,10 +25,10 @@
                             <span data-value="0,ph" class="a-hover" title="Pending - 10"><i class="far fa-clock pr-1"></i>10</span>
                         </div>
                         <div class="d-inline pr-2">
-                            <span data-value="1,ph" href="#" class="a-hover" title="Approved - 22"><i class="fas fa-check pr-1"></i>22</span>
+                            <span data-value="1,ph" class="a-hover" title="Approved - 22"><i class="fas fa-check pr-1"></i>22</span>
                         </div>
                         <div class="d-inline pr-1">
-                            <span data-value="2,ph" href="#" class="a-hover" title="Rejected - 15"><i class="fas fa-times pr-1"></i>15</span>
+                            <span data-value="2,ph" class="a-hover" title="Rejected - 15"><i class="fas fa-times pr-1"></i>15</span>
                         </div>
                     </div>
                     <button class="dropdown-toggle dropdown-btn" type="button" data-toggle="dropdown">

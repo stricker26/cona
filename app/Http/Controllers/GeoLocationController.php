@@ -19,7 +19,7 @@ class GeoLocationController extends Controller
 
 		foreach ($query as $rows => $row) {
 
-			$out .= '<option value="'. $row->region .'">'. $row->region .'</option>';	
+			$out .= '<option value="'. $row->region .'">'. $row->region .'</option>';
 		
 		}
 
