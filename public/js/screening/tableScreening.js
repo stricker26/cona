@@ -176,7 +176,7 @@ $(document).ready( function () {
 		else {
 			$.ajax({
 				method: 'GET',
-				url: '/screening/' + type + '/' + e,
+				url: 'screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {

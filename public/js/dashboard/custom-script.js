@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
 		    }, 1000);
 	    }
 	    else {
-	    	window.location.href = 'hq/screening?e=' + e + '&name=' + name + '&type=' + type ;
+	    	window.location.href = 'screening?e=' + e + '&name=' + name + '&type=' + type ;
 	    }
 	});
 
