@@ -206,6 +206,7 @@ $(document).ready( function () {
 		    	} 
 			});
 		}
+		getCandidate(e, type);
 	}
 
 	function hucTable(e, data) {
@@ -371,4 +372,8 @@ function loadPagination() {
         css('display','table-row').animate({opacity:1}, 300);
         return false;
     });
+}
+
+function getCandidate(provinceCode, type) {
+	
 }
