@@ -145,7 +145,7 @@ $(document).ready( function () {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
-				url: '/screening/' + e,
+				url: 'screening/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {

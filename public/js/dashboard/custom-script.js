@@ -22,6 +22,14 @@ jQuery(document).ready(function($){
 		$(this).find('.cr').css("borderColor","#808080");
 	});
 
+	//status candidates click
+	$('#left-panel #main-menu .stat-check span').on('click', function(){
+		var value = $(this).data("value");
+		console.log(value);
+		$('#left-panel #statusCandidates #statusData').val(value);
+		$('#left-panel #statusCandidates').submit();
+	});
+
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
 		var dataProvince = $(this).data("value");
 		var data = dataProvince.split(',');
@@ -63,7 +71,7 @@ jQuery(document).ready(function($){
 	function ajaxGet(e, name, type, region) {
 		$.ajax({
 			method: 'GET',
-			url: '/screening/' + type + '/' + e,
+			url: 'screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
 	    		if (data == '') {
