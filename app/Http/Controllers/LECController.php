@@ -19,8 +19,4 @@ class LECController extends Controller
         $candidates_db = DB::table('candidates')->get();
     	return view('lec.candidates', compact('candidates_db'));
     }
-
-    public function sidebar(Request $request) {
-        
-    }
 }
