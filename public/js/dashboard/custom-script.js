@@ -23,12 +23,21 @@ jQuery(document).ready(function($){
 	});
 
 	//status candidates click
+	//whole Philippines
 	$('#left-panel #main-menu .stat-check span').on('click', function(){
 		var value = $(this).data("value");
 		console.log(value);
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
+	//regional
+	$('#left-panel #main-menu .dropdown-menu li .reg-stat span').on('click', function(){
+		var value = $(this).data("value");
+		console.log(value);
+		$('#left-panel #statusCandidates #statusData').val(value);
+		$('#left-panel #statusCandidates').submit();
+	});
+
 
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
 		var dataProvince = $(this).data("value");

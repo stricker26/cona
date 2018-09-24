@@ -9,7 +9,7 @@
             <a class="navbar-brand hidden" href="/dashboard"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
         </div>
 
-        <form id="statusCandidates" action="status" method="POST">
+        <form id="statusCandidates" action="/hq/status" method="POST">
             @csrf
             <input type="hidden" name="statusData" id="statusData" value="">
         </form>
@@ -22,13 +22,13 @@
                 <li class="pl-2">
                     <div class="float-right stat-check">
                         <div class="d-inline pr-2 pl-1">
-                            <span data-value="0,ph" class="a-hover" title="Pending - 10"><i class="far fa-clock pr-1"></i>10</span>
+                            <span data-value="0,ph,empty" class="a-hover" title="Pending - {{ $pending_count_all }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_all }}</span>
                         </div>
                         <div class="d-inline pr-2">
-                            <span data-value="1,ph" class="a-hover" title="Approved - 22"><i class="fas fa-check pr-1"></i>22</span>
+                            <span data-value="1,ph,empty" class="a-hover" title="Approved - {{ $approved_count_all }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_all }}</span>
                         </div>
                         <div class="d-inline pr-1">
-                            <span data-value="2,ph" class="a-hover" title="Rejected - 15"><i class="fas fa-times pr-1"></i>15</span>
+                            <span data-value="2,ph,empty" class="a-hover" title="Rejected - {{ $rejected_count_all }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_all }}</span>
                         </div>
                     </div>
                     <button class="dropdown-toggle dropdown-btn" type="button" data-toggle="dropdown">
@@ -37,17 +37,17 @@
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
                             @if(!empty($regions))
-                            @foreach($regions as $region)
+                            @foreach($regions as $key=>$region)
                             <div>
                                 <div class="float-right reg-stat">
                                     <div class="d-inline pr-2">
-                                        <span data-value="0,{{$region}}" class="a-hover" title="Pending - 22"><i class="far fa-clock pr-1"></i>22</span>
+                                        <span data-value="0,{{$region}},empty" class="a-hover" title="Pending - {{ $pending_count_region[$key] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_region[$key] }}</span>
                                     </div>
                                     <div class="d-inline pr-2">
-                                        <span data-value="1,{{$region}}" class="a-hover" title="Approved - 44"><i class="fas fa-check pr-1"></i>44</span>
+                                        <span data-value="1,{{$region}},empty" class="a-hover" title="Approved - {{ $approved_count_region[$key] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_region[$key] }}</span>
                                     </div>
                                     <div class="d-inline pr-1">
-                                        <span data-value="2,{{$region}}" class="a-hover" title="Rejected - 22"><i class="fas fa-times pr-1"></i>22</span>
+                                        <span data-value="2,{{$region}},empty" class="a-hover" title="Rejected - {{ $rejected_count_region[$key] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_region[$key] }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -56,6 +56,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu submenu">
+                                @php
+                                    $key_p = 0;
+                                @endphp
                                 @foreach($provinces as $province)
                                     @if(($region === $province->region &&
                                         $province->type != 'HUC') ||
@@ -64,17 +67,20 @@
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
-                                                <span data-value="0,{{$province->province_code}}" class="a-hover" title="Pending - 2"><i class="far fa-clock pr-1"></i>2</span>
+                                                <span data-value="0,{{$region}},{{$province->province_code}}" class="a-hover" title="Pending - {{ $pending_count_province->$region[$key_p] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_province->$region[$key_p] }}</span>
                                             </div>
                                             <div class="d-inline pr-2">
-                                                <span data-value="1,{{$province->province_code}}" class="a-hover" title="Approved - 5"><i class="fas fa-check pr-1"></i>5</span>
+                                                <span data-value="1,{{$region}},{{$province->province_code}}" class="a-hover" title="Approved - {{ $approved_count_province->$region[$key_p] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_province->$region[$key_p] }}</span>
                                             </div>
                                             <div class="d-inline pr-1">
-                                                <span data-value="2,{{$province->province_code}}" class="a-hover" title="Rejected - 1"><i class="fas fa-times pr-1"></i>1</span>
+                                                <span data-value="2,{{$region}},{{$province->province_code}}" class="a-hover" title="Rejected - {{ $rejected_count_province->$region[$key_p] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_province->$region[$key_p] }}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}},{{$province->region}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
+                                    @php
+                                        $key_p++;
+                                    @endphp
                                     @endif
                                 @endforeach
                                 </li>
@@ -83,10 +89,10 @@
                             @endif
                         </li>
                     </ul>
-                </li>
+                </li>{{-- 
                 <li class="pl-2">
                     <a href="#settings"><i class="fas fa-wrench pr-4"></i>&nbsp;Settings </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </nav>

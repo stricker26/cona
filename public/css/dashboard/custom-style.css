@@ -166,14 +166,6 @@ i.fa-caret-down {
   margin-bottom: -96px;
 }
 .data-candidates {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  padding-bottom: 40px;
-  padding-top: 20px;
-}
-=======
-=======
->>>>>>> ce822c4c4f7b8fc44376b1063473b6dbb93a2aa4
   padding-bottom: 20px;
   padding-top: 20px;
 }
@@ -184,10 +176,6 @@ i.fa-caret-down {
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
-<<<<<<< HEAD
->>>>>>> origin/staging
-=======
->>>>>>> ce822c4c4f7b8fc44376b1063473b6dbb93a2aa4
 .data-candidates table {
   width: 100%;
 }
@@ -206,11 +194,6 @@ i.fa-caret-down {
   padding-bottom: 20px;
   border-top: 1px solid #808080;
   border-bottom: 1px solid #808080;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> ce822c4c4f7b8fc44376b1063473b6dbb93a2aa4
 }
 .checkbox-part {
   padding-top: 20px;
@@ -274,8 +257,11 @@ i.fa-caret-down {
 }
 .comment-part textarea {
   border: 1px solid #808080;
-<<<<<<< HEAD
->>>>>>> origin/staging
-=======
->>>>>>> ce822c4c4f7b8fc44376b1063473b6dbb93a2aa4
+}
+.card-header-click {
+  border-bottom: 1px solid #f7d116;
+}
+.card-header-click:hover {
+  cursor: pointer;
+  background-color: #dadada;
 }
