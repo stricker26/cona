@@ -42,4 +42,5 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::get('/','LECController@lec_dashboard');
 	Route::get('/candidates','LECController@lec_candidates');
+	Route::post('/sidebar', 'LECController@sidebar');
 });
