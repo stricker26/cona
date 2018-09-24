@@ -30,7 +30,8 @@ jQuery(document).ready(function($){
 		$('#left-panel #statusCandidates').submit();
 	});
 
-	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
+	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(event){
+		event.preventDefault();
 		var dataProvince = $(this).data("value");
 		var data = dataProvince.split(',');
 		var e = data[0];
@@ -94,6 +95,7 @@ jQuery(document).ready(function($){
 	    			switch (type) {
 	    				case 'HUC':
 	    					hucTable(e, data, region);
+	    					getCityCandidate(e, type);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);

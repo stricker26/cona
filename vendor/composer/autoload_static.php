@@ -327,6 +327,7 @@ class ComposerStaticInit95c51ba1c86f5b5af41dc8f7df15eb62
     );
 
     public static $classMap = array (
+        'App\\Candidate' => __DIR__ . '/../..' . '/app/Candidate.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -335,7 +336,12 @@ class ComposerStaticInit95c51ba1c86f5b5af41dc8f7df15eb62
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\GeoLocationController' => __DIR__ . '/../..' . '/app/Http/Controllers/GeoLocationController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\LECController' => __DIR__ . '/../..' . '/app/Http/Controllers/LECController.php',
+        'App\\Http\\Controllers\\ScreeningController' => __DIR__ . '/../..' . '/app/Http/Controllers/ScreeningController.php',
+        'App\\Http\\Controllers\\dashboardPageController' => __DIR__ . '/../..' . '/app/Http/Controllers/dashboardPageController.php',
+        'App\\Http\\Controllers\\profileController' => __DIR__ . '/../..' . '/app/Http/Controllers/profileController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Admin' => __DIR__ . '/../..' . '/app/Http/Middleware/Admin.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

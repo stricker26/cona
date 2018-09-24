@@ -25,9 +25,11 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').hide(500);
     		$('.gov-governor').show(500);
+    		getProvinceCandidate(urlCode, urlType);
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
+		    getCityCandidate(urlCode, urlType);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -44,11 +46,16 @@ $(document).ready( function () {
     		case 'DISTRICT':
     			$('tbody').html('');
     			ajaxGet(e, name, 'MUNICIPALITY');
+    			getDistrictCandidate(e, type, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
-	    		$('.gov-mayor').show(500);
+	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').hide(500);
+	    		$('.huc-districts').hide(500);
+	    		$('.gov-districts').show(500);
+	    		$('.prov-districts').show(500);
+
     		break;
     		case 'PROVINCE':
     			$('tbody').html('');
@@ -59,16 +66,41 @@ $(document).ready( function () {
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
+	    		$('.gov-districts').hide(500);
 	    		$('.gov-governor').show(500);
     		break;
     		case 'MUNICIPAL':
-    			alert('Last heirarchy. [municipality function goes here]');
+    			$('tbody').html('');
+    			ajaxGet(e, name, type, region);
+    			getCityCandidate(e, type);
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('#cc-councilor-wrapper').show(500);
+	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
-    			alert('Last heirarchy. [district function goes here]');
+    			getDistrictCandidate(e, type, name);
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.gov-mayor').hide(500);
+	    		$('.gov-districts').show(500);
+	    		$('.huc-districts').show(500);
+	    		$('#cc-councilor-wrapper').hide(500);
     		break;
     		case 'CC':
-    			alert('Last heirarchy. [cc function goes here]');
+    			$('tbody').html('');
+    			ajaxGet(e, name, type, region);
+    			getCityCandidate(e, type);
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('#cc-councilor-wrapper').show(500);
+	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
     		break;
     		default:
     			$('tbody').html('');
@@ -78,6 +110,7 @@ $(document).ready( function () {
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
     	}
 	});
 
@@ -100,11 +133,13 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
 		} else if(type == 'PROVINCE' || type == 'CITY') {
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
     		$('.gov-mayor').hide(500);
+    		$('.gov-districts').hide(500);
     		$('.gov-governor').show(500);
 		} else {
     		$('#locationModal').html(name);
@@ -112,6 +147,7 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
 		}
 	});
 
@@ -145,7 +181,7 @@ $(document).ready( function () {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
-				url: '/screening/' + e,
+				url: '/hq/screening/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -162,7 +198,7 @@ $(document).ready( function () {
 		else {
 			$.ajax({
 				method: 'GET',
-				url: 'screening/' + type + '/' + e,
+				url: '/hq/screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -192,6 +228,9 @@ $(document).ready( function () {
 		    				case 'CITY':
 		    					cityTable(e, data, name);
 		    				break;
+		    				case 'CC':
+		    					cityTable(e, data, name);
+		    				break;
 		    				default:
 		    					loadTable(e, data);
 		    			}
@@ -202,7 +241,6 @@ $(document).ready( function () {
 		    	} 
 			});
 		}
-		getCandidate(e, type);
 	}
 });
 
@@ -377,19 +415,311 @@ function loadPagination() {
     });
 }
 
-function getCandidate(provinceCode, type) {
+//Display Province Candidate
+function getProvinceCandidate(provinceCode, type) {
 
 	$.ajax({
-		url: '/hq/screening/candidate',
+		url: '/hq/screening/candidate/governor',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
+		cache: false,
 		success: function(data) {
-			jQuery('#huc-mayor').html(data.mayor);
-			jQuery('#huc-vmayor').html(data.vmayor);
+			//Governor
+			if(data.governor.length > 0) {
+				jQuery('#prov-governor').html('');
+				jQuery('#prov-governor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.governor[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.governor[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.governor[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#prov-governor').html('');
+				jQuery('#prov-governor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+			//V-Governor
+			if(data.vgovernor.length > 0) {
+				jQuery('#prov-vgovernor').html('');
+				jQuery('#prov-vgovernor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.vgovernor[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.vgovernor[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.vgovernor[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#prov-vgovernor').html('');
+				jQuery('#prov-vgovernor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
 		},
 		error: function(data) {
 			console.log(data);
 		}
 	});
+
+}
+
+// Display City Candidate
+function getCityCandidate(provinceCode, type) {
+
+	$.ajax({
+		url: '/hq/screening/candidate/city',
+		method: 'GET',
+		data: {provinceCode: provinceCode, requesType: type},
+		dataType: 'json',
+		cache: false,
+		success: function(data) {
+			//HUC Mayor
+			if(data.mayor.length > 0) {
+				jQuery('#huc-mayor').html('');
+				jQuery('#huc-mayor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.mayor[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.mayor[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.mayor[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#huc-mayor').html('');
+				jQuery('#huc-mayor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+			//HUC V-Mayor
+			if(data.vmayor.length > 0) {
+				jQuery('#huc-vmayor').html('');
+				jQuery('#huc-vmayor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.vmayor[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.vmayor[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.vmayor[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#huc-vmayor').html('');
+				jQuery('#huc-vmayor').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+			if(type == 'CC' || type == 'MUNICIPAL') {
+				if(data.councilor.length > 0) {
+					jQuery('#cc-councilor').html('');
+					var councilors = data.councilor;
+					$.each(councilors, function(index, value) {
+						jQuery('#cc-councilor').append(`
+							<div class="row pt-2">
+								<div class="col-sm-7">
+									<h5 class="font-weight-normal">` + value.name + `</h5>
+								</div>
+								<div class="col-sm-3">
+									` + candidateStatus(value.status) + `
+								</div>
+								<div class="col-sm-2">
+									<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+								</div>
+							</div>
+						`);
+					});
+				} else {
+					jQuery('#cc-councilor').html('');
+					jQuery('#cc-councilor').append(`
+						<div class="row pt-2">
+							<div class="col-sm-7">
+								<h5 class="font-weight-normal">No Candidate</h5>
+							</div>
+							<div class="col-sm-3"></div>
+							<div class="col-sm-2"></div>
+						</div>
+					`);
+				}
+			} 
+		},
+		error: function(data) {
+			console.log(data);
+		}
+	});
+}
+
+//Display District Candidate
+function getDistrictCandidate(provinceCode, type, district) {
+	$.ajax({
+		url: '/hq/screening/candidate/district',
+		method: 'GET',
+		data: {provinceCode: provinceCode, 'district': district},
+		dataType: 'json',
+		cache: false,
+		success: function(data) {
+			// //HUC Congressman
+			if(data.congressman.length > 0) {
+				jQuery('#huc-congressman').html('');
+				jQuery('#huc-congressman').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.congressman[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.congressman[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.congressman[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#huc-congressman').html('');
+				jQuery('#huc-congressman').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+			// //HUC Councilor/s
+			if(data.councilor.length > 0) {
+				jQuery('#huc-councilors').html('');
+				var councilors = data.councilor;
+				$.each(councilors, function(index, value) {
+					jQuery('#huc-councilors').append(`
+						<div class="row pt-2">
+							<div class="col-sm-7">
+								<h5 class="font-weight-normal">` + value.name + `</h5>
+							</div>
+							<div class="col-sm-3">
+								` + candidateStatus(value.status) + `
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+							</div>
+						</div>
+					`);
+				});
+			} else {
+				jQuery('#huc-councilors').html('');
+				jQuery('#huc-councilors').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+			// Board Members
+			if(data.bmember.length > 0) {
+				jQuery('#huc-congressman').html('');
+				var bmembers = data.bmember;
+				$.each(bmembers, function(index, value) {
+					jQuery('#bmembers').append(`
+						<div class="row pt-2">
+							<div class="col-sm-7">
+								<h5 class="font-weight-normal">` + value.name + `</h5>
+							</div>
+							<div class="col-sm-3">
+								` + candidateStatus(value.status) + `
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+							</div>
+						</div>
+					`);
+				});
+			} else {
+				jQuery('#bmembers').html('');
+				jQuery('#bmembers').append(`
+					<div class="row pt-2">
+						<div class="col-sm-7">
+							<h5 class="font-weight-normal">No Candidate</h5>
+						</div>
+						<div class="col-sm-3"></div>
+						<div class="col-sm-2"></div>
+					</div>
+				`);
+			}
+			// Provincial Congressman
+			if(data.provCongressman.length > 0) {
+				jQuery('#prov-congressman').html('');
+				jQuery('#prov-congressman').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">` + data.provCongressman[0].name + `</h5>
+					</div>
+					<div class="col-sm-3">
+						` + candidateStatus(data.provCongressman[0].status) + `
+					</div>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.provCongressman[0].id + `">View Profile</button>
+					</div>
+				`);
+			} else {
+				jQuery('#prov-congressman').html('');
+				jQuery('#prov-congressman').append(`
+					<div class="col-sm-7">
+						<h5 class="font-weight-normal">No Candidate</h5>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
+				`);
+			}
+		},
+		error: function() {
+
+		}
+	});
+}
+
+// Display Candidate Status
+function candidateStatus(status) {
+
+	switch(status) {
+		case 'Pending':
+			var stat = '<span class="badge badge-pill badge-warning p-2">Pending</span>';
+		break;
+		case '1':
+			var stat = '<span class="badge badge-pill badge-success p-2">Approved</span>';
+		break;
+		case '2':
+			var stat = '<span class="badge badge-pill badge-danger p-2">Rejected</span>';
+		break;
+		default:
+			var stat = '';
+		break;
+	}
+
+	return stat;
+
 }

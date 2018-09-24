@@ -188,18 +188,7 @@
 							<h5 class="font-weight-bold">Governor:</h5>
 						</div>
 						<div class="col-sm-9">
-							<div class="row">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="g">View Profile</button>
-								</div>
-							</div>
+							<div class="row" id="prov-governor"></div>
 						</div>
 					</div>
 					<hr>
@@ -208,50 +197,7 @@
 							<h5 class="font-weight-bold">Vice Governor:</h5>
 						</div>
 						<div class="col-sm-9">
-							<div class="row">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="vg">View Profile</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="row pb-2 pt-2">
-						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Board Members:</h5>
-						</div>
-						<div class="col-sm-9">
-							<div class="row pb-3">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="bm1">View Profile</button>
-								</div>
-							</div>
-							<div class="row pb-3">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="bm1">View Profile</button>
-								</div>
-							</div>
+							<div class="row" id="prov-vgovernor"></div>
 						</div>
 					</div>
 				</div>
@@ -270,18 +216,7 @@
 							<h5 class="font-weight-bold">Mayor:</h5>
 						</div>
 						<div class="col-sm-9">
-							<div class="row">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal" id="huc-mayor">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="g">View Profile</button>
-								</div>
-							</div>
+							<div class="row" id="huc-mayor"></div>
 						</div>
 					</div>
 					<hr>
@@ -290,49 +225,61 @@
 							<h5 class="font-weight-bold">Vice Mayor:</h5>
 						</div>
 						<div class="col-sm-9">
-							<div class="row">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal" id="huc-vmayor">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="vg">View Profile</button>
-								</div>
+							<div class="row" id="huc-vmayor"></div>
+						</div>
+					</div>
+					<div id="cc-councilor-wrapper" style="display: none;">
+						<hr>
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">Councilors:</h5>
+							</div>
+							<div class="col-sm-9" id="cc-councilor">
 							</div>
 						</div>
 					</div>
-					<hr>
-					<div class="row pb-2 pt-2">
-						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Councilors:</h5>
-						</div>
-						<div class="col-sm-9">
-							<div class="row pb-3">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="bm1">View Profile</button>
-								</div>
+				</div>
+				<div class="gov-districts" style="display: none;">
+					<div class="huc-districts" style="display: none;">
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">LEC:</h5>
 							</div>
-							<div class="row pb-3">
-								<div class="col-sm-7">
-									<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
-								</div>
-								<div class="col-sm-3">
-									<span class="badge badge-pill badge-success p-2">Approved</span>
-									<span class="badge badge-pill badge-warning p-2">Pending</span>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="bm1">View Profile</button>
-								</div>
+							<div class="col-sm-9">
+								<h5 class="font-weight-normal">Lorem ipsum dolor sit amet.</h5>
+							</div>
+						</div>
+						<hr>
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">Congressman:</h5>
+							</div>
+							<div class="col-sm-9">
+								<div class="row" id="huc-congressman"></div>
+							</div>
+						</div>
+						<hr>
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">Councilors:</h5>
+							</div>
+							<div class="col-sm-9" id="huc-councilors">
+							</div>
+						</div>
+					</div>
+					<div class="prov-districts" style="display: none;">
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">Board Members:</h5>
+							</div>
+							<div class="col-sm-9" id="bmembers"></div>
+						</div>
+						<div class="row pb-2 pt-2">
+							<div class="col-sm-3">
+								<h5 class="font-weight-bold">Congressman:</h5>
+							</div>
+							<div class="col-sm-9">
+								<div class="row" id="prov-congressman"></div>
 							</div>
 						</div>
 					</div>

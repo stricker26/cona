@@ -33,9 +33,13 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+	Route::get('/screening/CC/{code}', 'ScreeningController@cc');
+	Route::get('/screening/MUNICIPAL/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
-	Route::get('/screening/candidate', 'ScreeningController@candidate');
+	Route::get('/screening/candidate/city', 'ScreeningController@candidate');
+	Route::get('/screening/candidate/district', 'ScreeningController@districtCandidate');
+	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
 });
 

@@ -9,8 +9,8 @@ use DB;
 class profileController extends Controller
 {
     public function profile(Request $request) {
-        // $profile = $request->screening_btn;
-        $candidate = DB::table('candidates')->first();
+        $profile = $request->screening_btn;
+        $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
 
         $province = DB::table('province')
                         ->select('lgu')
@@ -28,6 +28,10 @@ class profileController extends Controller
                     ->first();
 
         $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
+
+        //dd($province);
+        //dd($district);
+        // dd($city);
 
         return view('dashboard.screening.profile', compact('candidate','province','district','city','cos'));
     }

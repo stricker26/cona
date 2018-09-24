@@ -254,8 +254,10 @@
 						<span class="font-weight-bold">City :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($city->city))}}</span>
-						<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						@if($city)
+							<span>{{ucwords(strtolower($city->city))}}</span>
+							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -263,8 +265,10 @@
 						<span class="font-weight-bold">District :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->district))}}</span>
-						<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						@if($district)
+							<span>{{ucwords(strtolower($district->district))}}</span>
+							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -272,8 +276,10 @@
 						<span class="font-weight-bold">Municipality :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->municipality))}}</span>
-						<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						@if($district)
+							<span>{{ucwords(strtolower($district->municipality))}}</span>
+							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row mt-5">
