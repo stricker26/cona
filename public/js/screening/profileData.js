@@ -121,11 +121,15 @@ $(document).ready(function(){
 			success:function(alert){
 	    		$('#alert-handler').show().delay(2000).fadeOut();
 	    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
+		    	$('html, body').animate({
+			        scrollTop: $(".right-panel .container").offset().top
+			    }, 400);
 	    	},
 	    	error:function(alert){
 	    		$('#alert-handler').show().delay(2000).fadeOut();
 	    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
 	    	}
+		});
 	});
 
 	$('#approve_btn').on('click', function(){
@@ -156,7 +160,3 @@ $(document).ready(function(){
 		alert('Download CONA');
 	});
 });
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}

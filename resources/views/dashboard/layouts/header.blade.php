@@ -27,7 +27,12 @@
 
                     {{-- <a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;Settings</a> --}}
 
-                    <a class="nav-link" href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a>
+                    
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color:#212529;"><i class="fas fa-sign-out-alt pr-4"></i><span>Logout</span></a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

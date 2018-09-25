@@ -7,54 +7,69 @@
 
 @section('content')
 	<div class="container pb-5">
-		<hr>
-		<div class="row pr-2 pl-2">
-			<div class="col-sm-12">
-				<div class="col-sm-12 text-center pb-3">
-					<h3>LEC Admin</h3>
-				</div>
-			</div>
-			<div class="col-sm-12 text-center">
-				<div>
-					<small>(Assigned Places)</small>
-				</div>
-				<div class="text-center">
-					<h5>Lanao Del Sur</h5>
-				</div>
+		<div class="row pt-2 pb-2">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-2 text-center">
+				<img class="user-avatar rounded-circle" src="{{ asset('img/dashboard/admin.png') }}" alt="User Avatar">
 			</div>
 		</div>
 		<hr>
-		<div class="mb-3 lec-data">
-			<div class="row">
-				<div class="col-sm-6 text-right">
-					<strong>Name :</strong>
-				</div>
-				<div class="col-sm-4 text-left col-body">
-					<span>{{ $user->name }}</span>
-				</div>
+		<div class="row pt-2 mb-3">
+			<div class="col-sm-3">
+				<strong>Name : </strong>
 			</div>
-			<div class="row">
-				<div class="col-sm-6 text-right">
-					<strong>User 1 :</strong>
-				</div>
-				<div class="col-sm-4 text-left col-body">
-					<span>{{ $user->user }}</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 text-right">
-					<strong>User 2 :</strong>
-				</div>
-				<div class="col-sm-4 text-left col-body">
-					<span>{{ $user->user }}</span>
-				</div>
+			<div class="col-sm-9">
+				<span>Binchuan Recto</span>
 			</div>
 		</div>
-		<div class="text-center">
-			<form action="/lec/profile" method="POST">
-				@csrf
-				<button class="btn btn-secondary" type="submit" name="lec_edit_btn" value="{{ md5(Auth::user()->id) }}">Edit</button>
-			</form>	
+		<div class="row">
+			<div class="col-sm-3">
+				<strong>Location Assigned : </strong>
+			</div>
+			<div class="col-sm-9">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>REGION</th>
+							<th>PROVINCE</th>
+							<th>CITY</th>
+							<th>MUNICIPALITY/DISTRICT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td rowspan="2" class="align-middle">lorem</td>
+							<td>lorem</td>
+							<td>lorem</td>
+							<td>lorem</td>
+						</tr>
+						<tr>
+							<td rowspan="2">lorem</td>
+							<td>lorem</td>
+							<td>lorem</td>
+						</tr>
+						<tr>
+							<td>lorem</td>
+							<td>lorem</td>
+							<td>lorem</td>
+						</tr>
+						@foreach($regions as $region)
+							@php
+								$rowspan_region = 0;
+								foreach($provinces as $province) {
+									if($province->region === $region) {
+										foreach($cities as $city) {
+											if($city->province_code === $province->province_code) {
+												
+											}
+										}
+									}
+								}
+							@endphp
+						@endforeach
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 @stop

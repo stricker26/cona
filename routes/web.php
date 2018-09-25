@@ -28,6 +28,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::post('/sidebar', 'dashboardPageController@screening');
 	Route::get('/screening', 'ScreeningController@screening');
 	Route::post('/screening/profile', 'profileController@profile');
+	Route::post('/screening/profile/sent', 'profileController@sent');
 	Route::post('/screening/profile/approve', 'profileController@approve');
 	Route::post('/screening/profile/reject', 'profileController@reject');
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
@@ -46,4 +47,5 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::get('/','LECController@lec_dashboard');
 	Route::get('/candidates','LECController@lec_candidates');
+	Route::post('/status', 'LECController@status');
 });

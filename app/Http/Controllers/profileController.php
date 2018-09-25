@@ -13,27 +13,33 @@ class profileController extends Controller
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
 
         $province = DB::table('province')
-                        ->select('lgu')
+                        ->select('lgu','type')
                         ->where('province_code','=',$candidate->province_id)
                         ->first();
 
-        $district = DB::table('municipality')
-                        ->select('municipality','district')
+        $district = $candidate->district_id;
+        $city = $candidate->city_id;
+
+        if($province->type === 'HUC') {
+            $municipality = null;
+        } else {
+            $municipality = DB::table('municipality')
+                        ->select('municipality')
+                        ->where('district','=',$candidate->district_id)
                         ->where('province_code','=',$candidate->province_id)
-                        ->first();
-
-        $city = DB::table('city')
-                    ->select('city')
-                    ->where('province_code','=',$candidate->province_id)
-                    ->first();
-
+                        ->first()->municipality;
+        }
+        
         $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
 
-        //dd($province);
-        //dd($district);
-        // dd($city);
-
-        return view('dashboard.screening.profile', compact('candidate','province','district','city','cos'));
+        return view('dashboard.screening.profile', compact(
+            'candidate',
+            'province',
+            'district',
+            'city',
+            'cos',
+            'municipality'
+        ));
     }
 
     public function sent(Request $data_candidate) {
