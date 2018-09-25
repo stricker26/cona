@@ -56,6 +56,7 @@
 				<button class="btn btn-secondary" type="submit" name="lec_edit_btn" value="{{ md5(Auth::user()->id) }}">Edit</button>
 			</form>	
 		</div>
+	</div>
 @stop
 
 @section('scripts')

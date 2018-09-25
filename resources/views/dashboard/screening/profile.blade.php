@@ -6,6 +6,34 @@
 @stop
 
 @section('content')
+	<!-- APPROVE AND REJECT MODALS -->
+	<div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Approve Candidate" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+		      	<div class="modal-body">
+		        	Are you sure you want to approve this candidate?
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		      	</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="modal fade" id="modalReject" tabindex="-1" role="dialog" aria-labelledby="Reject Candidate" aria-hidden="true">
+	  	<div class="modal-dialog modal-dialog-centered" role="document">
+	    	<div class="modal-content">
+		      	<div class="modal-body">
+		        	Are you sure you want to reject this candidate?
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		      	</div>
+	    	</div>
+	  	</div>
+	</div>
+	<!-- END OF APPROVE AND REJECT MODALS -->
 	<div class="container pb-5">
 		<div id="alert-handler" style="display: none;">
 			<div class="content mt-3 pl-3 pr-3 success-alert" style="display: none;">
@@ -56,6 +84,13 @@
 						</div>
 						<div class="text-center">
 							<h3>{{$candidate->candidate_for}}</h3>
+						</div>
+						<div>
+								@if ($candidate->signed_by_lp == 1)
+									<span class="text-success">Approved</span>
+								@elseif ($candidate->signed_by_lp ==2)
+									<span class="text-danger">Rejected</span>
+								@endif
 						</div>
 					</div>
 				</div>
@@ -219,8 +254,10 @@
 						<span class="font-weight-bold">City :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($city->city))}}</span>
-						<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						@if($city)
+							<span>{{ucwords(strtolower($city->city))}}</span>
+							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -228,8 +265,10 @@
 						<span class="font-weight-bold">District :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->district))}}</span>
-						<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						@if($district)
+							<span>{{ucwords(strtolower($district->district))}}</span>
+							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -237,8 +276,10 @@
 						<span class="font-weight-bold">Municipality :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->municipality))}}</span>
-						<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						@if($district)
+							<span>{{ucwords(strtolower($district->municipality))}}</span>
+							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						@endif
 					</div>
 				</div>
 				<div class="row mt-5">
@@ -341,12 +382,18 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			<div class="d-inline pr-2">
-				<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
-			</div>
-			<div class="d-inline pr-2">
-				<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
-			</div>
+			@if ($candidate->signed_by_lp == null)
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
+				</div>
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject">Reject</button>
+				</div>
+			@else
+				<div class="d-inline pr-2">
+					<button type="button" class="btn btn-warning" id="download_btn">Download CONA</button>
+				</div>
+			@endif
 		</div>
 	</div>
 @stop

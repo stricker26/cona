@@ -38,7 +38,8 @@ jQuery(document).ready(function($){
 		$('#left-panel #statusCandidates').submit();
 	});
 
-	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
+	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(event){
+		event.preventDefault();
 		var dataProvince = $(this).data("value");
 		var data = dataProvince.split(',');
 		var e = data[0];
@@ -46,12 +47,13 @@ jQuery(document).ready(function($){
 		var type = data[1];
 		var region = data[3];
 		$('tbody').html('');
-		if (path == '/screening') {
+		if (path == '/hq/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY');
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
@@ -60,16 +62,21 @@ jQuery(document).ready(function($){
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
+	    }
+	    else if (path == '/hq/screening/profile') {
+	    	window.location.href = '../screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	    else {
 	    	window.location.href = 'screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
@@ -79,7 +86,7 @@ jQuery(document).ready(function($){
 	function ajaxGet(e, name, type, region) {
 		$.ajax({
 			method: 'GET',
-			url: 'screening/' + type + '/' + e,
+			url: '/hq/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
 	    		if (data == '') {
@@ -99,12 +106,15 @@ jQuery(document).ready(function($){
 	    			switch (type) {
 	    				case 'HUC':
 	    					hucTable(e, data, region);
+	    					getCityCandidate(e, type);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
+	    					getProvinceCandidate(e, type);
 	    				break;
 	    				case 'CITY':
 	    					cityTable(e, data, name);
+	    					getCityCandidate(e, type);
 	    				break;
 	    			}
 	    			//loadTable(e, data);

@@ -100,7 +100,7 @@
 
 			if(groupType == 'HUC' && region == 'NCR') {
 				var requestType = 'huc_district';
-				if(jQuery('#position').val() == 'HUC Congressman') {
+				if(jQuery('#position').val() == 'HUC Congressman' || jQuery('#position').val() == 'City Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('.huc-city-wrapper').fadeOut(500);
 					var target = '#district';
@@ -119,7 +119,7 @@
 				var requestType = 'district';
 				var target = '#district';
 				var position = jQuery('#position').val();
-				if(position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
+				if(position == 'Provincial Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('#district').html('<option>Loading...</option>');
 				} else {
@@ -188,7 +188,7 @@
 
 				jQuery('#city').html('<option>Loading...</option>');
 
-				if(position == 'Congressman') {
+				if(position == 'Congressman' || position == 'Provincial Board Member') {
 					jQuery('.city-wrapper').fadeOut(500);
 				} else {
 

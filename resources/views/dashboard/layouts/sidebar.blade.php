@@ -5,8 +5,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="/dashboard"><img src="{{ asset('img/LP_Logo.png') }}" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="/dashboard"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
+            <a class="navbar-brand" href="{{ route('hqPanel') }}"><img src="{{ asset('img/LP_Logo.png') }}" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="{{ route('hqPanel') }}"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
         </div>
 
         <form id="statusCandidates" action="/hq/status" method="POST">
