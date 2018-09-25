@@ -29,42 +29,41 @@ class LECController extends Controller
     	return view('lec.candidates', compact('candidates_db'));
     }
 
-    public static function lec_candidate($lec_id) {
+    public static function lec_candidate($province_code) {
 
         $query = DB::table('province AS pv')
             ->join('lec AS lc', 'pv.lec', '=', 'lc.id')
             ->select('lc.name')
-            ->where('pv.province_code', '=', $lec_id)
+            ->where('pv.province_code', '=', $province_code)
             ->limit(1)
             ->get();
 
         $queryCity = DB::table('city AS ct')
             ->join('lec AS lc', 'ct.lec', '=', 'lc.id')
             ->select('lc.name')
-            ->where('ct.province_code', '=', $lec_id)
+            ->where('ct.province_code', '=', $province_code)
             ->limit(1)
             ->get();
 
         $queryMunicipal = DB::table('municipality AS muni')
             ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
             ->select('lc.name')
-            ->where('muni.province_code', '=', $lec_id)
+            ->where('muni.province_code', '=', $province_code)
             ->limit(1)
             ->get();
 
         if(count($query) > 0) {
             return $query[0]->name;
         } else {
-            if(count($queryCity)) {
+            if(count($queryCity) > 0) {
                 return $queryCity[0]->name;
             } else {
-                if(count($queryMunicipal)) {
-                     return $queryMunicipal[0]->name;
+                if(count($queryMunicipal) > 0) {
+                    return $queryMunicipal[0]->name;
+                } else {
+                    return 'No assigned LEC';
                 }
             }
         }
-
-        return 'No assigned LEC';
-
     }
 }
