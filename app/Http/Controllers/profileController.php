@@ -57,7 +57,7 @@ class profileController extends Controller
             'incumbent' => $data_candidate->incumbent,
             'mobile' => $data_candidate->mobile,
             'landline' => $data_candidate->landline,
-            'sma' => $data_candidate->fb.','.$data_candidate->twitter.','.$data_candidate->ig.','.$data_candidate->website,
+            'sma' => '{"facebook":"'.$data_candidate->fb.'","twitter":"'.$data_candidate->twitter.'","instagram":"'.$data_candidate->ig.'","website":"'.$data_candidate->website.'"}',
             'updated_at' => $date_now
         );
 

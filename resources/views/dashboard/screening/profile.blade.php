@@ -186,11 +186,16 @@
 						</div>
 					</div>
 					@php
-						$arraySMA = explode(",",$candidate->sma);
+						$json = $candidate->sma;
+						$json = json_decode($json, true);
 					@endphp
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#facebook"><i><span>{{$arraySMA[0]}}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{$arraySMA[0]}}">
+						<div class="facebook">
+							@if($json['facebook'])
+								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{ $json['facebook'] }}">
+							@else
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -202,8 +207,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#twitter"><i><span class="wrap">{{$arraySMA[1]}}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{$arraySMA[1]}}">
+						<div class="twitter">
+							@if($json['twitter'])
+								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{ $json['twitter'] }}">
+							@else
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -215,8 +224,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#instagram"><i><span class="wrap">{{$arraySMA[2]}}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{$arraySMA[2]}}">
+						<div class="instagram">
+							@if($json['instagram'])
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{ $json['instagram'] }}">
+							@else
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -228,8 +241,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#website"><i><span class="wrap">{{$arraySMA[3]}}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{$arraySMA[3]}}">
+						<div class="website">
+							@if($json['website'])
+								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{ $json['website'] }}">
+							@else
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="">
+							@endif
 						</div>
 					</div>
 				</div>

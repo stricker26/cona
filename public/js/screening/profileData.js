@@ -128,6 +128,9 @@ $(document).ready(function(){
 	    	error:function(alert){
 	    		$('#alert-handler').show().delay(2000).fadeOut();
 	    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
+		    	$('html, body').animate({
+			        scrollTop: $(".right-panel .container").offset().top
+			    }, 400);
 	    	}
 		});
 	});

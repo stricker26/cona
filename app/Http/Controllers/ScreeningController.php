@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\LECController;
 use DB;
 
 class ScreeningController extends Controller
@@ -63,6 +64,8 @@ class ScreeningController extends Controller
     //Get City/Municipality Candidate
     public function candidate(Request $request) {
 
+        $lec = new LECController;
+
         if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
@@ -99,18 +102,24 @@ class ScreeningController extends Controller
                             );
                         }
                     }
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 } else {
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 }
 
             }  
+
+        }  else {
+
+            return response()->json(['warning' => 'Invalid request.']);
 
         }
 
     }
 
     public function districtCandidate(Request $request) {
+
+        $lec = new LECController;
 
         if($request->ajax()) {
             
@@ -155,9 +164,9 @@ class ScreeningController extends Controller
                         );
                     }
                 }
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
             } else {
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
             }      
 
         } else {
@@ -169,6 +178,8 @@ class ScreeningController extends Controller
     }
 
     public function governor(Request $request) {
+
+        $lec = new LECController;
 
         if($request->ajax()) {
 
@@ -201,9 +212,9 @@ class ScreeningController extends Controller
                             );
                         }
                     }
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 } else {
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 }
 
             } else {
