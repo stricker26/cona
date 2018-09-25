@@ -24,7 +24,8 @@ class LECController extends Controller
         
     }
 
-    public static function lec_candidates($province_code) {
+    public static function lec_candidate($province_code) {
+
         $query = DB::table('province AS pv')
             ->join('lec AS lc', 'pv.lec', '=', 'lc.id')
             ->select('lc.name')
@@ -60,7 +61,6 @@ class LECController extends Controller
             }
         }
     }
-
     public function status(Request $request) {
         $status = $request->statusData;
         $data = explode(",", $status);
