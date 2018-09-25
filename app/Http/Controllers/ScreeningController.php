@@ -101,15 +101,6 @@ class ScreeningController extends Controller
                     }
                     return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
                 } else {
-                    $mayor[] = array(
-                        'name' => 'No Candidate',
-                    );
-                    $vmayor[] = array(
-                        'name' => 'No Candidate',
-                    );
-                    $councilor[] = array(
-                        'name' => 'No Candidate',
-                    );
                     return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
                 }
 
@@ -166,12 +157,6 @@ class ScreeningController extends Controller
                 }
                 return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember]);
             } else {
-                $congressman[] = array(
-                    'name' => 'No Candidate',
-                );
-                $councilor[] = array(
-                    'name' => 'No Candidate',
-                );
                 return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember]);
             }      
 
@@ -218,12 +203,6 @@ class ScreeningController extends Controller
                     }
                     return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor]);
                 } else {
-                    $governor[] = array(
-                        'name' => 'No Candidate',
-                    );
-                    $vgovernor[] = array(
-                        'name' => 'No Candidate',
-                    );
                     return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor]);
                 }
 

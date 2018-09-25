@@ -45,6 +45,7 @@ jQuery(document).ready(function($){
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
@@ -53,12 +54,14 @@ jQuery(document).ready(function($){
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
@@ -99,9 +102,11 @@ jQuery(document).ready(function($){
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
+	    					getProvinceCandidate(e, type);
 	    				break;
 	    				case 'CITY':
 	    					cityTable(e, data, name);
+	    					getCityCandidate(e, type);
 	    				break;
 	    			}
 	    			//loadTable(e, data);

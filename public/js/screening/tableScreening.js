@@ -15,6 +15,7 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
     	}
     	else if (urlType == 'PROVINCE') {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
@@ -25,6 +26,7 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').hide(500);
     		$('.gov-governor').show(500);
+    		$('.gov-districts').hide(500);
     		getProvinceCandidate(urlCode, urlType);
     	}
     	else {
@@ -35,6 +37,7 @@ $(document).ready( function () {
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
     	}
 	}
 	$('#tableGeo').delegate('tbody > tr', 'click', function () {
@@ -68,6 +71,7 @@ $(document).ready( function () {
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-districts').hide(500);
 	    		$('.gov-governor').show(500);
+	    		$('.huc-districts').hide(500);
     		break;
     		case 'MUNICIPAL':
     			$('tbody').html('');
@@ -80,6 +84,7 @@ $(document).ready( function () {
 	    		$('#cc-councilor-wrapper').show(500);
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
     			getDistrictCandidate(e, type, name);
@@ -101,6 +106,7 @@ $(document).ready( function () {
 	    		$('#cc-councilor-wrapper').show(500);
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
     		break;
     		default:
     			$('tbody').html('');
@@ -111,6 +117,7 @@ $(document).ready( function () {
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
     	}
 	});
 
