@@ -102,6 +102,7 @@
 				<div class="row">
 					<div class="col-sm-12 pb-3">
 						<h4>Personal Data</h4>
+						<input type="hidden" id="id_candidate" value="{{ $candidate->id }}">
 					</div>
 				</div>
 				<div class="row row-body">

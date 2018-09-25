@@ -74,8 +74,7 @@ class profileController extends Controller
     }
 
     public function approve(Request $data_candidate) {
-        //$candidate_id = $data_candidate->id;
-        $candidate_id = 9;
+        $candidate_id = $data_candidate->id;
         $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '1']);
         if($approve) {
             $alert = 'Approved';
@@ -87,8 +86,7 @@ class profileController extends Controller
     }
 
     public function reject(Request $data_candidate) {
-        //$candidate_id = $data_candidate->id;
-        $candidate_id = 9;
+        $candidate_id = $data_candidate->id;
         $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2']);
         if($reject) {
             $alert = 'Rejected';
