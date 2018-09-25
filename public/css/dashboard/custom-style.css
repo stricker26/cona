@@ -84,7 +84,13 @@
   text-align: left;
   width: 59.5%;
 }
-.dropdown-btn:hover {
+#left-panel #main-menu .stat-check span,
+#left-panel #main-menu .dropdown-menu .reg-stat span  {
+  color: #d7d9e3;
+}
+.dropdown-btn:hover,
+#left-panel #main-menu .stat-check span:hover,
+#left-panel #main-menu .dropdown-menu .reg-stat span:hover {
   cursor: pointer;
   color: #fff;
 }
