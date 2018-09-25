@@ -22,7 +22,7 @@ jQuery(document).ready(function($){
 		$(this).find('.cr').css("borderColor","#808080");
 	});
 
-	//status candidates click
+	//hq status candidates click
 	//whole Philippines
 	$('#left-panel #main-menu .stat-check span').on('click', function(){
 		var value = $(this).data("value");
@@ -30,14 +30,13 @@ jQuery(document).ready(function($){
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
-	//regional
+	//regional and provincial
 	$('#left-panel #main-menu .dropdown-menu li .reg-stat span').on('click', function(){
 		var value = $(this).data("value");
 		console.log(value);
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
-
 
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
 		var dataProvince = $(this).data("value");

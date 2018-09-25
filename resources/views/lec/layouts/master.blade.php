@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/dashboard/style_lec.css">
+    <link rel="stylesheet" href="../css/dashboard/style.css">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../css/dashboard/custom-style.css">
@@ -34,7 +34,7 @@
 
 
         {{-- Right Panel --}}
-        <div id="right-panel" class="right-panel-l">
+        <div id="right-panel" class="right-panel">
 
             {{-- Header --}}
             @include('lec.layouts.header')

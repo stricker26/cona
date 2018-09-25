@@ -106,6 +106,9 @@ aside.left-panel {
   vertical-align: top;
   width: 300px;
   transition: width 0.3s ease; }
+  aside.left-panel #main-menu a:hover {
+    color: #fff;
+  }
 
 .navbar {
   background: #15140c;

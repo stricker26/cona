@@ -101,7 +101,7 @@ $(document).ready(function(){
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
-
+		console.log(objectData);
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -110,7 +110,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			method: 'POST',
-			url: '/dashboard/profile/sent',
+			url: '/hq/screening/profile/sent',
 			data: objectData,
 			success:function(alert){
 	    		$('#alert-handler').show().delay(2000).fadeOut();
