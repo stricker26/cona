@@ -157,6 +157,7 @@ $(document).ready(function(){
 			success:function(data)  
 	    	{
 	    		location.reload();
+	    		
 	    	} 
 		});
 	});
