@@ -72,6 +72,7 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.gov-governor').show(500);
 	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
     		break;
     		case 'MUNICIPAL':
     			$('tbody').html('');
@@ -85,6 +86,7 @@ $(document).ready( function () {
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
     			getDistrictCandidate(e, type, name);
@@ -94,6 +96,7 @@ $(document).ready( function () {
 	    		$('.gov-districts').show(500);
 	    		$('.huc-districts').show(500);
 	    		$('#cc-councilor-wrapper').hide(500);
+	    		$('.prov-districts').hide(500);
     		break;
     		case 'CC':
     			$('tbody').html('');
@@ -107,6 +110,7 @@ $(document).ready( function () {
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
     		break;
     		default:
     			$('tbody').html('');
@@ -118,6 +122,7 @@ $(document).ready( function () {
 	    		$('.gov-governor').hide(500);
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
     	}
 	});
 
@@ -480,6 +485,8 @@ function getProvinceCandidate(provinceCode, type) {
 					<div class="col-sm-2"></div>
 				`);
 			}
+			jQuery('.gov-lec').html('');
+			jQuery('.gov-lec').html(data.lec);
 		},
 		error: function(data) {
 			console.log(data);
@@ -577,7 +584,9 @@ function getCityCandidate(provinceCode, type) {
 						</div>
 					`);
 				}
-			} 
+			}
+			jQuery('.gov-lec').html('');
+			jQuery('.gov-lec').html(data.lec);
 		},
 		error: function(data) {
 			console.log(data);
@@ -640,11 +649,13 @@ function getDistrictCandidate(provinceCode, type, district) {
 			} else {
 				jQuery('#huc-councilors').html('');
 				jQuery('#huc-councilors').append(`
-					<div class="col-sm-7">
-						<h5 class="font-weight-normal">No Candidate</h5>
+					<div class="row pt-2">
+						<div class="col-sm-7">
+							<h5 class="font-weight-normal">No Candidate</h5>
+						</div>
+						<div class="col-sm-3"></div>
+						<div class="col-sm-2"></div>
 					</div>
-					<div class="col-sm-3"></div>
-					<div class="col-sm-2"></div>
 				`);
 			}
 			// Board Members
@@ -702,6 +713,8 @@ function getDistrictCandidate(provinceCode, type, district) {
 					<div class="col-sm-2"></div>
 				`);
 			}
+			jQuery('.gov-lec').html('');
+			jQuery('.gov-lec').html(data.lec);
 		},
 		error: function() {
 
