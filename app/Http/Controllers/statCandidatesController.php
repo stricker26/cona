@@ -13,7 +13,8 @@ class statCandidatesController extends Controller
     	$data = explode(",", $status);
     	$status = $data[0];
         $region = $data[1];
-    	$province = $data[2];
+        $province = $data[2];
+    	$province_type = $data[3];
 
         if($region == "ph"){
             $location = "All Region";
@@ -419,13 +420,13 @@ class statCandidatesController extends Controller
             }
         } else {
             //province sidebar clicked
-            $province_table = DB::table('province')->where('province_code',$province)->first();
-            $location = ucwords(strtolower($province_table->lgu));
-            $location_type = $province_table->type;
-            $candidates = DB::table('candidates')->where('province_id',$province)->get();
-
-            if($location_type === 'HUC' || $location_type === 'ICC') {
+            if($province_type === 'HUC' || $province_type === 'ICC') {
                 //city mayor
+                $province_table = DB::table('province')->where('province_code',$province)->first();
+                $location = ucwords(strtolower($province_table->lgu));
+                $location_type = $province_table->type;
+                $candidates = DB::table('candidates')->where('province_id',$province)->get();
+
                 $city_mayor = 'empty';
                 $city_vice_mayor = 'empty';
                 $city_councilor = 'empty';
@@ -506,6 +507,11 @@ class statCandidatesController extends Controller
                 }
             } else {
                 //governor
+                $province_table = DB::table('province')->where('province_code',$province)->first();
+                $location = ucwords(strtolower($province_table->lgu));
+                $location_type = $province_table->type;
+                $candidates = DB::table('candidates')->where('province_id','like',$province.'%')->get();
+
                 $governor = 'empty';
                 $vice_governor = 'empty';
                 $board_members = 'empty';
