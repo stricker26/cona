@@ -47,19 +47,33 @@ class LECController extends Controller
             ->limit(1)
             ->get();
 
-        if(count($query) > 0) {
-            return $query[0]->name;
+        if(count($queryMunicipal) > 0) {
+            return $queryMunicipal[0]->name;
         } else {
             if(count($queryCity) > 0) {
                 return $queryCity[0]->name;
             } else {
-                if(count($queryMunicipal) > 0) {
-                    return $queryMunicipal[0]->name;
+                if(count($query) > 0) {
+                    return $query[0]->name;
                 } else {
                     return 'No assigned LEC';
                 }
             }
         }
+
+        // if(count($query) > 0) {
+        //     return $query[0]->name;
+        // } else {
+        //     if(count($queryCity) > 0) {
+        //         return $queryCity[0]->name;
+        //     } else {
+        //         if(count($queryMunicipal) > 0) {
+        //             return $queryMunicipal[0]->name;
+        //         } else {
+        //             return 'No assigned LEC';
+        //         }
+        //     }
+        // }
     }
     public function status(Request $request) {
         $status = $request->statusData;

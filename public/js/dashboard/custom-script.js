@@ -59,6 +59,7 @@ jQuery(document).ready(function($){
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUC', region);
 	    		ajaxGet(e, name, 'CITY', region);
+	    		getProvinceCandidate(e, type);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
