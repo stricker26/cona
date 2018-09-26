@@ -28,7 +28,12 @@ class profileController extends Controller
                         ->select('municipality')
                         ->where('district','=',$candidate->district_id)
                         ->where('province_code','=',$candidate->province_id)
-                        ->first()->municipality;
+                        ->first();
+            if(sizeof($municipality) === 0) {
+                $municipality = null;
+            } else {
+                $municipality = $municipality->municipality;
+            }
         }
         
         $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();

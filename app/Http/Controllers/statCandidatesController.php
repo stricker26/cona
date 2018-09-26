@@ -225,7 +225,7 @@ class statCandidatesController extends Controller
                     'status_page'
                 ));
         	}
-            
+
         } elseif($province === 'empty') {
             //region sidebar clicked
             $location = "Region ".$region;
@@ -541,7 +541,7 @@ class statCandidatesController extends Controller
                 $province_table = DB::table('province')->where('province_code',$province)->first();
                 $location = ucwords(strtolower($province_table->lgu));
                 $location_type = $province_table->type;
-                $candidates = DB::table('candidates')->where('province_id','like',$province.'%')->get();
+                $candidates = DB::table('candidates')->where('province_id',$province.'%')->get();
 
                 $governor = 'empty';
                 $vice_governor = 'empty';
