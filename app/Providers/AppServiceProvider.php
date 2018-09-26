@@ -99,6 +99,7 @@ class AppServiceProvider extends ServiceProvider
                             } else {
                                 $pending_count_province->$province_key += 1;
                             }
+                            
                         }
 
                         $candidates_HUC = DB::table('candidates')
