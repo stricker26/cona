@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\LECController;
 use DB;
 
 class ScreeningController extends Controller
@@ -56,37 +57,179 @@ class ScreeningController extends Controller
 		return $data;
     }
 
+    public function cc($code) {
+        return null;
+    }
+
+    //Get City/Municipality Candidate
     public function candidate(Request $request) {
+
+        $lec = new LECController;
 
         if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
 
-            if($requesType == 'HUC') {
+            $mayor = array();
+            $vmayor = array();
+            $councilor = array();
+
+            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
                     ->get();
-
-                //$mayor = array();
-
-                foreach ($query as $rows => $row) {
-                    if($row->candidate_for == 'City Mayor') {
-                        $mayor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
-                    } elseif ($row->candidate_for == 'City Vice Mayor') {
-                        $vmayor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
-                    } else {
-                        $councilor[] = $row->firstname . ' ' . $row->middlename . ' ' .$row->lastname;
+                if(count($query) > 0) {
+                    foreach ($query as $rows => $row) {
+                        if($row->candidate_for == 'City Mayor') {
+                            $mayor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            );
+                            
+                        } else if ($row->candidate_for == 'City Vice Mayor') {
+                            $vmayor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            );
+                        } else if($row->candidate_for == 'City Councilor') {
+                            $councilor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
                     }
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                } else {
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 }
 
-                return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor]);
+            }  
 
-            } else {
+        }  else {
 
-            }
+            return response()->json(['warning' => 'Invalid request.']);
 
         }
 
     }
+
+    public function districtCandidate(Request $request) {
+
+        $lec = new LECController;
+
+        if($request->ajax()) {
+            
+            $provinceCode = $request->input('provinceCode');
+            $district = $request->input('district');
+
+            $query = DB:: table('candidates')
+                ->where('province_id', '=', $provinceCode)
+                ->where('district_id', '=', $district)
+                ->get();
+
+            $congressman = array();
+            $councilor = array();
+            $bmember = array();
+            $prvcongressman = array();
+
+            if(count($query) > 0) {
+                foreach($query as $rows => $row) {
+                    if($row->candidate_for == 'HUC Congressman') {
+                        $congressman[] = array(
+                            'id' => $row->id,
+                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                        );
+                    } else if($row->candidate_for == 'City Councilor') {
+                        $councilor[] = array(
+                            'id' => $row->id,
+                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                        );
+                    } else if ($row->candidate_for == 'Provincial Board Member') {
+                            $bmember[] = array(
+                            'id' => $row->id,
+                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                        );
+                    } else if ($row->candidate_for == 'Congressman') {
+                        $prvcongressman[] = array(
+                            'id' => $row->id,
+                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                        );
+                    }
+                }
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+            } else {
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+            }      
+
+        } else {
+
+            return response()->json(['warning' => 'Invalid request.']);
+
+        }
+
+    }
+
+    public function governor(Request $request) {
+
+        $lec = new LECController;
+
+        if($request->ajax()) {
+
+            $provinceCode = $request->input('provinceCode');
+            $requesType = $request->input('requesType');
+
+            if($requesType == 'PROVINCE') {
+
+                $query = DB::table('candidates')
+                    ->where('province_id', '=', $provinceCode)
+                    ->get();
+
+                $governor = array();
+                $vgovernor = array();
+
+                if(count($query) > 0) {
+                    foreach ($query as $rows => $row) {
+                        if($row->candidate_for == 'Governor') {
+                            $governor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            );
+                            
+                        } else if ($row->candidate_for == 'Vice-Governor') {
+                            $vgovernor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
+                    }
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                } else {
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                }
+
+            } else {
+
+                return response()->json(['warning' => 'Invalid request.']); 
+
+            }
+
+        } else {
+
+            return response()->json(['warning' => 'Invalid Request']);
+
+        }
+
+    }
+
+
 }

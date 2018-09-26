@@ -22,15 +22,24 @@ jQuery(document).ready(function($){
 		$(this).find('.cr').css("borderColor","#808080");
 	});
 
-	//status candidates click
+	//hq status candidates click
+	//whole Philippines
 	$('#left-panel #main-menu .stat-check span').on('click', function(){
 		var value = $(this).data("value");
 		console.log(value);
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
+	//regional and provincial
+	$('#left-panel #main-menu .dropdown-menu li .reg-stat span').on('click', function(){
+		var value = $(this).data("value");
+		console.log(value);
+		$('#left-panel #statusCandidates #statusData').val(value);
+		$('#left-panel #statusCandidates').submit();
+	});
 
-	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(){
+	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(event){
+		event.preventDefault();
 		var dataProvince = $(this).data("value");
 		var data = dataProvince.split(',');
 		var e = data[0];
@@ -44,6 +53,7 @@ jQuery(document).ready(function($){
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
 	    		ajaxGet(e, name, type, region);
@@ -52,12 +62,14 @@ jQuery(document).ready(function($){
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
+    			$('.gov-districts').hide(500);
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
@@ -94,12 +106,15 @@ jQuery(document).ready(function($){
 	    			switch (type) {
 	    				case 'HUC':
 	    					hucTable(e, data, region);
+	    					getCityCandidate(e, type);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
+	    					getProvinceCandidate(e, type);
 	    				break;
 	    				case 'CITY':
 	    					cityTable(e, data, name);
+	    					getCityCandidate(e, type);
 	    				break;
 	    			}
 	    			//loadTable(e, data);

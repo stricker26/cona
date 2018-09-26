@@ -107,28 +107,57 @@ $(document).ready(function(){
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+
+		$.ajax({
+			method: 'POST',
+			url: '/hq/screening/profile/sent',
+			data: objectData,
+			success:function(alert){
+	    		$('#alert-handler').show().delay(2000).fadeOut();
+	    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
+		    	$('html, body').animate({
+			        scrollTop: $(".right-panel .container").offset().top
+			    }, 400);
+	    	},
+	    	error:function(alert){
+	    		$('#alert-handler').show().delay(2000).fadeOut();
+	    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
+		    	$('html, body').animate({
+			        scrollTop: $(".right-panel .container").offset().top
+			    }, 400);
+	    	}
+		});
 	});
 
 	$('#approve_btn').on('click', function(){
+		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
 			url: 'profile/approve',
+			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
-	    		console.log(data);
 	    		location.reload();
-	    	} 
+	    	}
 		});
 	});
 
 	$('#reject_btn').on('click', function(){
+		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
 			url: 'profile/reject',
+			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
-	    		console.log(data);
 	    		location.reload();
+	    		
 	    	} 
 		});
 	});
@@ -137,7 +166,3 @@ $(document).ready(function(){
 		alert('Download CONA');
 	});
 });
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}

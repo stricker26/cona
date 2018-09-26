@@ -9,27 +9,37 @@ use DB;
 class profileController extends Controller
 {
     public function profile(Request $request) {
-        // $profile = $request->screening_btn;
-        $candidate = DB::table('candidates')->first();
+        $profile = $request->screening_btn;
+        $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
 
         $province = DB::table('province')
-                        ->select('lgu')
+                        ->select('lgu','type')
                         ->where('province_code','=',$candidate->province_id)
                         ->first();
 
-        $district = DB::table('municipality')
-                        ->select('municipality','district')
+        $district = $candidate->district_id;
+        $city = $candidate->city_id;
+
+        if($province->type === 'HUC') {
+            $municipality = null;
+        } else {
+            $municipality = DB::table('municipality')
+                        ->select('municipality')
+                        ->where('district','=',$candidate->district_id)
                         ->where('province_code','=',$candidate->province_id)
-                        ->first();
-
-        $city = DB::table('city')
-                    ->select('city')
-                    ->where('province_code','=',$candidate->province_id)
-                    ->first();
-
+                        ->first()->municipality;
+        }
+        
         $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
 
-        return view('dashboard.screening.profile', compact('candidate','province','district','city','cos'));
+        return view('dashboard.screening.profile', compact(
+            'candidate',
+            'province',
+            'district',
+            'city',
+            'cos',
+            'municipality'
+        ));
     }
 
     public function sent(Request $data_candidate) {
@@ -47,7 +57,7 @@ class profileController extends Controller
             'incumbent' => $data_candidate->incumbent,
             'mobile' => $data_candidate->mobile,
             'landline' => $data_candidate->landline,
-            'sma' => $data_candidate->fb.','.$data_candidate->twitter.','.$data_candidate->ig.','.$data_candidate->website,
+            'sma' => '{"facebook":"'.$data_candidate->fb.'","twitter":"'.$data_candidate->twitter.'","instagram":"'.$data_candidate->ig.'","website":"'.$data_candidate->website.'"}',
             'updated_at' => $date_now
         );
 
@@ -64,8 +74,7 @@ class profileController extends Controller
     }
 
     public function approve(Request $data_candidate) {
-        //$candidate_id = $data_candidate->id;
-        $candidate_id = 9;
+        $candidate_id = $data_candidate->id;
         $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '1']);
         if($approve) {
             $alert = 'Approved';
@@ -77,8 +86,7 @@ class profileController extends Controller
     }
 
     public function reject(Request $data_candidate) {
-        //$candidate_id = $data_candidate->id;
-        $candidate_id = 9;
+        $candidate_id = $data_candidate->id;
         $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2']);
         if($reject) {
             $alert = 'Rejected';

@@ -17,13 +17,11 @@ jQuery(document).ready(function($) {
 		$('#main-menu ul li').toggle();
 		if($('body').hasClass('open')){
 			$('.right-panel').css("width","calc(100vw - 90px)");
-			$('.right-panel-l').css("width","calc(100vw - 95px)");
 			$('.navbar .navbar-brand img').css("padding-bottom","25px");
 			$('aside.left-panel #main-menu a span').hide();
 			$('.navbar-lec').hide();
 		} else {
 			$('.right-panel').css("width","calc(100vw - 420px)");
-			$('.right-panel-l').css("width","calc(100vw - 300px)");
 			$('.navbar .navbar-brand img').css("padding-bottom","15px");
 			$('aside.left-panel #main-menu a span').show();
 			$('.navbar-lec').show();
