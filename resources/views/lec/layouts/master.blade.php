@@ -33,7 +33,7 @@
         {{-- Left Panel --}}
 
         {{-- Right Panel --}}
-        <div id="right-panel" class="right-panel-l">
+        <div id="right-panel" class="right-panel">
 
             {{-- Header --}} 
             @include('lec.layouts.header')

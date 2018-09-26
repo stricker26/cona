@@ -1,4 +1,5 @@
 var url_string = window.location.href;
+var part = window.location.pathname.split('/')[1];
 var url = new URL(url_string);
 var urlCode = url.searchParams.get('e');
 var urlName = url.searchParams.get('name');
@@ -9,7 +10,7 @@ window.history.replaceState(null, null, window.location.pathname);
 $(document).ready( function () {
 	if (urlCode != null || urlCode != undefined || urlCode != '') {
 		if (urlType == 'DISTRICT') {
-    		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
+    		ajaxGet(urlCode, urlName, 'MUNICIPALITY', undefined, part);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -18,9 +19,9 @@ $(document).ready( function () {
     		$('.gov-districts').hide(500);
     	}
     	else if (urlType == 'PROVINCE') {
-    		ajaxGet(urlCode, urlName, urlType, urlRegion);
-    		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
-    		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
+    		ajaxGet(urlCode, urlName, 'HUC', urlRegion, part);
+    		ajaxGet(urlCode, urlName, 'CITY', urlRegion, part);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -30,7 +31,7 @@ $(document).ready( function () {
     		getProvinceCandidate(urlCode, urlType);
     	}
     	else {
-    		ajaxGet(urlCode, urlName, urlType, urlRegion);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
 		    getCityCandidate(urlCode, urlType);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
@@ -48,7 +49,7 @@ $(document).ready( function () {
     	switch (type) {
     		case 'DISTRICT':
     			$('tbody').html('');
-    			ajaxGet(e, name, 'MUNICIPALITY');
+    			ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
     			getDistrictCandidate(e, type, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -62,9 +63,9 @@ $(document).ready( function () {
     		break;
     		case 'PROVINCE':
     			$('tbody').html('');
-	    		ajaxGet(e, name, type, region);
-	    		ajaxGet(e, name, 'HUC', region);
-	    		ajaxGet(e, name, 'CITY', region);
+	    		ajaxGet(e, name, type, region, part);
+	    		ajaxGet(e, name, 'HUC', region, part);
+	    		ajaxGet(e, name, 'CITY', region, part);
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -76,7 +77,7 @@ $(document).ready( function () {
     		break;
     		case 'MUNICIPAL':
     			$('tbody').html('');
-    			ajaxGet(e, name, type, region);
+    			ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -100,7 +101,7 @@ $(document).ready( function () {
     		break;
     		case 'CC':
     			$('tbody').html('');
-    			ajaxGet(e, name, type, region);
+    			ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -114,7 +115,7 @@ $(document).ready( function () {
     		break;
     		default:
     			$('tbody').html('');
-    			ajaxGet(e, name, type, region);
+    			ajaxGet(e, name, type, region, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -132,11 +133,11 @@ $(document).ready( function () {
 		var type = $(this).attr('class');
 		console.log('Type: ' + type);
 		$(this).nextAll().remove();
-		ajaxGet(code, '', type);
+		ajaxGet(code, '', type, undefined, part);
 		$('tbody').html('');
 		if (type == 'PROVINCE') {
-			ajaxGet(code, '', 'CITY');
-			ajaxGet(code, '', 'HUC');
+			ajaxGet(code, '', 'CITY', undefined, part);
+			ajaxGet(code, '', 'HUC', undefined, part);
 		}
 		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
@@ -189,11 +190,11 @@ $(document).ready( function () {
 
 	loadPagination();
 
-	function ajaxGet(e, name, type, region) {
+	function ajaxGet(e, name, type, region, path) {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
-				url: '/hq/screening/' + e,
+				url: '/' + path + '/screening/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -210,9 +211,10 @@ $(document).ready( function () {
 		else {
 			$.ajax({
 				method: 'GET',
-				url: '/hq/screening/' + type + '/' + e,
+				url: '/' + path + '/screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
+		    		console.log(data);
 		    		if (data == '') {
 		    		}
 		    		else  {
@@ -268,17 +270,19 @@ function loadTable(e, data) {
 				type = data[x].type;
 			}
 			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x].lgu + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
-						<td class="type">` + type + `</td>
-						<td class="region" style="display:none;">` + data[x].region + `</td>
-					</tr>
-				`);
+				<tr class='item'>
+					<td class="code">` + data[x].province_code + `</td>
+					<td class="description">` + data[x].lgu + `</td>
+					<td>` + data[x].pending + `</td>
+					<td>` + data[x].approved + `</td>
+					<td>` + data[x].rejected + `</td>
+					<td>Lorem Ipsum</td>
+					<td class="type">` + type + `</td>
+					<td class="region" style="display:none;">` + data[x].region + `</td>
+				</tr>
+			`
+			);
+
 			loadPagination();
 		}
 	}
@@ -370,9 +374,9 @@ function printRow(data, x, name, type) {
 			<tr class='item'>
 				<td class="code">` + data[x].province_code + `</td>
 				<td class="description">` + data[x][name] + `</td>
-				<td>0</td>
-				<td>0</td>
-				<td>0</td>
+				<td>` + data[x].pending + `</td>
+				<td>` + data[x].approved + `</td>
+				<td>` + data[x].rejected + `</td>
 				<td>Lorem Ipsum</td>
 				<td class="type">` + type + `</td>
 			</tr>

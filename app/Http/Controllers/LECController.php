@@ -24,6 +24,75 @@ class LECController extends Controller
         
     }
 
+    public function screening() {
+        return view('lec.screening.screening');
+    }
+
+    public function huc($code) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
+        $data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
+        return $data;
+    }
+
+    public function municipality($code) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
+        if ($code == '0505' || $code == '0630' || $code == '0155') {
+            $data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+        }
+        else {
+            $data = DB::table('municipality')->get()->where('province_code', '=', $code);
+        }
+        return $data;
+    }
+
+    public function district($code) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
+        if ($code == '0505' || $code == '0630' || $code == '0155') {
+            $data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+        }
+        else {
+            $data = DB::table('municipality')->get()->where('province_code', '=', $code);
+        }
+        return $data;
+    }
+
+    public function city($code) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
+        if ($code == '0505' || $code == '0973' || $code == '0354' || $code == '0349' || $code == '0215' || $code == '0155') {
+            $data = DB::table('city')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+        }
+        else {
+            $data = DB::table('city')->get()->where('province_code', '=', $code);
+        }
+        return $data;
+    }
+
+    public function region($code) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
+        if ($code == 'NCR') {
+            $data = DB::table('province')->get()->where('region', '=', $code)->where('lec', '=', $lecId);
+        }
+        else {
+            $data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC')->where('lec', '=', $lecId);
+        }
+        return $data;
+    }
+
     public static function lec_candidate($province_code) {
 
         $query = DB::table('province AS pv')
@@ -61,6 +130,7 @@ class LECController extends Controller
             }
         }
     }
+
     public function status(Request $request) {
         $status = $request->statusData;
         $data = explode(",", $status);
