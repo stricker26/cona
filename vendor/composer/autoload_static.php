@@ -342,6 +342,7 @@ class ComposerStaticInit95c51ba1c86f5b5af41dc8f7df15eb62
         'App\\Http\\Controllers\\ScreeningController' => __DIR__ . '/../..' . '/app/Http/Controllers/ScreeningController.php',
         'App\\Http\\Controllers\\dashboardPageController' => __DIR__ . '/../..' . '/app/Http/Controllers/dashboardPageController.php',
         'App\\Http\\Controllers\\profileController' => __DIR__ . '/../..' . '/app/Http/Controllers/profileController.php',
+        'App\\Http\\Controllers\\statCandidatesController' => __DIR__ . '/../..' . '/app/Http/Controllers/statCandidatesController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Admin' => __DIR__ . '/../..' . '/app/Http/Middleware/Admin.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
