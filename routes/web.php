@@ -27,6 +27,10 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	]);
 	Route::post('/sidebar', 'dashboardPageController@screening');
 	Route::get('/screening', 'ScreeningController@screening');
+	Route::get('/screening/profile', 'profileController@redirect');
+	Route::get('/screening/profile/sent', 'profileController@redirect');
+	Route::get('/screening/profile/approve', 'profileController@redirect');
+	Route::get('/screening/profile/reject', 'profileController@redirect');
 	Route::post('/screening/profile', 'profileController@profile');
 	Route::post('/screening/profile/sent', 'profileController@sent');
 	Route::post('/screening/profile/approve', 'profileController@approve');
@@ -42,6 +46,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/candidate/district', 'ScreeningController@districtCandidate');
 	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
+	Route::get('/status', 'profileController@redirect');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {

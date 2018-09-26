@@ -37,57 +37,41 @@ class AppServiceProvider extends ServiceProvider
             $rejected_count_all = count(DB::table('candidates')->where('signed_by_lp',2)->get());
 
             //regional status
-            $pending_count_region = array();
-            $approved_count_region = array();
-            $rejected_count_region = array();
+            $pending_count_region = (object)[];
+            $approved_count_region = (object)[];
+            $rejected_count_region = (object)[];
             foreach($regions as $region){
                 $province_id = DB::table('province')
                                 ->select('province_code')
                                 ->where('region',$region)
                                 ->get();
+
                 $count_p = 0;
                 $count_a = 0;
                 $count_r = 0;
                 foreach($province_id as $id_province){
-                    if(count(DB::table('candidates')
-                                ->where('province_id',$id_province->province_code)
-                                ->where('signed_by_lp',NULL)
-                                ->get()) !== 0) {
-                        $count_p++;
-                    }
+                    $count = count(DB::table('candidates')
+                        ->where('province_id',$id_province->province_code)
+                        ->where('signed_by_lp',NULL)
+                        ->get());
+                    $count_p += $count;
                     
-                    if(count(DB::table('candidates')
+                    $count = count(DB::table('candidates')
                                 ->where('province_id',$id_province->province_code)
                                 ->where('signed_by_lp',1)
-                                ->get()) !== 0) {
-                        $count_a++;
-                    }
+                                ->get());
+                    $count_a += $count;
 
-                    if(count(DB::table('candidates')
+                    $count = count(DB::table('candidates')
                                 ->where('province_id',$id_province->province_code)
                                 ->where('signed_by_lp',2)
-                                ->get()) !== 0) {
-                        $count_r++;
-                    }
+                                ->get());
+                    $count_r += $count;
                 }
 
-                if($count_p === 0){
-                    array_push($pending_count_region, 0);
-                } else {
-                    array_push($pending_count_region, $count_p);
-                }
-
-                if($count_a === 0){
-                    array_push($approved_count_region, 0);
-                } else {
-                    array_push($approved_count_region, $count_a);
-                }
-          
-                if($count_r === 0){
-                    array_push($rejected_count_region, 0);
-                } else {
-                    array_push($rejected_count_region, $count_r);
-                }
+                $pending_count_region->$region = $count_p;
+                $approved_count_region->$region = $count_a;
+                $rejected_count_region->$region = $count_r;
             }
 
             //provincial status
@@ -96,46 +80,94 @@ class AppServiceProvider extends ServiceProvider
             $rejected_count_province = (object)[];
             foreach($regions as $region){
                 $province_id = DB::table('province')
-                                ->select('province_code')
                                 ->where('region',$region)
                                 ->get();
-                $array_p = array();
-                $array_a = array();
-                $array_r = array();
+
                 foreach($province_id as $id_province) {
-                    $count = count(DB::table('candidates')
-                                ->where('province_id',$id_province->province_code)
-                                ->where('signed_by_lp',NULL)
-                                ->get());
-                    if($count !== 0) {
-                        array_push($array_p, $count);
-                    } else {
-                        array_push($array_p, 0);
-                    }
+                    if($id_province->type === 'HUC' && $region !== 'NCR') {
+                        $candidates_HUC = DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',NULL)
+                            ->get();
+                        foreach($candidates_HUC as $candidate_HUC) {
+                            $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                            $province_key = DB::table('province')
+                                ->where('province_code',$candidate_HUC_array[0])
+                                ->first()->lgu;
+                            if(!isset($pending_count_province->$province_key)) {
+                                $pending_count_province->$province_key = 1;
+                            } else {
+                                $pending_count_province->$province_key += 1;
+                            }
+                            
+                        }
 
-                    $count = count(DB::table('candidates')
-                                ->where('province_id',$id_province->province_code)
-                                ->where('signed_by_lp',1)
-                                ->get());
-                    if($count !== 0) {
-                        array_push($array_a, $count);
-                    } else {
-                        array_push($array_a, 0);
-                    }
+                        $candidates_HUC = DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',1)
+                            ->get();
+                        foreach($candidates_HUC as $candidate_HUC) {
+                            $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                            $province_key = DB::table('province')
+                                ->where('province_code',$candidate_HUC_array[0])
+                                ->first()->lgu;
+                            if(!isset($approved_count_province->$province_key)) {
+                                $approved_count_province->$province_key = 1;
+                            } else {
+                                $approved_count_province->$province_key += 1;
+                            }
+                        }
 
-                    $count = count(DB::table('candidates')
-                                ->where('province_id',$id_province->province_code)
-                                ->where('signed_by_lp',2)
-                                ->get());
-                    if($count !== 0) {
-                        array_push($array_r, $count);
+                        $candidates_HUC = DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',2)
+                            ->get();
+                        foreach($candidates_HUC as $candidate_HUC) {
+                            $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                            $province_key = DB::table('province')
+                                ->where('province_code',$candidate_HUC_array[0])
+                                ->first()->lgu;
+                            if(!isset($rejected_count_province->$province_key)) {
+                                $rejected_count_province->$province_key = 1;
+                            } else {
+                                $rejected_count_province->$province_key += 1;
+                            }
+                        }
                     } else {
-                        array_push($array_r, 0);
-                    }
+                        $count = count(DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',NULL)
+                            ->get());
+                        $province_key = $id_province->lgu;
+                        if(!isset($pending_count_province->$province_key)) {
+                            $pending_count_province->$province_key = $count;
+                        } else {
+                            $pending_count_province->$province_key += $count;
+                        }
 
-                    $pending_count_province->$region = $array_p;
-                    $approved_count_province->$region = $array_a;
-                    $rejected_count_province->$region = $array_r;
+                        $count = count(DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',1)
+                            ->get());
+                        $province_key = $id_province->lgu;
+                        if(!isset($approved_count_province->$province_key)) {
+                            $approved_count_province->$province_key = $count;
+                        } else {
+                            $approved_count_province->$province_key += $count;
+                        }
+
+
+                        $count = count(DB::table('candidates')
+                            ->where('province_id',$id_province->province_code)
+                            ->where('signed_by_lp',2)
+                            ->get());
+                        $province_key = $id_province->lgu;
+                        if(!isset($rejected_count_province->$province_key)) {
+                            $rejected_count_province->$province_key = $count;
+                        } else {
+                            $rejected_count_province->$province_key += $count;
+                        }
+                    }
                 }
             }
 
