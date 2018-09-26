@@ -19,7 +19,13 @@ class ScreeningController extends Controller
     }
 
     public function municipality($code) {
-    	$data = DB::table('municipality')->get()->where('province_code', '=', $code);
+    	$data = DB::table('municipality as m')
+            ->join('candidates as c', 'm.province_code', '=', 'c.province_id')
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE municipality = c.city_id AND signed_by_lp = 0 AND province_id = '. $code .') AS pending'))
+            ->where('m.province_code', '=', $code)
+            ->where('c.province_id', '=', $code)
+            ->get();
+
     	return $data;
     }
 
@@ -66,7 +72,7 @@ class ScreeningController extends Controller
 
         $lec = new LECController;
 
-        if($request->ajax()) {
+        //if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
@@ -78,42 +84,43 @@ class ScreeningController extends Controller
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
+                    ->where('signed_by_lp', '<>', 3)
                     ->get();
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
-                        if($row->candidate_for == 'City Mayor') {
+                        if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
                             $mayor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                             );
                             
-                        } else if ($row->candidate_for == 'City Vice Mayor') {
+                        } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
                             $vmayor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                             );
-                        } else if($row->candidate_for == 'City Councilor') {
+                        } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
                             $councilor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                             );
-                        }
+                        } 
                     }
                     return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
                 } else {
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode), 'pass' => $requesType]);
                 }
 
             }  
 
-        }  else {
+        // }  else {
 
-            return response()->json(['warning' => 'Invalid request.']);
+        //     return response()->json(['warning' => 'Invalid request.']);
 
-        }
+        // }
 
     }
 
@@ -129,6 +136,7 @@ class ScreeningController extends Controller
             $query = DB:: table('candidates')
                 ->where('province_id', '=', $provinceCode)
                 ->where('district_id', '=', $district)
+                ->where('signed_by_lp', '<>', '3')
                 ->get();
 
             $congressman = array();
@@ -142,25 +150,25 @@ class ScreeningController extends Controller
                         $congressman[] = array(
                             'id' => $row->id,
                             'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                         );
                     } else if($row->candidate_for == 'City Councilor') {
                         $councilor[] = array(
                             'id' => $row->id,
                             'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                         );
                     } else if ($row->candidate_for == 'Provincial Board Member') {
                             $bmember[] = array(
                             'id' => $row->id,
                             'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                         );
                     } else if ($row->candidate_for == 'Congressman') {
                         $prvcongressman[] = array(
                             'id' => $row->id,
                             'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                         );
                     }
                 }
@@ -190,6 +198,7 @@ class ScreeningController extends Controller
 
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
+                    ->where('signed_by_lp', '<>', '3')
                     ->get();
 
                 $governor = array();
@@ -201,14 +210,14 @@ class ScreeningController extends Controller
                             $governor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                             );
                             
                         } else if ($row->candidate_for == 'Vice-Governor') {
                             $vgovernor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => is_null($row->signed_by_lp) ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
                             );
                         }
                     }

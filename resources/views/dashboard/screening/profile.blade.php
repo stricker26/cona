@@ -85,12 +85,31 @@
 						<div class="text-center">
 							<h3>{{$candidate->candidate_for}}</h3>
 						</div>
+						<div class="text-center">
+							<?php
+								if($province->type == 'HUC') {
+									if($district) {
+										$location = $province->lgu . ', ' . $district;
+									} else {
+										$location = $province->lgu;
+									}
+									
+								} else {
+									if($district) {
+										$location = $province->lgu . ', ' . $municipality . ', ' . $district;
+									} else {
+										$location = $province->lgu . ', ' . $municipality;
+									}
+								}
+							?>
+							<h5><?php echo $location; ?></h5>
+						</div>
 						<div>
-								@if ($candidate->signed_by_lp == 1)
-									<span class="text-success">Approved</span>
-								@elseif ($candidate->signed_by_lp ==2)
-									<span class="text-danger">Rejected</span>
-								@endif
+							@if ($candidate->signed_by_lp == 1)
+								<span class="text-success">Approved</span>
+							@elseif ($candidate->signed_by_lp ==2)
+								<span class="text-danger">Rejected</span>
+							@endif
 						</div>
 					</div>
 				</div>

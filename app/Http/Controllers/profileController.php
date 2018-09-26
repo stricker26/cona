@@ -101,4 +101,5 @@ class profileController extends Controller
     public function redirect(){
         return redirect()->action('ScreeningController@screening');
     }
+    
 }
