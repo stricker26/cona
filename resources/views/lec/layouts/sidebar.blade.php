@@ -59,10 +59,7 @@
                                     $key_p = 0;
                                 @endphp
                                 @foreach($provinces as $province)
-                                    @if(($region === $province->region &&
-                                        $province->type != 'HUC') ||
-                                        ($region === $province->region &&
-                                        $region == 'NCR'))
+                                    @if($region === $province->region)
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
