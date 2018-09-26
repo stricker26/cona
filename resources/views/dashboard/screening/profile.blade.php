@@ -39,7 +39,7 @@
 			<div class="content mt-3 pl-3 pr-3 success-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-success alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-success message-alert">Success</span> Data saved
+	                  <span class="badge badge-pill badge-success">Success</span><span class="message-text"> Data saved</span>
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -50,7 +50,7 @@
 	        <div class="content pl-3 pr-3 failed-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-danger message-alert">Failed</span> Data not saved
+	                  <span class="badge badge-pill badge-danger">Failed</span><span class="message-text"> Data not saved</span>
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -193,9 +193,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="facebook">
 							@if($json['facebook'])
-								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{ $json['facebook'] }}">
+								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="{{ $json['facebook'] }}">
 							@else
-								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="">
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="">
 							@endif
 						</div>
 					</div>
@@ -210,9 +210,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="twitter">
 							@if($json['twitter'])
-								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{ $json['twitter'] }}">
+								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="{{ $json['twitter'] }}">
 							@else
-								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="">
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="">
 							@endif
 						</div>
 					</div>
@@ -227,9 +227,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="instagram">
 							@if($json['instagram'])
-								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{ $json['instagram'] }}">
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
 							@else
-								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="">
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="">
 							@endif
 						</div>
 					</div>
@@ -244,9 +244,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="website">
 							@if($json['website'])
-								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{ $json['website'] }}">
+								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="{{ $json['website'] }}">
 							@else
-								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="">
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="">
 							@endif
 						</div>
 					</div>
@@ -331,7 +331,7 @@
 					</div>
 					<div class="row row-body">
 						<div class="col-sm-6">
-							<span class="font-weight-bold">Relationship/Position :</span>
+							<span class="font-weight-bold">Relationship :</span>
 						</div>
 						<div class="col-sm-6 row-content">
 							<span>{{$cos->relationship}}</span>

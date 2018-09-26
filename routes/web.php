@@ -27,6 +27,10 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	]);
 	Route::post('/sidebar', 'dashboardPageController@screening');
 	Route::get('/screening', 'ScreeningController@screening');
+	Route::get('/screening/profile', 'profileController@redirect');
+	Route::get('/screening/profile/sent', 'profileController@redirect');
+	Route::get('/screening/profile/approve', 'profileController@redirect');
+	Route::get('/screening/profile/reject', 'profileController@redirect');
 	Route::post('/screening/profile', 'profileController@profile');
 	Route::post('/screening/profile/sent', 'profileController@sent');
 	Route::post('/screening/profile/approve', 'profileController@approve');

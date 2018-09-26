@@ -73,32 +73,30 @@ $(document).ready(function(){
 
 		$('.data-candidates .left-div').find(".row-body").each(function(){
 			var spanData = $(this).find(".row-content input").val();
-			$(this).find(".row-content span").html(spanData).show();
-			$(this).find(".row-content input").hide();
+			// $(this).find(".row-content span").html(spanData).show();
+			// $(this).find(".row-content input").hide();
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
-			console.log(idForAjax);
 			var nameToPass = idForAjax.replace("prof_","");
 			objectData[nameToPass] = spanData;
 
-			if($.inArray(idForAjax, a_href_id) !== -1) {
-				$(this).find("a").show();
-			}
+			// if($.inArray(idForAjax, a_href_id) !== -1) {
+			// 	$(this).find("a").show();
+			// }
 		});
 
 		$('.data-candidates .right-div').find(".row-body").each(function(){
 			var spanData = $(this).find(".row-content input").val();
-			$(this).find(".row-content span").html(spanData).show();
-			$(this).find(".row-content input").hide();
+			// $(this).find(".row-content span").html(spanData).show();
+			// $(this).find(".row-content input").hide();
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
-			console.log(idForAjax);
 			var nameToPass = idForAjax.replace("prof_","");
 			objectData[nameToPass] = spanData;
 
-			if($.inArray(idForAjax, a_href_id) !== -1) {
-				$(this).find("a").show();
-			}
+			// if($.inArray(idForAjax, a_href_id) !== -1) {
+			// 	$(this).find("a").show();
+			// }
 		});
 
 		$('#approve_btn').show();
@@ -108,29 +106,81 @@ $(document).ready(function(){
 		$('#edit_btn').show();
 		$(this).hide();
 
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-
 		$.ajax({
 			method: 'POST',
 			url: '/hq/screening/profile/sent',
 			data: objectData,
 			success:function(alert){
-	    		$('#alert-handler').show().delay(2000).fadeOut();
-	    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
+	    		if(alert == 'cos failed') {
+		    		$('#alert-handler').show().delay(2000).fadeOut();
+		    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
+		    		$('#alert-handler .failed-alert .alert-danger .message-text').html("  Chief of Staff Saving Failed");
+	    		} else if(alert == 'candidate failed') {
+		    		$('#alert-handler').show().delay(2000).fadeOut();
+		    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
+		    		$('#alert-handler .failed-alert .alert-danger .message-text').html("  Candidate Saving Failed");
+	    		} else {
+		    		$('#alert-handler').show().delay(2000).fadeOut();
+		    		$('#alert-handler .success-alert').show().delay(2000).fadeOut();
+		    		$('#alert-handler .success-alert .alert-success .message-text').html("  Saving Success!");
+		    	}
 		    	$('html, body').animate({
 			        scrollTop: $(".right-panel .container").offset().top
 			    }, 400);
+
+			    $('.data-candidates .left-div').find(".row-body").each(function(){
+					var spanData = $(this).find(".row-content input").val();
+					$(this).find(".row-content span").html(spanData).show();
+					$(this).find(".row-content input").hide();
+					
+					var idForAjax = $(this).find(".row-content input").attr("id");
+
+					if($.inArray(idForAjax, a_href_id) !== -1) {
+						$(this).find("a").show();
+					}
+				});
+
+				$('.data-candidates .right-div').find(".row-body").each(function(){
+					var spanData = $(this).find(".row-content input").val();
+					$(this).find(".row-content span").html(spanData).show();
+					$(this).find(".row-content input").hide();
+					
+					var idForAjax = $(this).find(".row-content input").attr("id");
+
+					if($.inArray(idForAjax, a_href_id) !== -1) {
+						$(this).find("a").show();
+					}
+				});
 	    	},
 	    	error:function(alert){
 	    		$('#alert-handler').show().delay(2000).fadeOut();
 	    		$('#alert-handler .failed-alert').show().delay(2000).fadeOut();
+	    		$('#alert-handler .failed-alert .alert-danger .message-text').html("  Edit failed");
 		    	$('html, body').animate({
 			        scrollTop: $(".right-panel .container").offset().top
 			    }, 400);
+
+				$('.data-candidates .left-div').find(".row-body").each(function(){
+					var inputData = $(this).find(".row-content span").html();
+					$(this).find(".row-content span").show();
+					$(this).find(".row-content input").val(inputData).hide();
+
+					var idForAjax = $(this).find(".row-content input").attr("id");
+					if($.inArray(idForAjax, a_href_id) !== -1) {
+						$(this).find("a").show();
+					}
+				});
+
+				$('.data-candidates .right-div').find(".row-body").each(function(){
+					var inputData = $(this).find(".row-content span").html();
+					$(this).find(".row-content span").show();
+					$(this).find(".row-content input").val(inputData).hide();
+
+					var idForAjax = $(this).find(".row-content input").attr("id");
+					if($.inArray(idForAjax, a_href_id) !== -1) {
+						$(this).find("a").show();
+					}
+				});
 	    	}
 		});
 	});

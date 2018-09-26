@@ -37,17 +37,17 @@
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
                             @if(!empty($regions))
-                            @foreach($regions as $key=>$region)
+                            @foreach($regions as $region)
                             <div>
                                 <div class="float-right reg-stat">
                                     <div class="d-inline pr-2">
-                                        <span data-value="0,{{$region}},empty" class="a-hover" title="Pending - {{ $pending_count_region[$key] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_region[$key] }}</span>
+                                        <span data-value="0,{{$region}},empty" class="a-hover" title="Pending - {{ $pending_count_region->$region }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_region->$region }}</span>
                                     </div>
                                     <div class="d-inline pr-2">
-                                        <span data-value="1,{{$region}},empty" class="a-hover" title="Approved - {{ $approved_count_region[$key] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_region[$key] }}</span>
+                                        <span data-value="1,{{$region}},empty" class="a-hover" title="Approved - {{ $approved_count_region->$region }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_region->$region }}</span>
                                     </div>
                                     <div class="d-inline pr-1">
-                                        <span data-value="2,{{$region}},empty" class="a-hover" title="Rejected - {{ $rejected_count_region[$key] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_region[$key] }}</span>
+                                        <span data-value="2,{{$region}},empty" class="a-hover" title="Rejected - {{ $rejected_count_region->$region }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_region->$region }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -67,13 +67,13 @@
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
-                                                <span data-value="0,{{$region}},{{$province->province_code}}" class="a-hover" title="Pending - {{ $pending_count_province->$region[$key_p] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_province->$region[$key_p] }}</span>
+                                                <span data-value="0,{{$region}},{{$province->province_code}}" class="a-hover" title="Pending - {{ $pending_count_province->{$province->lgu} }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_province->{$province->lgu} }}</span>
                                             </div>
                                             <div class="d-inline pr-2">
-                                                <span data-value="1,{{$region}},{{$province->province_code}}" class="a-hover" title="Approved - {{ $approved_count_province->$region[$key_p] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_province->$region[$key_p] }}</span>
+                                                <span data-value="1,{{$region}},{{$province->province_code}}" class="a-hover" title="Approved - {{ $approved_count_province->{$province->lgu} }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_province->{$province->lgu} }}</span>
                                             </div>
                                             <div class="d-inline pr-1">
-                                                <span data-value="2,{{$region}},{{$province->province_code}}" class="a-hover" title="Rejected - {{ $rejected_count_province->$region[$key_p] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_province->$region[$key_p] }}</span>
+                                                <span data-value="2,{{$region}},{{$province->province_code}}" class="a-hover" title="Rejected - {{ $rejected_count_province->{$province->lgu} }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_province->{$province->lgu} }}</span>
                                             </div>
                                         </div>
                                     </div>
