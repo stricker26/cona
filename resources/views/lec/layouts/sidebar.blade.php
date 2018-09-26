@@ -1,7 +1,6 @@
 <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
-
-        <div class="navbar-header">
+        <div class="navbar-header mb-2">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
@@ -60,8 +59,7 @@
                                     $key_p = 0;
                                 @endphp
                                 @foreach($provinces as $province)
-                                    @if(($region === $province->region &&
-                                        $province->type != 'HUC') ||
+                                    @if(($region === $province->region) ||
                                         ($region === $province->region &&
                                         $region == 'NCR'))
                                     <div>

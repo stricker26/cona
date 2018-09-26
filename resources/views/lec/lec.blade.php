@@ -3,6 +3,7 @@
 @section('title','Home')
 
 @section('styles')
+	<link rel="stylesheet" href="{{ asset('css/style_lec.css') }}">
 @stop
 
 @section('content')

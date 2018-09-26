@@ -14,37 +14,56 @@ class ScreeningController extends Controller
     }
 
     public function huc($code) {
-    	$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
+        $data = DB::table('huc')
+            ->join('candidates as c', 'c.province_id', '=', 'huc.province_code')
+            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->where('huc.province_code', '=', $code)
+            ->get();
+    	//$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
     	return $data;
     }
 
     public function municipality($code) {
     	$data = DB::table('municipality as m')
-            ->join('candidates as c', 'm.province_code', '=', 'c.province_id')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE municipality = c.city_id AND signed_by_lp = 0 AND province_id = '. $code .') AS pending'))
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
             ->where('m.province_code', '=', $code)
-            ->where('c.province_id', '=', $code)
             ->get();
-
-    	return $data;
+        return $data;
     }
 
     public function district($code) {
-    	$data = DB::table('municipality')->get()->where('province_code', '=', $code);
+        $data = DB::table('municipality as m')
+            ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->where('m.province_code', '=', $code)
+            ->get();
     	return $data;
     }
 
     public function city($code) {
-    	$data = DB::table('city')->get()->where('province_code', '=', $code);
+        $data = DB::table('city')
+            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->where('city.province_code', '=', $code)
+            ->get();
+    	//$data = DB::table('city')->get()->where('province_code', '=', $code);
     	return $data;
     }
 
     public function region($code) {
         if ($code == 'NCR') {
-            $data = DB::table('province')->get()->where('region', '=', $code);
+            $data = DB::table('province as p')
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->where('p.region', '=', $code)
+                ->get();
+            //$data = DB::table('province')->get()->where('region', '=', $code);
         }
         else {
-            $data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC');
+            $data = DB::table('province as p')
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->where('p.region', '=', $code)
+                ->where('type', '!=', 'HUC')
+                ->get();
+            //$data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC');
         }
         return $data;
     }
