@@ -15,7 +15,7 @@
 </div>
 <hr class="mb-4">
 <div class="container pb-3">
-    @if(count($candidates) !== 0)
+    @if(count($candidates) !== 0 && $status_page === '1')
       	@foreach($positions as $position)
 	      	<div class="card rounded mb-2">
 			  	<div class="card-header card-header-click text-center">

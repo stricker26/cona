@@ -84,7 +84,8 @@ class statCandidatesController extends Controller
                         }
                     }
                 }
-
+                
+                $status_page = '0';
         		return view('dashboard.status.pending', compact(
                     'candidates',
                     'governor',
@@ -100,7 +101,8 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
         	} elseif($status == '1') {
                 $candidates = DB::table('candidates')->where('signed_by_lp',1)->get();
@@ -143,6 +145,7 @@ class statCandidatesController extends Controller
                     }
                 }
 
+                $status_page = '1';
                 return view('dashboard.status.approved', compact(
                     'candidates',
                     'governor',
@@ -158,7 +161,8 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
         	} else {
                 $candidates = DB::table('candidates')->where('signed_by_lp',2)->get();
@@ -201,6 +205,7 @@ class statCandidatesController extends Controller
                     }
                 }
 
+                $status_page = '2';
                 return view('dashboard.status.rejected', compact(
                     'candidates',
                     'governor',
@@ -216,7 +221,8 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
         	}
         } elseif($province === 'empty') {
@@ -364,6 +370,9 @@ class statCandidatesController extends Controller
             }
 
             if($status === '0') {
+                foreach($candidates as $candidate) {
+                    $status_page = $candidate->signed_by_lp;
+                }
                 return view('dashboard.status.pending', compact(
                     'candidates',
                     'governor',
@@ -379,9 +388,13 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
             } elseif($status === '1') {
+                foreach($candidates as $candidate) {
+                    $status_page = $candidate->signed_by_lp;
+                }
                 return view('dashboard.status.approved', compact(
                     'candidates',
                     'governor',
@@ -397,9 +410,13 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
             } else {
+                foreach($candidates as $candidate) {
+                    $status_page = $candidate->signed_by_lp;
+                }
                 return view('dashboard.status.rejected', compact(
                     'candidates',
                     'governor',
@@ -415,7 +432,8 @@ class statCandidatesController extends Controller
                     'municipal_councilor',
                     'positions',
                     'count_positions',
-                    'location'
+                    'location',
+                    'status_page'
                 ));
             }
         } else {
@@ -475,6 +493,9 @@ class statCandidatesController extends Controller
                 }
 
                 if($status === '0') {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.pending', compact(
                         'candidates',
                         'city_mayor',
@@ -482,9 +503,13 @@ class statCandidatesController extends Controller
                         'city_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 } elseif($status === '1') {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.approved', compact(
                         'candidates',
                         'city_mayor',
@@ -492,9 +517,13 @@ class statCandidatesController extends Controller
                         'city_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 } else {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.rejected', compact(
                         'candidates',
                         'city_mayor',
@@ -502,7 +531,8 @@ class statCandidatesController extends Controller
                         'city_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 }
             } else {
@@ -648,6 +678,9 @@ class statCandidatesController extends Controller
                 }
 
                 if($status === '0') {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.pending', compact(
                         'candidates',
                         'governor',
@@ -663,9 +696,13 @@ class statCandidatesController extends Controller
                         'municipal_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 } elseif($status === '1') {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.approved', compact(
                         'candidates',
                         'governor',
@@ -681,9 +718,13 @@ class statCandidatesController extends Controller
                         'municipal_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 } else {
+                    foreach($candidates as $candidate) {
+                        $status_page = $candidate->signed_by_lp;
+                    }
                     return view('dashboard.status.rejected', compact(
                         'candidates',
                         'governor',
@@ -699,7 +740,8 @@ class statCandidatesController extends Controller
                         'municipal_councilor',
                         'positions',
                         'count_positions',
-                        'location'
+                        'location',
+                        'status_page'
                     ));
                 }
             }
