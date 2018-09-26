@@ -225,6 +225,7 @@ class statCandidatesController extends Controller
                     'status_page'
                 ));
         	}
+            
         } elseif($province === 'empty') {
             //region sidebar clicked
             $location = "Region ".$region;
