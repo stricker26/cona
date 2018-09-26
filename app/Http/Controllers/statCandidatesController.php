@@ -102,6 +102,7 @@ class statCandidatesController extends Controller
                     'count_positions',
                     'location'
                 ));
+                
         	} elseif($status == '1') {
                 $candidates = DB::table('candidates')->where('signed_by_lp',1)->get();
                 if(count($candidates)) {
