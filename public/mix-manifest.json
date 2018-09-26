@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/x.css": "/css/x.css",
-    "/css/table-screening.css": "/css/table-screening.css"
+    "/css/table-screening.css": "/css/table-screening.css",
+    "/css/certificate.css": "/css/certificate.css"
 }

@@ -37,6 +37,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
 	Route::get('/screening/candidate', 'ScreeningController@candidate');
 	Route::post('/status', 'statCandidatesController@status');
+	Route::get('/certificate','CertificateController@create');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
