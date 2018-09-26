@@ -10,22 +10,24 @@ use DB;
 class ScreeningController extends Controller
 {
     public function screening() {
-    	return view('dashboard.screening.screening');
+        return view('dashboard.screening.screening');
     }
 
     public function huc($code) {
         $data = DB::table('huc')
-            ->join('candidates as c', 'c.province_id', '=', 'huc.province_code')
-            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->join('province as p', 'huc.province_code', '=', 'p.province_code')
+            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
             ->where('huc.province_code', '=', $code)
+            ->orWhere('huc.parent_province_code', '=', $code)
+            ->distinct('huc.id')
             ->get();
-    	//$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
-    	return $data;
+         return $data;
+
     }
 
     public function municipality($code) {
-    	$data = DB::table('municipality as m')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+        $data = DB::table('municipality as m')
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
             ->where('m.province_code', '=', $code)
             ->get();
         return $data;
@@ -33,33 +35,32 @@ class ScreeningController extends Controller
 
     public function district($code) {
         $data = DB::table('municipality as m')
-            ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
             ->where('m.province_code', '=', $code)
             ->get();
-    	return $data;
+        return $data;
     }
 
     public function city($code) {
         $data = DB::table('city')
-            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
             ->where('city.province_code', '=', $code)
             ->get();
-    	//$data = DB::table('city')->get()->where('province_code', '=', $code);
-    	return $data;
+        //$data = DB::table('city')->get()->where('province_code', '=', $code);
+        return $data;
     }
 
     public function region($code) {
         if ($code == 'NCR') {
             $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
                 ->where('p.region', '=', $code)
                 ->get();
             //$data = DB::table('province')->get()->where('region', '=', $code);
         }
         else {
             $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
                 ->where('p.region', '=', $code)
                 ->where('type', '!=', 'HUC')
                 ->get();
@@ -69,17 +70,17 @@ class ScreeningController extends Controller
     }
 
     public function table($code) {
-    	$data = DB::table('province')->get()->where('region', '=', $code);
-    	if (count($data) == 0) {
-	    	$data = DB::table('district')->get()->where('province_code', '=', $code);
-	    	if (count($data) == 0) {
-	    		$data = DB::table('city')->get()->where('province_code', '=', $code);
-	    		if (count($data) == 0) {
-	    			$data = '';
-	    		}
-	    	}
-	    }
-		return $data;
+        $data = DB::table('province')->get()->where('region', '=', $code);
+        if (count($data) == 0) {
+            $data = DB::table('district')->get()->where('province_code', '=', $code);
+            if (count($data) == 0) {
+                $data = DB::table('city')->get()->where('province_code', '=', $code);
+                if (count($data) == 0) {
+                    $data = '';
+                }
+            }
+        }
+        return $data;
     }
 
     public function cc($code) {

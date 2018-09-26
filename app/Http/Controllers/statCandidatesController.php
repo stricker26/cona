@@ -9,12 +9,12 @@ use DB;
 class statCandidatesController extends Controller
 {
     public function status(Request $request) {
-    	$status = $request->statusData;
-    	$data = explode(",", $status);
-    	$status = $data[0];
+        $status = $request->statusData;
+        $data = explode(",", $status);
+        $status = $data[0];
         $region = $data[1];
         $province = $data[2];
-    	$province_type = $data[3];
+        $province_type = $data[3];
 
         if($region == "ph"){
             $location = "All Region";
@@ -44,7 +44,7 @@ class statCandidatesController extends Controller
             );
             $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
             
-        	if($status == '0'){
+            if($status == '0'){
                 $candidates = DB::table('candidates')->where('signed_by_lp',0)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
@@ -86,7 +86,7 @@ class statCandidatesController extends Controller
                 }
                 
                 $status_page = '0';
-        		return view('dashboard.status.pending', compact(
+                return view('dashboard.status.pending', compact(
                     'candidates',
                     'governor',
                     'vice_governor',
@@ -104,7 +104,7 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	} elseif($status == '1') {
+            } elseif($status == '1') {
                 $candidates = DB::table('candidates')->where('signed_by_lp',1)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
@@ -164,7 +164,7 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	} else {
+            } else {
                 $candidates = DB::table('candidates')->where('signed_by_lp',2)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
@@ -224,8 +224,8 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	}
-            
+            }
+
         } elseif($province === 'empty') {
             //region sidebar clicked
             $location = "Region ".$region;
@@ -541,7 +541,7 @@ class statCandidatesController extends Controller
                 $province_table = DB::table('province')->where('province_code',$province)->first();
                 $location = ucwords(strtolower($province_table->lgu));
                 $location_type = $province_table->type;
-                $candidates = DB::table('candidates')->where('province_id','like',$province.'%')->get();
+                $candidates = DB::table('candidates')->where('province_id',$province.'%')->get();
 
                 $governor = 'empty';
                 $vice_governor = 'empty';

@@ -136,8 +136,8 @@ $(document).ready( function () {
 		ajaxGet(code, '', type, undefined, part);
 		$('tbody').html('');
 		if (type == 'PROVINCE') {
-			ajaxGet(code, '', 'CITY', undefined, part);
 			ajaxGet(code, '', 'HUC', undefined, part);
+			ajaxGet(code, '', 'CITY', undefined, part);
 		}
 		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
@@ -209,6 +209,7 @@ $(document).ready( function () {
 			});
 		}
 		else {
+			console.log(e);
 			$.ajax({
 				method: 'GET',
 				url: '/' + path + '/screening/' + type + '/' + e,
@@ -276,7 +277,7 @@ function loadTable(e, data) {
 					<td>` + data[x].pending + `</td>
 					<td>` + data[x].approved + `</td>
 					<td>` + data[x].rejected + `</td>
-					<td>Lorem Ipsum</td>
+					<td>` + data[x].assigned_lec + `</td>
 					<td class="type">` + type + `</td>
 					<td class="region" style="display:none;">` + data[x].region + `</td>
 				</tr>
@@ -377,7 +378,7 @@ function printRow(data, x, name, type) {
 				<td>` + data[x].pending + `</td>
 				<td>` + data[x].approved + `</td>
 				<td>` + data[x].rejected + `</td>
-				<td>Lorem Ipsum</td>
+				<td>` + data[x].assigned_lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);
