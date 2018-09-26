@@ -27,20 +27,33 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	]);
 	Route::post('/sidebar', 'dashboardPageController@screening');
 	Route::get('/screening', 'ScreeningController@screening');
+	Route::get('/screening/profile', 'profileController@redirect');
+	Route::get('/screening/profile/sent', 'profileController@redirect');
+	Route::get('/screening/profile/approve', 'profileController@redirect');
+	Route::get('/screening/profile/reject', 'profileController@redirect');
 	Route::post('/screening/profile', 'profileController@profile');
+	Route::post('/screening/profile/sent', 'profileController@sent');
 	Route::post('/screening/profile/approve', 'profileController@approve');
 	Route::post('/screening/profile/reject', 'profileController@reject');
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+	Route::get('/screening/CC/{code}', 'ScreeningController@cc');
+	Route::get('/screening/MUNICIPAL/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
-	Route::get('/screening/candidate', 'ScreeningController@candidate');
+	Route::get('/screening/candidate/city', 'ScreeningController@candidate');
+	Route::get('/screening/candidate/district', 'ScreeningController@districtCandidate');
+	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
+
 	Route::get('/certificate','CertificateController@create');
+
+	Route::get('/status', 'profileController@redirect');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::get('/','LECController@lec_dashboard');
-	Route::get('/candidates','LECController@lec_candidates');
+	Route::get('/candidates','LECController@lec_candidate');
+	Route::post('/status', 'LECController@status');
 });

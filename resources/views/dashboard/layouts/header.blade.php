@@ -21,13 +21,18 @@
                 </a>
 
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;My Profile</a>
+                    {{-- <a class="nav-link" href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;My Profile</a> --}}
 
                     {{-- <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a> --}}
 
-                    <a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;Settings</a>
+                    {{-- <a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;Settings</a> --}}
 
-                    <a class="nav-link" href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a>
+                    
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color:#212529;"><i class="fas fa-sign-out-alt pr-4"></i><span>Logout</span></a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

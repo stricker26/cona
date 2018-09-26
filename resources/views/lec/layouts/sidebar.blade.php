@@ -5,33 +5,98 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand navbar-brand-lec" href="index.html">
-                <div>
-                    <img src="../img/dashboard/admin.png" alt="Logo">
-                </div>
-            </a>
-            <div class="navbar-profile" style="color:#fff;">
-                <span>User Admin</span>
-            </div>
-            <a class="navbar-brand hidden" href="index.html"><img class="user-avatar rounded-circle" src="../img/dashboard/admin.png" alt="User Avatar"></a>
+            <a class="navbar-brand" href="{{ route('hqPanel') }}"><img src="{{ asset('img/LP_Logo.png') }}" alt="Logo"></a>
+            <a class="navbar-brand hidden" href="{{ route('hqPanel') }}"><img src="{{ asset('img/dashboard/logo-sidebar2.png') }}" alt="Logo"></a>
         </div>
 
-        <div id="main-menu" class="main-menu collapse navbar-collapse">
+        <form id="statusCandidates" action="/lec/status" method="POST">
+            @csrf
+            <input type="hidden" name="statusData" id="statusData" value="">
+        </form>
+
+        <div id="main-menu" class="main-menu collapse navbar-collapse mt-3">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="/lec"><i class="far fa-user pr-4 pl-3"></i>Profile </a>
-                    <a href="/lec/candidates"><i class="fas fa-user pr-4 pl-3"></i>Candidates </a>
-                    <a href="#"><i class="fa fa-power-off pr-4 pl-3"></i>Logout</a>
+                <li class="pl-2">
+                    <a href="/lec"><i class="far fa-address-card pr-4"></i><span>Profile</span></a>
                 </li>
-                {{-- <h3 class="menu-title">MENU</h3>
-                <li class="menu-item-has-children dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Nominations</a>
-                    <ul class="sub-menu children dropdown-menu">
-                        <li><i class="far fa-clock"></i><a href="/nomination/pending">Pending</a></li>
-                        <li><i class="fas fa-check"></i><a href="/nomination/approve">Approved</a></li>
-                        <li><i class="fas fa-times"></i><a href="/nomination/reject">Rejeted</a></li>
+                <li class="pl-2">
+                    <div class="float-right stat-check">
+                        <div class="d-inline pr-2 pl-1">
+                            <span data-value="0,ph,empty" class="a-hover" title="Pending - {{ $pending_count_all }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_all }}</span>
+                        </div>
+                        <div class="d-inline pr-2">
+                            <span data-value="1,ph,empty" class="a-hover" title="Approved - {{ $approved_count_all }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_all }}</span>
+                        </div>
+                        <div class="d-inline pr-1">
+                            <span data-value="2,ph,empty" class="a-hover" title="Rejected - {{ $rejected_count_all }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_all }}</span>
+                        </div>
+                    </div>
+                    <button class="dropdown-toggle dropdown-btn" type="button" data-toggle="dropdown">
+                        <i class="fas fa-users pr-4"></i><span class="pr-2">National Candidates</span><i class="fas fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            @if(!empty($regions))
+                            @foreach($regions as $key=>$region)
+                            <div>
+                                <div class="float-right reg-stat">
+                                    <div class="d-inline pr-2">
+                                        <span data-value="0,{{$region}},empty" class="a-hover" title="Pending - {{ $pending_count_region[$key] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_region[$key] }}</span>
+                                    </div>
+                                    <div class="d-inline pr-2">
+                                        <span data-value="1,{{$region}},empty" class="a-hover" title="Approved - {{ $approved_count_region[$key] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_region[$key] }}</span>
+                                    </div>
+                                    <div class="d-inline pr-1">
+                                        <span data-value="2,{{$region}},empty" class="a-hover" title="Rejected - {{ $rejected_count_region[$key] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_region[$key] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="test d-inline" class="dropdown-btn">
+                                <i class="fas fa-map-marker-alt pr-4"></i><span class="pr-2">Region&nbsp;{{ $region }}</span><i class="fas fa-caret-down align-middle"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-submenu submenu">
+                                @php
+                                    $key_p = 0;
+                                @endphp
+                                @foreach($provinces as $province)
+                                    @if(($region === $province->region &&
+                                        $province->type != 'HUC') ||
+                                        ($region === $province->region &&
+                                        $region == 'NCR'))
+                                    <div>
+                                        <div class="float-right reg-stat">
+                                            <div class="d-inline pr-2">
+                                                <span data-value="0,{{$region}},{{$province->province_code}}" class="a-hover" title="Pending - {{ $pending_count_province->$region[$key_p] }}"><i class="far fa-clock pr-1"></i>{{ $pending_count_province->$region[$key_p] }}</span>
+                                            </div>
+                                            <div class="d-inline pr-2">
+                                                <span data-value="1,{{$region}},{{$province->province_code}}" class="a-hover" title="Approved - {{ $approved_count_province->$region[$key_p] }}"><i class="fas fa-check pr-1"></i>{{ $approved_count_province->$region[$key_p] }}</span>
+                                            </div>
+                                            <div class="d-inline pr-1">
+                                                <span data-value="2,{{$region}},{{$province->province_code}}" class="a-hover" title="Rejected - {{ $rejected_count_province->$region[$key_p] }}"><i class="fas fa-times pr-1"></i>{{ $rejected_count_province->$region[$key_p] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}},{{$province->region}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(strtolower($province->lgu)) }}</div></a>
+                                    @php
+                                        $key_p++;
+                                    @endphp
+                                    @endif
+                                @endforeach
+                                </li>
+                            </ul>
+                            @endforeach
+                            @endif
+                        </li>
                     </ul>
-                </li> --}}
+                </li>
+                <li class="pl-2">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt pr-4"></i><span>Logout</span></a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

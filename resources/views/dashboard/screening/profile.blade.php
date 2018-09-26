@@ -39,7 +39,7 @@
 			<div class="content mt-3 pl-3 pr-3 success-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-success alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-success message-alert">Success</span> Data saved
+	                  <span class="badge badge-pill badge-success">Success</span><span class="message-text"> Data saved</span>
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -50,7 +50,7 @@
 	        <div class="content pl-3 pr-3 failed-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-danger message-alert">Failed</span> Data not saved
+	                  <span class="badge badge-pill badge-danger">Failed</span><span class="message-text"> Data not saved</span>
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -85,12 +85,31 @@
 						<div class="text-center">
 							<h3>{{$candidate->candidate_for}}</h3>
 						</div>
+						<div class="text-center">
+							<?php
+								if($province->type == 'HUC') {
+									if($district) {
+										$location = $province->lgu . ', ' . $district;
+									} else {
+										$location = $province->lgu;
+									}
+									
+								} else {
+									if($district) {
+										$location = $province->lgu . ', ' . $municipality . ', ' . $district;
+									} else {
+										$location = $province->lgu . ', ' . $municipality;
+									}
+								}
+							?>
+							<h5><?php echo $location; ?></h5>
+						</div>
 						<div>
-								@if ($candidate->signed_by_lp == 1)
-									<span class="text-success">Approved</span>
-								@elseif ($candidate->signed_by_lp ==2)
-									<span class="text-danger">Rejected</span>
-								@endif
+							@if ($candidate->signed_by_lp == 1)
+								<span class="text-success">Approved</span>
+							@elseif ($candidate->signed_by_lp ==2)
+								<span class="text-danger">Rejected</span>
+							@endif
 						</div>
 					</div>
 				</div>
@@ -102,6 +121,7 @@
 				<div class="row">
 					<div class="col-sm-12 pb-3">
 						<h4>Personal Data</h4>
+						<input type="hidden" id="id_candidate" value="{{ $candidate->id }}">
 					</div>
 				</div>
 				<div class="row row-body">
@@ -186,11 +206,16 @@
 						</div>
 					</div>
 					@php
-						$arraySMA = explode(",",$candidate->sma);
+						$json = $candidate->sma;
+						$json = json_decode($json, true);
 					@endphp
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#facebook"><i><span>{{$arraySMA[0]}}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{$arraySMA[0]}}">
+						<div class="facebook">
+							@if($json['facebook'])
+								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="{{ $json['facebook'] }}">
+							@else
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -202,8 +227,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#twitter"><i><span class="wrap">{{$arraySMA[1]}}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{$arraySMA[1]}}">
+						<div class="twitter">
+							@if($json['twitter'])
+								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="{{ $json['twitter'] }}">
+							@else
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -215,8 +244,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#instagram"><i><span class="wrap">{{$arraySMA[2]}}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{$arraySMA[2]}}">
+						<div class="instagram">
+							@if($json['instagram'])
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
+							@else
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -228,8 +261,12 @@
 						</div>
 					</div>
 					<div class="col-sm-6 row-content">
-						<div>
-							<a style="color:#212529;" href="#website"><i><span class="wrap">{{$arraySMA[3]}}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{$arraySMA[3]}}">
+						<div class="website">
+							@if($json['website'])
+								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="{{ $json['website'] }}">
+							@else
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="">
+							@endif
 						</div>
 					</div>
 				</div>
@@ -245,8 +282,13 @@
 						<span class="font-weight-bold">Province :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($province->lgu))}}</span>
-						<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="{{ucwords(strtolower($province->lgu))}}">
+						@if($province)
+							<span>{{ucwords(strtolower($province->lgu))}}</span>
+							<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="{{ucwords(strtolower($province->lgu))}}">
+						@else
+							<span><i>--None--</i></span>
+							<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -254,8 +296,13 @@
 						<span class="font-weight-bold">City :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($city->city))}}</span>
-						<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city->city))}}">
+						@if($city)
+							<span>{{ucwords(strtolower($city))}}</span>
+							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city))}}">
+						@else
+							<span><i>--None--</i></span>
+							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -263,8 +310,13 @@
 						<span class="font-weight-bold">District :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->district))}}</span>
-						<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district->district))}}">
+						@if($district)
+							<span>{{ucwords(strtolower($district))}}</span>
+							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district))}}">
+						@else
+							<span><i>--None--</i></span>
+							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="">
+						@endif
 					</div>
 				</div>
 				<div class="row row-body">
@@ -272,8 +324,13 @@
 						<span class="font-weight-bold">Municipality :</span>
 					</div>
 					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($district->municipality))}}</span>
-						<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($district->municipality))}}">
+						@if($municipality)
+							<span>{{ucwords(strtolower($municipality))}}</span>
+							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($municipality))}}">
+						@else
+							<span><i>--None--</i></span>
+							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="">
+						@endif
 					</div>
 				</div>
 				<div class="row mt-5">
@@ -281,51 +338,59 @@
 						<h4>Chief of Staff</h4>
 					</div>
 				</div>
-				<div class="row row-body">
-					<div class="col-sm-6">
-						<span class="font-weight-bold">Name :</span>
+				@if($cos)
+					<div class="row row-body">
+						<div class="col-sm-6">
+							<span class="font-weight-bold">Name :</span>
+						</div>
+						<div class="col-sm-6 row-content">
+							<span>{{ucwords(strtolower($cos->name))}}</span>
+							<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{ucwords(strtolower($cos->name))}}">
+						</div>
 					</div>
-					<div class="col-sm-6 row-content">
-						<span>{{ucwords(strtolower($cos->name))}}</span>
-						<input type="text" class="form-control" id="prof_cos_name" style="display:none;" value="{{ucwords(strtolower($cos->name))}}">
+					<div class="row row-body">
+						<div class="col-sm-6">
+							<span class="font-weight-bold">Relationship :</span>
+						</div>
+						<div class="col-sm-6 row-content">
+							<span>{{$cos->relationship}}</span>
+							<input type="text" class="form-control" id="prof_cos_relationship" style="display:none;" value="{{ucwords(strtolower($cos->relationship))}}">
+						</div>
 					</div>
-				</div>
-				<div class="row row-body">
-					<div class="col-sm-6">
-						<span class="font-weight-bold">Relationship/Position :</span>
+					<div class="row row-body">
+						<div class="col-sm-6">
+							<span class="font-weight-bold">Address :</span>
+						</div>
+						<div class="col-sm-6 row-content">
+							<span>{{$cos->address}}</span>
+							<input type="text" class="form-control" id="prof_cos_address" style="display:none;" value="{{$cos->address}}">
+						</div>
 					</div>
-					<div class="col-sm-6 row-content">
-						<span>{{$cos->relationship}}</span>
-						<input type="text" class="form-control" id="prof_cos_relationship" style="display:none;" value="{{ucwords(strtolower($cos->relationship))}}">
+					<div class="row row-body">
+						<div class="col-sm-6">
+							<span class="font-weight-bold">Contact :</span>
+						</div>
+						<div class="col-sm-6 row-content">
+							<span>{{$cos->contact}}</span>
+							<input type="text" class="form-control" id="prof_cos_contact" style="display:none;" value="{{$cos->contact}}">
+						</div>
 					</div>
-				</div>
-				<div class="row row-body">
-					<div class="col-sm-6">
-						<span class="font-weight-bold">Address :</span>
+					<div class="row row-body">
+						<div class="col-sm-6">
+							<span class="font-weight-bold">Email :</span>
+						</div>
+						<div class="col-sm-6 row-content">
+							<span class="wrap">{{$cos->email}}</span>
+							<input type="text" class="form-control" id="prof_cos_email" style="display:none;" value="{{$cos->email}}">
+						</div>
 					</div>
-					<div class="col-sm-6 row-content">
-						<span>{{$cos->address}}</span>
-						<input type="text" class="form-control" id="prof_cos_address" style="display:none;" value="{{$cos->address}}">
+				@else
+					<div class="row">
+						<div class="col-sm-12 text-center">
+							<span><i>------None------</i></span>
+						</div>
 					</div>
-				</div>
-				<div class="row row-body">
-					<div class="col-sm-6">
-						<span class="font-weight-bold">Contact :</span>
-					</div>
-					<div class="col-sm-6 row-content">
-						<span>{{$cos->contact}}</span>
-						<input type="text" class="form-control" id="prof_cos_contact" style="display:none;" value="{{$cos->contact}}">
-					</div>
-				</div>
-				<div class="row row-body">
-					<div class="col-sm-6">
-						<span class="font-weight-bold">Email :</span>
-					</div>
-					<div class="col-sm-6 row-content">
-						<span class="wrap">{{$cos->email}}</span>
-						<input type="text" class="form-control" id="prof_cos_email" style="display:none;" value="{{$cos->email}}">
-					</div>
-				</div>
+				@endif
 			</div>
 		</div>
 		<div class="row comment-part">
