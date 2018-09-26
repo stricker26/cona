@@ -45,7 +45,7 @@ class statCandidatesController extends Controller
             $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
             
         	if($status == '0'){
-                $candidates = DB::table('candidates')->where('signed_by_lp',NULL)->get();
+                $candidates = DB::table('candidates')->where('signed_by_lp',0)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
                         if($candidate->candidate_for === "Governor") {
@@ -255,7 +255,7 @@ class statCandidatesController extends Controller
             $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
 
             foreach($candidates as $candidate){
-                if($status === '0' && $candidate->signed_by_lp === NULL) {
+                if($status === '0' && $candidate->signed_by_lp === '0') {
                     if($candidate->candidate_for === "Governor") {
                         $governors = 'not empty';
                         $count_positions->governor = ($count_positions->governor) + 1;
@@ -438,7 +438,7 @@ class statCandidatesController extends Controller
                 $positions = array('city_mayor','city_vice_mayor','city_councilor');
 
                 foreach($candidates as $candidate){
-                    if($status === '0' && $candidate->signed_by_lp === NULL) {
+                    if($status === '0' && $candidate->signed_by_lp === '0') {
                         if($candidate->candidate_for === "City Mayor") {
                             $city_mayor = 'not empty';
                             $count_positions->city_mayor = ($count_positions->city_mayor) + 1;
@@ -539,7 +539,7 @@ class statCandidatesController extends Controller
                 $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
 
                 foreach($candidates as $candidate){
-                    if($status === '0' && $candidate->signed_by_lp === NULL) {
+                    if($status === '0' && $candidate->signed_by_lp === '0') {
                         if($candidate->candidate_for === "Governor") {
                             $governors = 'not empty';
                             $count_positions->governor = ($count_positions->governor) + 1;

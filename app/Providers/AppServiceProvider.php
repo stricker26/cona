@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             sort($regions);
 
             //over all status
-            $pending_count_all = count(DB::table('candidates')->where('signed_by_lp',NULL)->get());
+            $pending_count_all = count(DB::table('candidates')->where('signed_by_lp',0)->get());
             $approved_count_all = count(DB::table('candidates')->where('signed_by_lp',1)->get());
             $rejected_count_all = count(DB::table('candidates')->where('signed_by_lp',2)->get());
 
@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
                 foreach($province_id as $id_province){
                     $count = count(DB::table('candidates')
                         ->where('province_id',$id_province->province_code)
-                        ->where('signed_by_lp',NULL)
+                        ->where('signed_by_lp',0)
                         ->get());
                     $count_p += $count;
                     
@@ -87,7 +87,7 @@ class AppServiceProvider extends ServiceProvider
                     if($id_province->type === 'HUC' && $region !== 'NCR') {
                         $candidates_HUC = DB::table('candidates')
                             ->where('province_id',$id_province->province_code)
-                            ->where('signed_by_lp',NULL)
+                            ->where('signed_by_lp',0)
                             ->get();
                         foreach($candidates_HUC as $candidate_HUC) {
                             $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
@@ -99,7 +99,7 @@ class AppServiceProvider extends ServiceProvider
                             } else {
                                 $pending_count_province->$province_key += 1;
                             }
-                            
+
                         }
 
                         $candidates_HUC = DB::table('candidates')
@@ -136,7 +136,7 @@ class AppServiceProvider extends ServiceProvider
                     } else {
                         $count = count(DB::table('candidates')
                             ->where('province_id',$id_province->province_code)
-                            ->where('signed_by_lp',NULL)
+                            ->where('signed_by_lp',0)
                             ->get());
                         $province_key = $id_province->lgu;
                         if(!isset($pending_count_province->$province_key)) {
@@ -206,7 +206,7 @@ class AppServiceProvider extends ServiceProvider
             $rejected_count_all = 0;
             foreach($provinces as $province_id) {
                 $pending_a = count(DB::table('candidates')
-                                    ->where('signed_by_lp',NULL)
+                                    ->where('signed_by_lp',0)
                                     ->where('province_id',$province_id->province_code)
                                     ->get());
                 $pending_count_all = $pending_count_all + $pending_a;
@@ -236,7 +236,7 @@ class AppServiceProvider extends ServiceProvider
                         $count_r = 0;
                         if(count(DB::table('candidates')
                                     ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lp',NULL)
+                                    ->where('signed_by_lp',0)
                                     ->get()) !== 0) {
                             $count_p++;
                         }
@@ -291,7 +291,7 @@ class AppServiceProvider extends ServiceProvider
                 foreach($province_id as $id_province) {
                     $count = count(DB::table('candidates')
                                 ->where('province_id',$id_province->province_code)
-                                ->where('signed_by_lp',NULL)
+                                ->where('signed_by_lp',0)
                                 ->get());
                     if($count !== 0) {
                         array_push($array_p, $count);

@@ -559,7 +559,7 @@ function getCityCandidate(provinceCode, type) {
 					var councilors = data.councilor;
 					$.each(councilors, function(index, value) {
 						jQuery('#cc-councilor').append(`
-							<div class="row pt-2">
+							<div class="row">
 								<div class="col-sm-7">
 									<h5 class="font-weight-normal">` + value.name + `</h5>
 								</div>
@@ -575,7 +575,7 @@ function getCityCandidate(provinceCode, type) {
 				} else {
 					jQuery('#cc-councilor').html('');
 					jQuery('#cc-councilor').append(`
-						<div class="row pt-2">
+						<div class="row">
 							<div class="col-sm-7">
 								<h5 class="font-weight-normal">No Candidate</h5>
 							</div>
@@ -633,7 +633,7 @@ function getDistrictCandidate(provinceCode, type, district) {
 				var councilors = data.councilor;
 				$.each(councilors, function(index, value) {
 					jQuery('#huc-councilors').append(`
-						<div class="row pt-2">
+						<div class="row mb-2">
 							<div class="col-sm-7">
 								<h5 class="font-weight-normal">` + value.name + `</h5>
 							</div>
@@ -649,7 +649,7 @@ function getDistrictCandidate(provinceCode, type, district) {
 			} else {
 				jQuery('#huc-councilors').html('');
 				jQuery('#huc-councilors').append(`
-					<div class="row pt-2">
+					<div class="row mb-2">
 						<div class="col-sm-7">
 							<h5 class="font-weight-normal">No Candidate</h5>
 						</div>
@@ -664,7 +664,7 @@ function getDistrictCandidate(provinceCode, type, district) {
 				var bmembers = data.bmember;
 				$.each(bmembers, function(index, value) {
 					jQuery('#bmembers').append(`
-						<div class="row">
+						<div class="row mb-2">
 							<div class="col-sm-7">
 								<h5 class="font-weight-normal">` + value.name + `</h5>
 							</div>
@@ -680,7 +680,7 @@ function getDistrictCandidate(provinceCode, type, district) {
 			} else {
 				jQuery('#bmembers').html('');
 				jQuery('#bmembers').append(`
-					<div class="row">
+					<div class="row mb-2">
 						<div class="col-sm-7">
 							<h5 class="font-weight-normal">No Candidate</h5>
 						</div>
