@@ -27,7 +27,7 @@
 		        	Are you sure you want to reject this candidate?
 		      	</div>
 		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
+		        	<button type="button" class="btn btn-danger" id="lec_reject_btn">Reject</button>
 		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
@@ -86,11 +86,11 @@
 							<h3>{{$candidate->candidate_for}}</h3>
 						</div>
 						<div>
-								@if ($candidate->signed_by_lp == 1)
+								@if ($candidate->signed_by_lec == 1)
 									<span class="text-success">Approved</span>
-								@elseif ($candidate->signed_by_lp == 0)
+								@elseif ($candidate->signed_by_lec == 0)
 									<span class="text-warning">Pending</span>
-								@elseif ($candidate->signed_by_lp ==2)
+								@elseif ($candidate->signed_by_lec ==2)
 									<span class="text-danger">Rejected</span>
 								@endif
 						</div>
@@ -424,7 +424,7 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			@if ($candidate->signed_by_lp == 3)
+			@if ($candidate->signed_by_lec == 0)
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
 				</div>

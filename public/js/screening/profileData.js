@@ -225,6 +225,20 @@ $(document).ready(function(){
 		});
 	});
 
+	$('#lec_reject_btn').on('click', function(){
+		var id_candidate = $('#id_candidate').val();
+		$.ajax({
+			method: 'POST',
+			url: 'profile/reject',
+			data: { "id": id_candidate},
+			success:function(data)  
+	    	{
+	    		location.reload();
+	    		
+	    	} 
+		});
+	});
+
 	$('#download_btn').on('click', function() {
 		alert('Download CONA');
 	});
