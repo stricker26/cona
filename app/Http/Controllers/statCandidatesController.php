@@ -15,6 +15,7 @@ class statCandidatesController extends Controller
         $region = $data[1];
         $province = $data[2];
     	$province_type = $data[3];
+        $status_page = null;
 
         if($region == "ph"){
             $location = "All Region";
@@ -85,7 +86,10 @@ class statCandidatesController extends Controller
                     }
                 }
                 
-                $status_page = '0';
+                foreach($candidates as $candidate) {
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
+                }
         		return view('dashboard.status.pending', compact(
                     'candidates',
                     'governor',
@@ -145,7 +149,10 @@ class statCandidatesController extends Controller
                     }
                 }
 
-                $status_page = '1';
+                foreach($candidates as $candidate) {
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
+                }
                 return view('dashboard.status.approved', compact(
                     'candidates',
                     'governor',
@@ -205,7 +212,10 @@ class statCandidatesController extends Controller
                     }
                 }
 
-                $status_page = '2';
+                foreach($candidates as $candidate) {
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
+                }
                 return view('dashboard.status.rejected', compact(
                     'candidates',
                     'governor',
@@ -372,7 +382,8 @@ class statCandidatesController extends Controller
 
             if($status === '0') {
                 foreach($candidates as $candidate) {
-                    $status_page = $candidate->signed_by_lp;
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
                 }
                 return view('dashboard.status.pending', compact(
                     'candidates',
@@ -394,7 +405,8 @@ class statCandidatesController extends Controller
                 ));
             } elseif($status === '1') {
                 foreach($candidates as $candidate) {
-                    $status_page = $candidate->signed_by_lp;
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
                 }
                 return view('dashboard.status.approved', compact(
                     'candidates',
@@ -416,7 +428,8 @@ class statCandidatesController extends Controller
                 ));
             } else {
                 foreach($candidates as $candidate) {
-                    $status_page = $candidate->signed_by_lp;
+                    if($candidate->signed_by_lp == $status)
+                        $status_page = $status;
                 }
                 return view('dashboard.status.rejected', compact(
                     'candidates',
@@ -444,7 +457,7 @@ class statCandidatesController extends Controller
                 $province_table = DB::table('province')->where('province_code',$province)->first();
                 $location = ucwords(strtolower($province_table->lgu));
                 $location_type = $province_table->type;
-                $candidates = DB::table('candidates')->where('province_id',$province)->get();
+                $candidates = DB::table('candidates')->where('province_id','like',$province.'%')->get();
 
                 $city_mayor = 'empty';
                 $city_vice_mayor = 'empty';
@@ -495,7 +508,8 @@ class statCandidatesController extends Controller
 
                 if($status === '0') {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = $status;
                     }
                     return view('dashboard.status.pending', compact(
                         'candidates',
@@ -509,7 +523,8 @@ class statCandidatesController extends Controller
                     ));
                 } elseif($status === '1') {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = $status;
                     }
                     return view('dashboard.status.approved', compact(
                         'candidates',
@@ -523,7 +538,8 @@ class statCandidatesController extends Controller
                     ));
                 } else {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = $status;
                     }
                     return view('dashboard.status.rejected', compact(
                         'candidates',
@@ -541,7 +557,7 @@ class statCandidatesController extends Controller
                 $province_table = DB::table('province')->where('province_code',$province)->first();
                 $location = ucwords(strtolower($province_table->lgu));
                 $location_type = $province_table->type;
-                $candidates = DB::table('candidates')->where('province_id',$province.'%')->get();
+                $candidates = DB::table('candidates')->where('province_id','like',$province.'%')->get();
 
                 $governor = 'empty';
                 $vice_governor = 'empty';
@@ -680,7 +696,8 @@ class statCandidatesController extends Controller
 
                 if($status === '0') {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = $status;
                     }
                     return view('dashboard.status.pending', compact(
                         'candidates',
@@ -702,7 +719,8 @@ class statCandidatesController extends Controller
                     ));
                 } elseif($status === '1') {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = $status;
                     }
                     return view('dashboard.status.approved', compact(
                         'candidates',
@@ -724,7 +742,8 @@ class statCandidatesController extends Controller
                     ));
                 } else {
                     foreach($candidates as $candidate) {
-                        $status_page = $candidate->signed_by_lp;
+                        if($candidate->signed_by_lp == $status)
+                            $status_page = '2';
                     }
                     return view('dashboard.status.rejected', compact(
                         'candidates',

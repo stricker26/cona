@@ -15,7 +15,6 @@ class ScreeningController extends Controller
 
     public function huc($code) {
         $data = DB::table('huc')
-            ->join('candidates as c', 'c.province_id', '=', 'huc.province_code')
             ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
             ->where('huc.province_code', '=', $code)
             ->get();
@@ -33,7 +32,6 @@ class ScreeningController extends Controller
 
     public function district($code) {
         $data = DB::table('municipality as m')
-            ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
             ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
             ->where('m.province_code', '=', $code)
             ->get();

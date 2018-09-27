@@ -29,10 +29,13 @@ class profileController extends Controller
                         ->where('district','=',$candidate->district_id)
                         ->where('province_code','=',$candidate->province_id)
                         ->first();
-            if(sizeof($municipality) === 0) {
-                $municipality = null;
-            } else {
-                $municipality = $municipality->municipality;
+                        
+            if($municipality) {         
+                if(isset($municipality) === 0) {
+                    $municipality = null;
+                } else {
+                    $municipality = $municipality->municipality;
+                }
             }
         }
         
