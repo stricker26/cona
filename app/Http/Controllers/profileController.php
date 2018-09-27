@@ -247,7 +247,31 @@ class profileController extends Controller
         $date_now = date("Y-m-d h:i:s");
 
         $candidate_id = $data_candidate->id;
-        $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2']);
+        $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2', 'signed_by_lec' => '2']);
+        if($reject) {
+            $alert = 'Rejected';
+            DB::table('edit_logs')->insert([
+                'updated_candidate_id' => $candidate_id,
+                'isAdmin' => Auth::user()->isAdmin,
+                'action' => 'HQ Reject Candidate',
+                'updated_by_id' => Auth::user()->id,
+                'url' => \Request::fullUrl(),
+                'ip' => \Request::ip(),
+                'updated_at' => $date_now
+            ]);
+        }
+        else {
+            $alert = 'Fail';
+        }
+        return $alert;
+    }
+
+    public function reject_lec(Request $data_candidate) {
+        date_default_timezone_set("Asia/Manila");
+        $date_now = date("Y-m-d h:i:s");
+
+        $candidate_id = $data_candidate->id;
+        $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lec' => '2']);
         if($reject) {
             $alert = 'Rejected';
             DB::table('edit_logs')->insert([
