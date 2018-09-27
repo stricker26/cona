@@ -75,8 +75,8 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'MUNICIPAL':
-    			$('tbody').html('');
-    			ajaxGet(e, name, type, region, part);
+    			//$('tbody').html('');
+    			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -99,8 +99,8 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'CC':
-    			$('tbody').html('');
-    			ajaxGet(e, name, type, region, part);
+    			//$('tbody').html('');
+    			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
