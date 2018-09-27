@@ -198,6 +198,19 @@ $(document).ready(function(){
 		});
 	});
 
+	$('#lec_approve_btn').on('click', function(){
+		var id_candidate = $('#id_candidate').val();
+		$.ajax({
+			method: 'POST',
+			url: 'profile/approve',
+			data: { "id": id_candidate},
+			success:function(data)  
+	    	{
+	    		location.reload();
+	    	}
+		});
+	});
+
 	$('#reject_btn').on('click', function(){
 		var id_candidate = $('#id_candidate').val();
 		$.ajax({
