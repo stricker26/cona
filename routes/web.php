@@ -46,10 +46,9 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/candidate/district', 'ScreeningController@districtCandidate');
 	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
+	Route::get('/status', 'profileController@redirect');
 
 	Route::get('/certificate','CertificateController@create');
-
-	Route::get('/status', 'profileController@redirect');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {

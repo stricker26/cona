@@ -15,13 +15,12 @@
     <!-- <body onload="window.print()"> -->
     <body>
         @foreach($candidate as $c)
+
         <?php 
             $candidate_name = strtoupper($c->name);
             $candidate_position = strtoupper($c->position);
         ?>
             
-            
-
 		<div class="page">
             <div class="page_body">
                 <div class="page_header">
@@ -53,7 +52,7 @@
                 <p>
                     as the Party’s official candidate in the May 13, 2019
 
-                @if($candidate_position == 'GOVERNOR' || $candidate_position == 'VICE GOVERNOR' || $candidate_position == 'BOARD MEMBER')
+                @if($candidate_position == 'GOVERNOR' || $candidate_position == 'VICE-GOVERNOR' || $candidate_position == 'BOARD MEMBER')
                     National and Local Elections for the position of <span>{{$candidate_position}}</span> in the province of
                 
                 @elseif($candidate_position == 'REPRESENTATIVE')
@@ -127,7 +126,7 @@
                     <br>
                     Naniniwala ako sa pagkakapantay-pantay at kalayaan, katuwiran at bayanihan, mga prinsipyong nakasaad sa Salig ang Batas ng Partido at sa LP Declaration nang 2018, na may pagtuon sa pasya ng liderato na gawing tunay na partido ng mamamayan ang LP.<br>
                     <br>
-                    Ako, ang nakalagdang opisyal na kandidato ng Partido Liberal para {{$c->administrative_address}}
+                    Ako, ang nakalagdang opisyal na kandidato ng Partido Liberal para {{$c->position}} sa {{$c->address}}
                     sa eleksyon 2019, ay,
                 </p>
                 <br>
@@ -149,7 +148,7 @@
                 <div class="sign">
                     
                     Pangalan at Lagda<br>
-                    Kandidato para {{$candidate_position}} sa {{$c->administrative_address}}<br>
+                    Kandidato para {{$candidate_position}} sa {{$c->address}}<br>
                     Petsa ng Pagpirma:<br>
                 </div>
             </div>

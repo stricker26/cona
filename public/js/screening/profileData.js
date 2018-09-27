@@ -108,7 +108,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			method: 'POST',
-			url: '/hq/screening/profile/sent',
+			url: './hq/screening/profile/sent',
 			data: objectData,
 			success:function(alert){
 	    		if(alert == 'cos failed') {
@@ -189,7 +189,7 @@ $(document).ready(function(){
 		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
-			url: 'profile/approve',
+			url: './profile/approve',
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
@@ -202,7 +202,7 @@ $(document).ready(function(){
 		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
-			url: 'profile/reject',
+			url: './profile/reject',
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
@@ -213,6 +213,8 @@ $(document).ready(function(){
 	});
 
 	$('#download_btn').on('click', function() {
-		alert('Download CONA');
+		
 	});
 });
+
+	

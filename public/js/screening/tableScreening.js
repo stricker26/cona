@@ -193,7 +193,7 @@ $(document).ready( function () {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
-				url: '/hq/screening/' + e,
+				url: './screening/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -210,7 +210,7 @@ $(document).ready( function () {
 		else {
 			$.ajax({
 				method: 'GET',
-				url: '/hq/screening/' + type + '/' + e,
+				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -431,7 +431,7 @@ function loadPagination() {
 function getProvinceCandidate(provinceCode, type) {
 
 	$.ajax({
-		url: '/hq/screening/candidate/governor',
+		url: './screening/candidate/governor',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
@@ -499,7 +499,7 @@ function getProvinceCandidate(provinceCode, type) {
 function getCityCandidate(provinceCode, type) {
 
 	$.ajax({
-		url: '/hq/screening/candidate/city',
+		url: './screening/candidate/city',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
@@ -597,7 +597,7 @@ function getCityCandidate(provinceCode, type) {
 //Display District Candidate
 function getDistrictCandidate(provinceCode, type, district) {
 	$.ajax({
-		url: '/hq/screening/candidate/district',
+		url: './screening/candidate/district',
 		method: 'GET',
 		data: {provinceCode: provinceCode, 'district': district},
 		dataType: 'json',
