@@ -17,7 +17,10 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse pt-2">
             <ul class="nav navbar-nav">
                 <li class="pl-2">
-                    <a href="{{ route('hqPanel') }}"><i class="fas fa-tachometer-alt pr-4"></i>&nbsp;Dashboard </a>
+                    <a href="{{ route('hqPanel') }}"><i class="fas fa-tachometer-alt pr-4"></i>Dashboard </a>
+                </li>
+                <li class="pl-2">
+                    <a href="/hq/senators"><i class="fas fa-user-alt pr-4"></i>&nbsp;Senators </a>
                 </li>
                 <li class="pl-2">
                     <div class="float-right stat-check">

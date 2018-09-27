@@ -50,6 +50,8 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::post('/status', 'statCandidatesController@status');
 	Route::get('/status', 'profileController@redirect');
 
+	Route::get('/senators','profileController@senator');
+
 	Route::get('/certificate','CertificateController@create');
 });
 

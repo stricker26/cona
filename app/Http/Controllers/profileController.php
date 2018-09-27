@@ -13,28 +13,38 @@ class profileController extends Controller
         $profile = $request->screening_btn;
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
 
-        $province = DB::table('province')
-                        ->select('lgu','type')
-                        ->where('province_code','=',$candidate->province_id)
-                        ->first();
-
-        $district = $candidate->district_id;
-        $city = $candidate->city_id;
-
-        if($province->type === 'HUC') {
+        if($candidate->candidate_for === 'Senator') {
+            $province = (object) array(
+                'lgu' => 'Philippines',
+                'type'=> 'Nation'
+            );
             $municipality = null;
+            $district = null;
+            $city = null;
         } else {
-            $municipality = DB::table('municipality')
-                        ->select('municipality')
-                        ->where('district','=',$candidate->district_id)
-                        ->where('province_code','=',$candidate->province_id)
-                        ->first();
-                        
-            if($municipality) {         
-                if(isset($municipality) === 0) {
-                    $municipality = null;
-                } else {
-                    $municipality = $municipality->municipality;
+            $province = DB::table('province')
+                            ->select('lgu','type')
+                            ->where('province_code','=',$candidate->province_id)
+                            ->first();
+
+            $district = $candidate->district_id;
+            $city = $candidate->city_id;
+
+            if($province->type === 'HUC') {
+                $municipality = null;
+            } else {
+                $municipality = DB::table('municipality')
+                            ->select('municipality')
+                            ->where('district','=',$candidate->district_id)
+                            ->where('province_code','=',$candidate->province_id)
+                            ->first();
+                            
+                if($municipality) {         
+                    if(isset($municipality) === 0) {
+                        $municipality = null;
+                    } else {
+                        $municipality = $municipality->municipality;
+                    }
                 }
             }
         }
@@ -232,7 +242,6 @@ class profileController extends Controller
                 $alert = 'candidate failed';
             }
         }
-
         
         return $alert;
     }
@@ -333,6 +342,10 @@ class profileController extends Controller
         return $alert;
     }
 
+    public function senator(){
+        $senators = DB::table('candidates')->where('candidate_for','Senator')->get();
+        return view('dashboard.screening.senator')->with('senators',$senators);
+    }
 
     public function redirect(){
         return redirect()->action('ScreeningController@screening');
