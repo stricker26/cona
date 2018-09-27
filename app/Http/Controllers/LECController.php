@@ -121,11 +121,28 @@ class LECController extends Controller
                 return 'No assigned LEC';
             }
 
-        } elseif($type == 'municipal_district') {
+        } elseif($type == 'district') {
+
             $query = DB::table('municipality AS muni')
                 ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
                 ->select('lc.name')
                 ->where('muni.province_code', '=', $province_code)
+                ->where('muni.district', '=', $city)
+                ->limit(1)
+                ->get();
+
+            if(count($query) > 0) {
+                return $query[0]->name;
+            } else {
+                return 'No assigned LEC';
+            }
+
+        } elseif($type == 'municipal') {
+            $query = DB::table('municipality AS muni')
+                ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('muni.province_code', '=', $province_code)
+                ->where('muni.municipality', '=', $city)
                 ->limit(1)
                 ->get();
 
@@ -136,15 +153,16 @@ class LECController extends Controller
             }
 
         } elseif($type == 'component_city') {
-            $query = DB::table('city')
-                ->select('lec')
-                ->where('province_code', '=', $province_code)
-                ->where('city', '=', $city)
+            $query = DB::table('city AS ct')
+                ->join('lec AS lc', 'ct.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('ct.province_code', '=', $province_code)
+                ->where('ct.city', '=', $city)
                 ->limit(1)
                 ->get();
 
             if(count($query) > 0) {
-                return $query[0]->lec;
+                return $query[0]->name;
             } else {
                 return 'No assigned LEC';
             }
