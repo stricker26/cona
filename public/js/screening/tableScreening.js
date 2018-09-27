@@ -221,12 +221,12 @@ $(document).ready( function () {
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
-		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+		    					if (type == 'PROVINCE' || type == 'HUC') {
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
-		    						if ($('#' + e).length == 0)
-		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						console.log('type: '+type);
+		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    				}
 		    			}
@@ -324,6 +324,11 @@ function hucTable(e, data, region) {
 				if ($('.bcrumbs a').length <= 2) {
 					if (x == s) {
 						printRow(data, x, 'city', type);
+					}
+					else {
+						if (data[x].city != data[x-1].city) {
+							printRow(data, x, 'city', type);
+						}
 					}
 				}
 				else {
