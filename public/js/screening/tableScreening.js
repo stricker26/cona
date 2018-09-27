@@ -32,7 +32,7 @@ $(document).ready( function () {
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
-		    getCityCandidate(urlCode, urlType);
+		    getCityCandidate(urlCode, urlType, urlName);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -77,7 +77,7 @@ $(document).ready( function () {
     		case 'MUNICIPAL':
     			$('tbody').html('');
     			ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type);
+    			getCityCandidate(e, type, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -101,7 +101,7 @@ $(document).ready( function () {
     		case 'CC':
     			$('tbody').html('');
     			ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type);
+    			getCityCandidate(e, type, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -197,7 +197,11 @@ $(document).ready( function () {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
+<<<<<<< HEAD
+				url: './screening/' + e,
+=======
 				url: '/' + path + '/screening/' + e,
+>>>>>>> fef0cb70fcd5f9aa0020a3c34332d0e926782b58
 				success:function(data)  
 		    	{
 		    		if (data == '') {
@@ -216,13 +220,17 @@ $(document).ready( function () {
 			});
 		}
 		else {
-			console.log(e);
+			//console.log(e);
 			$.ajax({
 				method: 'GET',
+<<<<<<< HEAD
+				url: './screening/' + type + '/' + e,
+=======
 				url: '/' + path + '/screening/' + type + '/' + e,
+>>>>>>> fef0cb70fcd5f9aa0020a3c34332d0e926782b58
 				success:function(data)  
 		    	{
-		    		console.log(data);
+		    		//console.log(data);
 		    		if (data == '') {
 		    		}
 		    		else  {
@@ -282,6 +290,11 @@ function loadTable(e, data) {
 			if (data[x].type != undefined) {
 				type = data[x].type;
 			}
+			if(data[x].assigned_lec == null) {
+				var lec = 'No assigned LEC';
+			} else {
+				var lec = data[x].assigned_lec;
+			}
 			$('tbody').append(`
 				<tr class='item'>
 					<td class="code">` + data[x].province_code + `</td>
@@ -289,7 +302,7 @@ function loadTable(e, data) {
 					<td>` + data[x].pending + `</td>
 					<td>` + data[x].approved + `</td>
 					<td>` + data[x].rejected + `</td>
-					<td>` + data[x].assigned_lec + `</td>
+					<td>` + lec + `</td>
 					<td class="type">` + type + `</td>
 					<td class="region" style="display:none;">` + data[x].region + `</td>
 				</tr>
@@ -388,6 +401,11 @@ function cityTable(e, data, name) {
 }
 
 function printRow(data, x, name, type) {
+	if(data[x].assigned_lec == null) {
+		var lec = 'No assigned LEC';
+	} else {
+		var lec = data[x].assigned_lec;
+	}
 	$('tbody').append(`
 			<tr class='item'>
 				<td class="code">` + data[x].province_code + `</td>
@@ -395,7 +413,7 @@ function printRow(data, x, name, type) {
 				<td>` + data[x].pending + `</td>
 				<td>` + data[x].approved + `</td>
 				<td>` + data[x].rejected + `</td>
-				<td>` + data[x].assigned_lec + `</td>
+				<td>` + lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);
@@ -453,7 +471,7 @@ function loadPagination() {
 function getProvinceCandidate(provinceCode, type) {
 
 	$.ajax({
-		url: '/hq/screening/candidate/governor',
+		url: './screening/candidate/governor',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
@@ -518,12 +536,14 @@ function getProvinceCandidate(provinceCode, type) {
 }
 
 // Display City Candidate
-function getCityCandidate(provinceCode, type) {
+function getCityCandidate(provinceCode, type, name) {
+
+	console.log(name);
 
 	$.ajax({
-		url: '/hq/screening/candidate/city',
+		url: './screening/candidate/city',
 		method: 'GET',
-		data: {provinceCode: provinceCode, requesType: type},
+		data: {provinceCode: provinceCode, requesType: type, name: name},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {
@@ -619,9 +639,9 @@ function getCityCandidate(provinceCode, type) {
 //Display District Candidate
 function getDistrictCandidate(provinceCode, type, district) {
 	$.ajax({
-		url: '/hq/screening/candidate/district',
+		url: './screening/candidate/district',
 		method: 'GET',
-		data: {provinceCode: provinceCode, 'district': district},
+		data: {provinceCode: provinceCode, 'district': district, 'type': type},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {

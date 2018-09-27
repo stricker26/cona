@@ -46,7 +46,7 @@ class ScreeningController extends Controller
             ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
             ->where('city.province_code', '=', $code)
             ->get();
-        //$data = DB::table('city')->get()->where('province_code', '=', $code);
+
         return $data;
     }
 
@@ -92,14 +92,26 @@ class ScreeningController extends Controller
 
         $lec = new LECController;
 
-        //if($request->ajax()) {
+        if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
+            $city = $request->input('name');
 
             $mayor = array();
             $vmayor = array();
             $councilor = array();
+
+            if($requesType == 'MUNICIPAL') {
+                $lec_type = 'municipal_district';
+                $lec_city = '';
+            } elseif($requesType == 'CC') {
+                $lec_type = 'component_city';
+                $lec_city = $city;
+            } else {
+                $lec_type = 'huc_district';
+                $lec_city = '';
+            }
 
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
@@ -129,18 +141,18 @@ class ScreeningController extends Controller
                             );
                         } 
                     }
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
                 } else {
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode), 'pass' => $requesType]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city), 'pass' => $requesType]);
                 }
 
             }  
 
-        // }  else {
+        }  else {
 
-        //     return response()->json(['warning' => 'Invalid request.']);
+            return response()->json(['warning' => 'Invalid request.']);
 
-        // }
+        }
 
     }
 
@@ -152,6 +164,7 @@ class ScreeningController extends Controller
             
             $provinceCode = $request->input('provinceCode');
             $district = $request->input('district');
+            $type = $request->input('type');
 
             $query = DB:: table('candidates')
                 ->where('province_id', '=', $provinceCode)
@@ -163,6 +176,15 @@ class ScreeningController extends Controller
             $councilor = array();
             $bmember = array();
             $prvcongressman = array();
+
+
+            if($type == 'HUC DISTRICT') {
+                $lec_type = 'huc_district';
+                $lec_city = '';
+            } else {
+                $lec_type = 'municipal_district';
+                $lec_city = '';
+            }
 
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
@@ -192,9 +214,9 @@ class ScreeningController extends Controller
                         );
                     }
                 }
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
             } else {
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
             }      
 
         } else {
@@ -241,9 +263,9 @@ class ScreeningController extends Controller
                             );
                         }
                     }
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode, 'province', '')]);
                 } else {
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode, 'province', '')]);
                 }
 
             } else {

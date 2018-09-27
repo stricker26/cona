@@ -134,56 +134,52 @@ class LECController extends Controller
         return $data;
     }
 
-    public static function lec_candidate($province_code) {
+    public static function lec_candidate($province_code, $type, $city) {
 
-        $query = DB::table('province AS pv')
-            ->join('lec AS lc', 'pv.lec', '=', 'lc.id')
-            ->select('lc.name')
-            ->where('pv.province_code', '=', $province_code)
-            ->limit(1)
-            ->get();
+        if($type == 'province' || $type == 'huc_district') {
+            $query = DB::table('province AS pv')
+                ->join('lec AS lc', 'pv.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('pv.province_code', '=', $province_code)
+                ->limit(1)
+                ->get();
 
-        $queryCity = DB::table('city AS ct')
-            ->join('lec AS lc', 'ct.lec', '=', 'lc.id')
-            ->select('lc.name')
-            ->where('ct.province_code', '=', $province_code)
-            ->limit(1)
-            ->get();
-
-        $queryMunicipal = DB::table('municipality AS muni')
-            ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
-            ->select('lc.name')
-            ->where('muni.province_code', '=', $province_code)
-            ->limit(1)
-            ->get();
-
-        if(count($queryMunicipal) > 0) {
-            return $queryMunicipal[0]->name;
-        } else {
-            if(count($queryCity) > 0) {
-                return $queryCity[0]->name;
+            if(count($query) > 0) {
+                return $query[0]->name;
             } else {
-                if(count($query) > 0) {
-                    return $query[0]->name;
-                } else {
-                    return 'No assigned LEC';
-                }
+                return 'No assigned LEC';
             }
-        }
 
-        // if(count($query) > 0) {
-        //     return $query[0]->name;
-        // } else {
-        //     if(count($queryCity) > 0) {
-        //         return $queryCity[0]->name;
-        //     } else {
-        //         if(count($queryMunicipal) > 0) {
-        //             return $queryMunicipal[0]->name;
-        //         } else {
-        //             return 'No assigned LEC';
-        //         }
-        //     }
-        // }
+        } elseif($type == 'municipal_district') {
+            $query = DB::table('municipality AS muni')
+                ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('muni.province_code', '=', $province_code)
+                ->limit(1)
+                ->get();
+
+            if(count($query) > 0) {
+                return $query[0]->name;
+            } else {
+                return 'No assigned LEC';
+            }
+
+        } elseif($type == 'component_city') {
+            $query = DB::table('city')
+                ->select('lec')
+                ->where('province_code', '=', $province_code)
+                ->where('city', '=', $city)
+                ->limit(1)
+                ->get();
+
+            if(count($query) > 0) {
+                return $query[0]->lec;
+            } else {
+                return 'No assigned LEC';
+            }
+        } 
+
+
     }
 
     public function status(Request $request) {

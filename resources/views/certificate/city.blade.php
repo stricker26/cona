@@ -1,0 +1,2 @@
+@extends('certificate.layouts.master')
+

@@ -38,6 +38,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@district');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+	Route::get('/screening/CC/{code}', 'ScreeningController@city');
 	Route::get('/screening/ICC/{code}', 'ScreeningController@cc');
 	Route::get('/screening/CC/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPAL/{code}', 'ScreeningController@cc');
@@ -48,6 +49,8 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
 	Route::get('/status', 'profileController@redirect');
+
+	Route::get('/certificate','CertificateController@create');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
