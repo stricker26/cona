@@ -130,10 +130,14 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
+		var name = $(this).html();
 		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		ajaxGet(code, '', type, undefined, part);
 		$('tbody').html('');
+		if (type == 'MUNICIPALITY') {
+			ajaxGet(code, name, type, undefined, part);
+		}
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'HUC', undefined, part);
 			ajaxGet(code, '', 'CITY', undefined, part);
@@ -225,7 +229,8 @@ $(document).ready( function () {
 		    					}
 		    					else {
 		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
-		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    							if ($('.MUNICIPALITY').length != 1)
+		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    						}
 		    					}
 		    				}
