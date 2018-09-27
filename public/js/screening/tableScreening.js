@@ -59,7 +59,6 @@ $(document).ready( function () {
 	    		$('.huc-districts').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.prov-districts').show(500);
-
     		break;
     		case 'PROVINCE':
     			$('tbody').html('');
@@ -221,12 +220,13 @@ $(document).ready( function () {
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
-		    					if (type == 'PROVINCE' || type == 'HUC') {
+		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
-		    						console.log('type: '+type);
-		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
+		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						}
 		    					}
 		    				}
 		    			}
