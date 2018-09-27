@@ -28,11 +28,11 @@ $(document).ready( function () {
     		$('.gov-mayor').hide(500);
     		$('.gov-governor').show(500);
     		$('.gov-districts').hide(500);
-    		getProvinceCandidate(urlCode, urlType);
+    		getProvinceCandidate(urlCode, urlType, part);
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
-		    getCityCandidate(urlCode, urlType);
+		    getCityCandidate(urlCode, urlType, part);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -50,7 +50,7 @@ $(document).ready( function () {
     		case 'DISTRICT':
     			$('tbody').html('');
     			ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
-    			getDistrictCandidate(e, type, name);
+    			getDistrictCandidate(e, type, name, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -77,7 +77,7 @@ $(document).ready( function () {
     		case 'MUNICIPAL':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type);
+    			getCityCandidate(e, type, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -89,7 +89,7 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
-    			getDistrictCandidate(e, type, name);
+    			getDistrictCandidate(e, type, name, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.gov-mayor').hide(500);
@@ -101,7 +101,7 @@ $(document).ready( function () {
     		case 'CC':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type);
+    			getCityCandidate(e, type, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -450,10 +450,10 @@ function loadPagination() {
 }
 
 //Display Province Candidate
-function getProvinceCandidate(provinceCode, type) {
-
+function getProvinceCandidate(provinceCode, type, part) {
+	console.log('getProvinceCandidate: ' + part);
 	$.ajax({
-		url: '/hq/screening/candidate/governor',
+		url: '/' + part + '/screening/candidate/governor',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
@@ -518,16 +518,17 @@ function getProvinceCandidate(provinceCode, type) {
 }
 
 // Display City Candidate
-function getCityCandidate(provinceCode, type) {
-
+function getCityCandidate(provinceCode, type, part) {
+	console.log('getCityCandidate: ' + part);
 	$.ajax({
-		url: '/hq/screening/candidate/city',
+		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
 		data: {provinceCode: provinceCode, requesType: type},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
+			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
 				jQuery('#huc-mayor').append(`
@@ -617,9 +618,10 @@ function getCityCandidate(provinceCode, type) {
 }
 
 //Display District Candidate
-function getDistrictCandidate(provinceCode, type, district) {
+function getDistrictCandidate(provinceCode, type, district, part) {
+	console.log('getDistrictCandidate: ' + part);
 	$.ajax({
-		url: '/hq/screening/candidate/district',
+		url: '/' + part + '/screening/candidate/district',
 		method: 'GET',
 		data: {provinceCode: provinceCode, 'district': district},
 		dataType: 'json',
@@ -756,6 +758,9 @@ function candidateStatus(status) {
 		break;
 		case '2':
 			var stat = '<span class="badge badge-pill badge-danger p-2">Rejected</span>';
+		break;
+		case 'Approved':
+			var stat = '<span class="badge badge-pill badge-success p-2">Approved by HQ</span>';
 		break;
 		default:
 			var stat = '';
