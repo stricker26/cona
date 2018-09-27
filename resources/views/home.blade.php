@@ -28,6 +28,9 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col text-center" id="response"></div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 form-col">
                     <div class="form-group">
                         <h2>Personal Information</h2>
@@ -141,15 +144,15 @@
                             <option value="">Position</option>
                             <option data-group="PROV" value="Senator" {{ (old("position") == "Senator" ? "selected":"") }}>Senator</option>
                             <option data-group="PROV" value="Governor" {{ (old("position") == "Governor" ? "selected":"") }}>Governor</option>
-                            <option data-group="PROV" value="Vice-Governor" {{ (old("position") == "Vice-Governor" ? "selected":"") }}>Vice-Governor</option>
-                            <option data-group="PROV" value="Provincial Board Member" {{ (old("position") == "Provincial Board Member" ? "selected":"") }}>Provincial Board Member</option>
+                            <option data-group="PROV" value="Vice-Governor" {{ (old("position") == "Vice-Governor" ? "selected":"") }}>Vice Governor</option>
+                            <option data-group="PROV" value="Board Member" {{ (old("position") == "Board Member" ? "selected":"") }}>Board Member</option>
                             <option data-group="PROV" value="Congressman" {{ (old("position") == "Congressman" ? "selected":"") }}>Congressman</option>
                             <option data-group="HUC" value="HUC Congressman" {{ (old("position") == "HUC Congressman" ? "selected":"") }}>HUC Congressman</option>
                             <option data-group="HUC" value="City Mayor" {{ (old("position") == "City Mayor" ? "selected":"") }}>City Mayor</option>
                             <option data-group="HUC" value="City Vice Mayor" {{ (old("position") == "City Vice Mayor" ? "selected":"") }}>City Vice Mayor</option>
                             <option data-group="HUC" value="City Councilor" {{ (old("position") == "City Councilor" ? "selected":"") }}>City Councilor</option>
                             <option data-group="PROV" value="Municipal Mayor" {{ (old("position") == "Municipal Mayor" ? "selected":"") }}>Municipal Mayor</option>
-                            <option data-group="PROV" value="Municipal Vice-Mayor" {{ (old("position") == "Municipal Vice-Mayor" ? "selected":"") }}>Municipal Vice-Mayor</option>
+                            <option data-group="PROV" value="Municipal Vice Mayor" {{ (old("position") == "Municipal Vice-Mayor" ? "selected":"") }}>Municipal Vice-Mayor</option>
                             <option data-group="PROV" value="Municipal Councilor" {{ (old("position") == "Municipal Councilor" ? "selected":"") }}>Municipal Councilor</option>
                         </select>
                     </div>
@@ -184,10 +187,10 @@
                         </select>
                     </div>
                     <div class="form-group a">
-                        <h2>Chief of Staff Details</h2>
+                        <h2>Secondary Contact Person</h2>
                     </div>
                     <div class="form-group">
-                        <label for="cos_name">Name of Chief of Staff</label>
+                        <label for="cos_name">Name of Secondary Contact Person</label>
                         <input type="text" name="cos_name" class="form-control" id="cos_name" value="{{ old('cos_name') }}">
                     </div>
                     <div class="form-group">

@@ -19,17 +19,25 @@
 			jQuery('.district-wrapper').fadeOut(500);
 			jQuery('.huc-city-wrapper').fadeOut(500);
 
-			if(position != 'Senator') {
+			if(position != 'Senator' && position != '') {
 				jQuery('.region-wrapper').fadeIn(500);
 				jQuery('#region').attr('required', 'required');
-				jQuery('#region').removeAttr('required');
+				jQuery('#province').removeAttr('required');
+				jQuery('#huc-city').removeAttr('required');
+				jQuery('#district').removeAttr('required');
+				jQuery('#city').removeAttr('required');
+
 			} else {
 				jQuery('.region-wrapper').fadeOut(500);
 				jQuery('.province-wrapper').fadeOut(500);
 				jQuery('.city-wrapper').fadeOut(500);
 				jQuery('.district-wrapper').fadeOut(500);
 				jQuery('.huc-city-wrapper').fadeOut(500);
-				jQuery('#region').attr('required', 'required');
+				jQuery('#region').removeAttr('required');
+				jQuery('#province').removeAttr('required');
+				jQuery('#huc-city').removeAttr('required');
+				jQuery('#district').removeAttr('required');
+				jQuery('#city').removeAttr('required');
 			}
 
 		});
@@ -41,6 +49,12 @@
 			var groupType = jQuery('option:selected', jQuery('#position')).data('group');
 
 			jQuery('.province-wrapper').fadeIn(500);
+			jQuery('.huc-city-wrapper').fadeOut(500);
+			jQuery('#province').attr('required', 'required');
+			jQuery('#huc-city').removeAttr('required');
+			jQuery('#district').removeAttr('required');
+			jQuery('#huc-city').removeAttr('required');
+			jQuery('#city').removeAttr('required');
 			jQuery('#province').html('<option>Loading...</option>');
 
 			if(groupType == 'PROV') {
@@ -102,18 +116,22 @@
 				var requestType = 'huc_district';
 				if(jQuery('#position').val() == 'HUC Congressman' || jQuery('#position').val() == 'City Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
+					jQuery('#district').attr('required', 'required');
 					jQuery('.huc-city-wrapper').fadeOut(500);
 					var target = '#district';
 				} else {
+					jQuery('#district').removeAttr('required');
 					jQuery('.huc-city-wrapper').fadeOut(500);
 				}
 			} else if(groupType == 'HUC' && region != 'NCR') {
 				if(jQuery('#position').val() == 'HUC Congressman') {
 					jQuery('.huc-city-wrapper').fadeOut(500);
+					jQuery('#huc-city').removeAttr('required');
 				} else {
 					var requestType = 'cc_huc';
 					var target = '#huc-city';
 					jQuery('.huc-city-wrapper').fadeIn(500);
+					jQuery('#huc-city').attr('required', 'required');
 				}
 			} else {
 				var requestType = 'district';
@@ -121,8 +139,10 @@
 				var position = jQuery('#position').val();
 				if(position == 'Provincial Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
+					jQuery('#district').attr('required', 'required');
 					jQuery('#district').html('<option>Loading...</option>');
 				} else {
+					jQuery('#district').removeAttr('required');
 					jQuery('.district-wrapper').fadeOut(500);
 				}
 				
@@ -183,6 +203,7 @@
 			if(groupType == 'HUC') {
 
 				jQuery('.city-wrapper').fadeOut(500);
+				jQuery('#city').removeAttr('required');
 
 			} else {
 
@@ -190,12 +211,15 @@
 
 				if(position == 'Congressman' || position == 'Provincial Board Member') {
 					jQuery('.city-wrapper').fadeOut(500);
+					jQuery('#city').removeAttr('required');
 				} else {
 
 					if(position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor') {
 						jQuery('.city-wrapper').fadeOut(500);
+						jQuery('#city').removeAttr('required');
 					} else {
 						jQuery('.city-wrapper').fadeIn(500);
+						jQuery('#city').attr('required', 'required');
 					}
 
 					$.ajax({
@@ -211,6 +235,35 @@
 					});
 				}
 			}
+
+		});
+
+		jQuery('#register').submit(function(event) {
+
+			$.ajax({
+
+				url: jQuery(this).attr('action'),
+				method: jQuery(this).attr('method'),
+				data: jQuery(this).serialize(),
+				dataType: 'json',
+				success: function(data) {
+					if(data.warning) {
+						jQuery('#response').html('<div class="alert alert-danger">' + data.warning + '</div>');
+					} else {
+						jQuery('#response').html('<div class="alert alert-success">' + data.success + '</div>');
+						jQuery("#register").get(0).reset();
+					}
+				},
+				error: function(data) {
+				}
+
+			});
+
+			jQuery('html, body').animate({
+		        scrollTop: jQuery(".navbar").offset().top
+		    }, 800);
+
+			event.preventDefault();
 
 		});
 

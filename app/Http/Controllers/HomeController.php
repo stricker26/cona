@@ -40,10 +40,7 @@ class HomeController extends Controller
 
         if($validator->fails()) {
 
-           return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput(); 
+            return response()->json(['warning' => 'Fields with (*) are mandatory.']);
 
         } else {
 
@@ -93,8 +90,7 @@ class HomeController extends Controller
                 'email' => $request->input('cos_email'),
             ]);
 
-            Session::flash('success', 'Successfully Registered!!!');
-           return redirect()->back();
+            return response()->json(['success' => 'Successfully Registered!!!']);
 
         }
 
