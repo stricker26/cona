@@ -101,6 +101,7 @@ class statCandidatesController extends Controller
                         }
                     }
                 }
+                dd($candidate);
                 
                 foreach($candidates as $candidate) {
                     if($candidate->signed_by_lp == $status)
