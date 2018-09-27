@@ -1,4 +1,6 @@
 var path = window.location.pathname;
+var part = path.split('/')[1];
+console.log(path);
 jQuery(document).ready(function($){
 	$('.loader').hide();
 	$('.body-toload').show();
@@ -41,6 +43,7 @@ jQuery(document).ready(function($){
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(event){
 		event.preventDefault();
 		var dataProvince = $(this).data("value");
+		console.log(this);
 		var data = dataProvince.split(',');
 		var e = data[0];
 		var name = data[2];
@@ -49,23 +52,24 @@ jQuery(document).ready(function($){
 		$('tbody').html('');
 		if (path == '/hq/screening') {
 			if (type == 'DISTRICT') {
-	    		ajaxGet(e, name, 'MUNICIPALITY');
+	    		ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
     			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
-	    		ajaxGet(e, name, type, region);
-	    		ajaxGet(e, name, 'HUC', region);
-	    		ajaxGet(e, name, 'CITY', region);
+	    		ajaxGet(e, name, type, region, part);
+	    		ajaxGet(e, name, 'HUC', region, part);
+	    		ajaxGet(e, name, 'CITY', region, part);
+	    		getProvinceCandidate(e, type);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
     			$('.gov-districts').hide(500);
 	    	}
 	    	else {
-	    		ajaxGet(e, name, type, region);
+	    		ajaxGet(e, name, type, region, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
@@ -75,7 +79,7 @@ jQuery(document).ready(function($){
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
 	    }
-	    else if (path == '/hq/screening/profile') {
+	    else if (path == '/hq/screening/profile' || path == '/lec/screening/profile') {
 	    	window.location.href = '../screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	    else {
@@ -83,25 +87,39 @@ jQuery(document).ready(function($){
 	    }
 	});
 
-	function ajaxGet(e, name, type, region) {
+	function ajaxGet(e, name, type, region, part) {
 		$.ajax({
 			method: 'GET',
 			url: '/hq/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
+	    		console.log(e);
+	    		console.log(name);
+	    		console.log(type);
+	    		console.log(region);
+	    		console.log(part);
 	    		if (data == '') {
+
+		    		console.log(data);
 	    		}
 	    		else  {
 	    			if (name != undefined && name != '') {
 	    				if (type != 'CITY') {
 	    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
-		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');				
+					    		console.log(data);
 		    				}
 		    				else {
-		    					if ($('#' + e).length == 0)
+		    					if ($('#' + e).length == 0) {
+						    		console.log(data);
 		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    					}
+					    		console.log(data);
 		    				}
+				    		console.log(data);
 	    				}
+			    		console.log(data);
+			    		console.log(type);
 	    			}
 	    			switch (type) {
 	    				case 'HUC':
@@ -118,10 +136,12 @@ jQuery(document).ready(function($){
 	    				break;
 	    			}
 	    			//loadTable(e, data);
+		    		console.log(data);
+				    console.log(type);
 	    		}
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
-	    	} 
+	    	}
 		});
 	}
 });

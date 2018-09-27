@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.master')
+@extends('lec.layouts.master')
 
 @section('title','Profile')
 
@@ -14,7 +14,7 @@
 		        	Are you sure you want to approve this candidate?
 		      	</div>
 		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
+		        	<button type="button" class="btn btn-success" id="lec_approve_btn">Approve</button>
 		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
@@ -27,7 +27,7 @@
 		        	Are you sure you want to reject this candidate?
 		      	</div>
 		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
+		        	<button type="button" class="btn btn-danger" id="lec_reject_btn">Reject</button>
 		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
@@ -39,7 +39,7 @@
 			<div class="content mt-3 pl-3 pr-3 success-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-success alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-success">Success</span><span class="message-text"> Data saved</span>
+	                  <span class="badge badge-pill badge-success message-alert">Success</span> Data saved
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -50,7 +50,7 @@
 	        <div class="content pl-3 pr-3 failed-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-danger">Failed</span><span class="message-text"> Data not saved</span>
+	                  <span class="badge badge-pill badge-danger message-alert">Failed</span> Data not saved
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
@@ -85,33 +85,14 @@
 						<div class="text-center">
 							<h3>{{$candidate->candidate_for}}</h3>
 						</div>
-						<div class="text-center">
-							<?php
-								if($province->type == 'HUC') {
-									if($district) {
-										$location = $province->lgu . ', ' . $district;
-									} else {
-										$location = $province->lgu;
-									}
-									
-								} else {
-									if($district) {
-										$location = $province->lgu . ', ' . $municipality . ', ' . $district;
-									} else {
-										$location = $province->lgu . ', ' . $municipality;
-									}
-								}
-							?>
-							<h5><?php echo $location; ?></h5>
-						</div>
 						<div>
-							@if ($candidate->signed_by_lp == 1)
-								<span class="text-success">Approved</span>
-							@elseif ($candidate->signed_by_lp ==0)
-								<span class="text-warning">Pending</span>
-							@elseif ($candidate->signed_by_lp ==2)
-								<span class="text-danger">Rejected</span>
-							@endif
+								@if ($candidate->signed_by_lec == 1)
+									<span class="text-success">Approved</span>
+								@elseif ($candidate->signed_by_lec == 0)
+									<span class="text-warning">Pending</span>
+								@elseif ($candidate->signed_by_lec ==2)
+									<span class="text-danger">Rejected</span>
+								@endif
 						</div>
 					</div>
 				</div>
@@ -214,9 +195,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="facebook">
 							@if($json['facebook'])
-								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="{{ $json['facebook'] }}">
+								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{ $json['facebook'] }}">
 							@else
-								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="">
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="">
 							@endif
 						</div>
 					</div>
@@ -231,9 +212,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="twitter">
 							@if($json['twitter'])
-								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="{{ $json['twitter'] }}">
+								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{ $json['twitter'] }}">
 							@else
-								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="">
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="">
 							@endif
 						</div>
 					</div>
@@ -248,9 +229,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="instagram">
 							@if($json['instagram'])
-								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{ $json['instagram'] }}">
 							@else
-								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="">
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="">
 							@endif
 						</div>
 					</div>
@@ -265,9 +246,9 @@
 					<div class="col-sm-6 row-content">
 						<div class="website">
 							@if($json['website'])
-								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="{{ $json['website'] }}">
+								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{ $json['website'] }}">
 							@else
-								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="">
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="">
 							@endif
 						</div>
 					</div>
@@ -352,7 +333,7 @@
 					</div>
 					<div class="row row-body">
 						<div class="col-sm-6">
-							<span class="font-weight-bold">Relationship :</span>
+							<span class="font-weight-bold">Relationship/Position :</span>
 						</div>
 						<div class="col-sm-6 row-content">
 							<span>{{$cos->relationship}}</span>
@@ -443,7 +424,7 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			@if ($candidate->signed_by_lp == 0)
+			@if ($candidate->signed_by_lec == 0)
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
 				</div>
@@ -452,7 +433,7 @@
 				</div>
 			@elseif ($candidate->signed_by_lp == 1)
 				<div class="d-inline pr-2">
-					<a href="{{url('/hq/certificate?candidate=')}}{{ $candidate->id }}" type="button" class="btn btn-warning" id="download_btn"target="blank">Download CONA</a>
+					<button type="button" class="btn btn-warning" id="download_btn">Download CONA</button>
 				</div>
 			@endif
 		</div>

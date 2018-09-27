@@ -60,8 +60,7 @@
                                     $key_p = 0;
                                 @endphp
                                 @foreach($provinces as $province)
-                                    @if(($region === $province->region &&
-                                        $province->type != 'HUC') ||
+                                    @if(($region === $province->region && $province->type != 'HUC') ||
                                         ($region === $province->region &&
                                         $region == 'NCR'))
                                     <div>
