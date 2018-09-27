@@ -62,7 +62,7 @@ jQuery(document).ready(function($){
 	    		ajaxGet(e, name, type, region, part);
 	    		ajaxGet(e, name, 'HUC', region, part);
 	    		ajaxGet(e, name, 'CITY', region, part);
-	    		getProvinceCandidate(e, type);
+	    		getProvinceCandidate(e, type, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-governor').show(500);
@@ -124,15 +124,15 @@ jQuery(document).ready(function($){
 	    			switch (type) {
 	    				case 'HUC':
 	    					hucTable(e, data, region);
-	    					getCityCandidate(e, type);
+	    					getCityCandidate(e, type, part);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
-	    					getProvinceCandidate(e, type);
+	    					getProvinceCandidate(e, type, part);
 	    				break;
 	    				case 'CITY':
 	    					cityTable(e, data, name);
-	    					getCityCandidate(e, type);
+	    					getCityCandidate(e, type, part);
 	    				break;
 	    			}
 	    			//loadTable(e, data);

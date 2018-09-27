@@ -14,4 +14,5 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/x/x.scss', 'public/css')
-   .sass('resources/sass/x/table-screening.scss', 'public/css');
+   .sass('resources/sass/x/table-screening.scss', 'public/css')
+   .sass('resources/sass/certificate.scss', 'public/css');

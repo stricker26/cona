@@ -1,0 +1,208 @@
+@font-face {
+  font-family: 'Century Gothic';
+  src: url("http://localhost/gitprojects/conana/public/fonts/certificate/CenturyGothic-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sylfaen';
+  src: url("http://localhost/gitprojects/conana/public/fonts/certificate/Sylfaen.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Sylfaen_Bold';
+  src: url("http://localhost/gitprojects/conana/public/fonts/certificate/Sylfaen.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src: url("http://localhost/gitprojects/conana/public/fonts/certificate/arial.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  margin: 0px;
+}
+
+body {
+  background-color: #5d5d5d;
+  margin: 0;
+}
+
+body p {
+  margin: 0;
+}
+
+.page {
+  background-color: #fff;
+  height: 14in;
+  display: block;
+  margin: 0px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-bottom: 20px;
+  page-break-after: always;
+}
+
+@page .page {
+  size: 8.5in 14in;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.page_body {
+  width: 100%;
+  position: relative;
+  display: block;
+  padding: 20mm 25mm 0mm 25mm;
+}
+
+.page_body .page_header * {
+  font-family: 'Century Gothic';
+  text-align: center;
+  margin: 0;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.page_body .page_header h1 {
+  color: #001d66;
+  font-size: 11pt;
+}
+
+.page_body .page_header p {
+  font-size: 6pt;
+}
+
+.page_body .page_header img.logo {
+  position: absolute;
+  right: 15mm;
+  top: 16mm;
+  width: 23mm;
+  height: 19mm;
+}
+
+.page_body * {
+  font-family: 'Sylfaen';
+  margin: 0;
+}
+
+.page_body h1,
+.page_body h2 {
+  font-family: 'Sylfaen';
+  text-align: center;
+  font-weight: bold;
+}
+
+.page_body p {
+  font-size: 12pt;
+  text-align: justify;
+}
+
+.page_body p span {
+  font-weight: bold;
+}
+
+.page_body p.indented {
+  text-indent: 12mm;
+}
+
+.page_body h1 {
+  font-size: 16pt;
+}
+
+.page_body h2 {
+  font-size: 14pt;
+}
+
+.page_body .sign {
+  display: inline-block;
+  position: absolute;
+  left: 300px;
+}
+
+.page_body .sign p {
+  text-align: center;
+}
+
+.pledge {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0mm 13mm 0mm 13mm;
+}
+
+.pledge .pledge_logo {
+  position: relative;
+  text-align: center;
+  display: block;
+}
+
+.pledge .pledge_logo img {
+  width: 94mm;
+  height: 34mm;
+}
+
+.pledge * {
+  font-family: 'Arial';
+}
+
+.pledge h1 {
+  font-size: 17pt;
+  text-align: center;
+  margin: 0;
+}
+
+.pledge p {
+  font-size: 12pt;
+  text-align: justify;
+}
+
+.pledge p.pledge_subtitle {
+  text-align: center;
+}
+
+.pledge ul {
+  list-style-type: disc;
+  padding-left: 15px;
+}
+
+.pledge ul li {
+  text-align: justify;
+}
+
+.pledge .sign {
+  float: right;
+  border-top: 1px solid #000;
+}
+
+.pledge_eng {
+  padding-top: 65mm;
+}
+
+.pledge_eng p,
+.pledge_eng ul {
+  font-size: 11pt;
+}
+
+.pledge_eng h1 {
+  font-size: 15pt;
+}
+
+.pledge_eng .pledge_footer {
+  text-align: center;
+}
+
+.pledge_eng .pledge_footer img {
+  width: 184mm;
+  height: auto;
+}
+

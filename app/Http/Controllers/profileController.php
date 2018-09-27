@@ -110,15 +110,27 @@ class profileController extends Controller
             $update_cos = DB::table('chief_of_staff')->where('cos_id',$candidate->cos_id)->update($data_update_cos);
 
             if($update_cos) {
-                DB::table('edit_logs')->insert([
-                    'updated_candidate_id' => $candidate_id,
-                    'isAdmin' => Auth::user()->isAdmin,
-                    'action' => 'COS Updated',
-                    'updated_by_id' => Auth::user()->id,
-                    'url' => \Request::fullUrl(),
-                    'ip' => \Request::ip(),
-                    'updated_at' => $date_now
-                ]);
+                if(Auth::user()->isAdmin == 1) {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate_id,
+                        'isAdmin' => Auth::user()->isAdmin,
+                        'action' => 'HQ COS Edit',
+                        'updated_by_id' => Auth::user()->id,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                } else {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate_id,
+                        'isAdmin' => Auth::user()->isAdmin,
+                        'action' => 'LEC COS Edit',
+                        'updated_by_id' => Auth::user()->id,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                }
 
                 $data_candidate_province = DB::table('province')->where('lgu',strtoupper($data_candidate->loc_province))->first();
                 $data_update = array(
@@ -143,15 +155,28 @@ class profileController extends Controller
                 if($update) {
                     $alert = 'candidate success';
 
-                    DB::table('edit_logs')->insert([
-                        'updated_candidate_id' => $candidate_id,
-                        'isAdmin' => Auth::user()->isAdmin,
-                        'action' => 'Candidate Updated',
-                        'updated_by_id' => Auth::user()->id,
-                        'url' => \Request::fullUrl(),
-                        'ip' => \Request::ip(),
-                        'updated_at' => $date_now
-                    ]);
+                    
+                    if(Auth::user()->isAdmin == 1) {
+                        DB::table('edit_logs')->insert([
+                            'updated_candidate_id' => $candidate_id,
+                            'isAdmin' => Auth::user()->isAdmin,
+                            'action' => 'HQ Candidate Edit',
+                            'updated_by_id' => Auth::user()->id,
+                            'url' => \Request::fullUrl(),
+                            'ip' => \Request::ip(),
+                            'updated_at' => $date_now
+                        ]);
+                    } else {
+                        DB::table('edit_logs')->insert([
+                            'updated_candidate_id' => $candidate_id,
+                            'isAdmin' => Auth::user()->isAdmin,
+                            'action' => 'LEC Candidate Edit',
+                            'updated_by_id' => Auth::user()->id,
+                            'url' => \Request::fullUrl(),
+                            'ip' => \Request::ip(),
+                            'updated_at' => $date_now
+                        ]);
+                    }
                 } else {
                     $alert = 'candidate failed';
                 }
@@ -182,15 +207,27 @@ class profileController extends Controller
             if($update) {
                 $alert = 'candidate success';
 
-                DB::table('edit_logs')->insert([
-                    'updated_candidate_id' => $candidate_id,
-                    'isAdmin' => Auth::user()->isAdmin,
-                    'action' => 'Candidate Updated',
-                    'updated_by_id' => Auth::user()->id,
-                    'url' => \Request::fullUrl(),
-                    'ip' => \Request::ip(),
-                    'updated_at' => $date_now
-                ]);
+                if(Auth::user()->isAdmin == 1) {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate_id,
+                        'isAdmin' => Auth::user()->isAdmin,
+                        'action' => 'HQ Candidate Edit',
+                        'updated_by_id' => Auth::user()->id,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                } else {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate_id,
+                        'isAdmin' => Auth::user()->isAdmin,
+                        'action' => 'LEC Candidate Edit',
+                        'updated_by_id' => Auth::user()->id,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                }
             } else {
                 $alert = 'candidate failed';
             }
@@ -235,7 +272,7 @@ class profileController extends Controller
             DB::table('edit_logs')->insert([
                 'updated_candidate_id' => $candidate_id,
                 'isAdmin' => Auth::user()->isAdmin,
-                'action' => 'HQ Approve Candidate',
+                'action' => 'LEC Approve Candidate',
                 'updated_by_id' => Auth::user()->id,
                 'url' => \Request::fullUrl(),
                 'ip' => \Request::ip(),
@@ -283,7 +320,7 @@ class profileController extends Controller
             DB::table('edit_logs')->insert([
                 'updated_candidate_id' => $candidate_id,
                 'isAdmin' => Auth::user()->isAdmin,
-                'action' => 'HQ Reject Candidate',
+                'action' => 'LEC Reject Candidate',
                 'updated_by_id' => Auth::user()->id,
                 'url' => \Request::fullUrl(),
                 'ip' => \Request::ip(),

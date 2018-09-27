@@ -60,7 +60,7 @@
 			if(groupType == 'PROV') {
 
 				$.ajax({
-					url: '/geo',
+					url: './geo',
 						method: 'GET',
 						data: {requestType: 'province', requestValue: region},
 						success: function(data) {
@@ -76,7 +76,7 @@
 				if(region != 'NCR' && (position == 'City Mayor' || position == 'City Vice Mayor' || position == 'City Councilor')) {
 
 					$.ajax({
-						url: '/geo',
+						url: './geo',
 							method: 'GET',
 							data: {requestType: 'hybrid_province', requestValue: region},
 							success: function(data) {
@@ -90,7 +90,7 @@
 				} else {
 
 					$.ajax({
-						url: '/geo',
+						url: './geo',
 							method: 'GET',
 							data: {requestType: 'huc_province', requestValue: region},
 							success: function(data) {
@@ -149,7 +149,7 @@
 			}
 
 			$.ajax({
-				url: '/geo',
+				url: './geo',
 				method: 'GET',
 				data: {requestType: requestType, requestValue: provinceID},
 				success: function(data) {
@@ -179,7 +179,7 @@
 				jQuery('#district').html('<option>Loading...</option>');
 
 				$.ajax({
-					url: '/geo',
+					url: './geo',
 					method: 'GET',
 					data: {requestType: 'huc_district', requestValue: city},
 					success: function(data) {
@@ -223,7 +223,7 @@
 					}
 
 					$.ajax({
-						url: '/geo',
+						url: './geo',
 						method: 'GET',
 						data: {requestType: 'city', requestValue: district, provinceCode: province_code},
 						success: function(data) {

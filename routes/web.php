@@ -49,6 +49,8 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
 	Route::get('/status', 'profileController@redirect');
+
+	Route::get('/certificate','CertificateController@create');
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
@@ -73,4 +75,7 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::post('/screening/profile', 'profileController@profile_lec');
 	Route::post('/screening/profile/approve', 'profileController@approve_lec');
 	Route::post('/screening/profile/reject', 'profileController@reject_lec');
+	Route::get('/screening/candidate/city', 'LECController@candidate');
+	Route::get('/screening/candidate/district', 'LECController@districtCandidate');
+	Route::get('/screening/candidate/governor', 'LECController@governor');
 });
