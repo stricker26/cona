@@ -38,6 +38,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@district');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
+	Route::get('/screening/CC/{code}', 'ScreeningController@city');
 	Route::get('/screening/ICC/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPAL/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
