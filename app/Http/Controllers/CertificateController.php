@@ -16,9 +16,22 @@ class CertificateController extends Controller
 
     	$candidate = [];
         foreach($can as $cand){
-            $province = DB::table('province')->where('province_code','=',$cand->province_id)->value('lgu');
-            $region = DB::table('province')->where('province_code','=',$cand->province_id)->value('region');
-        	$c = new stdClass();
+            $prov = DB::table('province')->where('province_code','=',$cand->province_id)->get();
+
+            $province = $prov[0]->lgu;
+            $lec_id = $prov[0]->lec;
+            $region = $prov[0]->region;
+
+            $lec = DB::table('lec')->where('id','=',$lec_id)->get();
+            $c = new stdClass();
+
+
+            $c->lec_name = strtoupper($lec[0]->name);
+            $c->lec_position = $lec[0]->designation_gov;
+
+            // $c->lec_name = 'KIKO PANGILINAN';
+            // $c->lec_position = 'PRESIDENT';
+
         		// create object list of candidates to generate certificate
         	$c->name = $cand->firstname . ' ' . substr($cand->middlename,0,1) . '. ' . $cand->lastname;
 
@@ -71,7 +84,6 @@ class CertificateController extends Controller
                     $cand->candidate_for == 'Municipal Mayor'){
 
                     $c->position = 'MAYOR';
-
                 }
 
                 if($cand->candidate_for == 'City Vice Mayor' || 
@@ -91,6 +103,9 @@ class CertificateController extends Controller
 
                     $c->position = 'REPRESENTATIVE';
                 }
+
+               
+
                 $filename .= strtoupper($c->position) . '_';
                 $filename .= $cand->firstname . '_' . $cand->middlename . '_' . $cand->lastname . '.pdf';
 
@@ -102,8 +117,8 @@ class CertificateController extends Controller
 
 
         
-        return $pdf->download($filename);
-        // return $pdf->stream();
+        // return $pdf->download($filename);
+        return $pdf->stream();
     	// return view('certificate.main', compact('candidate'));
 
     }

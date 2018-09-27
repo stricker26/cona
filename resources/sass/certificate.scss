@@ -110,12 +110,25 @@ body{
 			font-size: 14pt;
 		}
 		.sign{
-			display: inline-block;
 			position: absolute;
-			left: 300px;
+			right: 0;
+			left: auto;
+			width: 450px;
+			display: block;
 			p{
 				text-align:center;
 			}
+		}
+		.lec_container{
+			position: absolute;
+			right: 0;
+			left: auto;
+			width: 450px;
+			display: block;
+		}
+
+		.lec_container p{
+			text-align: center;
 		}
 	}
 
