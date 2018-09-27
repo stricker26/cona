@@ -201,14 +201,18 @@ $(document).ready( function () {
 				success:function(data)  
 		    	{
 		    		if (data == '') {
+		    			console.log(data);
 		    		}
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="">' + name + '</a>');
+			    			console.log(data);
 		    			}
 		    			loadTable(e, data);
+		    			console.log(data);
 		    		}
-		    	} 
+		    		console.log(data);
+		    	}
 			});
 		}
 		else {
@@ -225,7 +229,8 @@ $(document).ready( function () {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
 		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
-		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');						
+					    			console.log(data);
 		    					}
 		    					else {
 		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
@@ -233,6 +238,7 @@ $(document).ready( function () {
 		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    						}
 		    					}
+				    			console.log(data);
 		    				}
 		    			}
 		    			switch (type) {
@@ -254,11 +260,12 @@ $(document).ready( function () {
 		    				default:
 		    					loadTable(e, data);
 		    			}
+		    			console.log(data);
 		    			//loadTable(e, data);
 		    		}
 		    		$('#locationModal').html(name);
 		    		$('.screenLocation').html(name);
-		    	} 
+		    	}
 			});
 		}
 	}

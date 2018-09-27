@@ -40,6 +40,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
 	Route::get('/screening/CC/{code}', 'ScreeningController@city');
 	Route::get('/screening/ICC/{code}', 'ScreeningController@cc');
+	Route::get('/screening/CC/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPAL/{code}', 'ScreeningController@cc');
 	Route::get('/screening/MUNICIPALITY/{code}', 'ScreeningController@municipality');
 	Route::get('/screening/REGION/{code}', 'ScreeningController@region');
@@ -51,9 +52,15 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
-	Route::get('/','LECController@lec_dashboard');
+	Route::get('/', [
+		'uses' => 'LECController@lec_dashboard',
+		'as' => 'lecPanel',
+	]);
 	Route::get('/candidates','LECController@lec_candidate');
 	Route::post('/status', 'LECController@status');
+	Route::post('/screening/profile', 'LECController@profile');
+	Route::get('/screening/profile', 'LECController@redirect');
+	
 	Route::get('/screening', 'LECController@screening');
 	Route::get('/screening/HUC/{code}', 'LECController@huc');
 	Route::get('/screening/PROVINCE/{code}', 'LECController@municipality');
@@ -65,4 +72,5 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::get('/screening/count/{province}/{district}', 'LECController@count');
 	Route::post('/screening/profile', 'profileController@profile_lec');
 	Route::post('/screening/profile/approve', 'profileController@approve_lec');
+	Route::post('/screening/profile/reject', 'profileController@reject_lec');
 });

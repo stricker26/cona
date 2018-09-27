@@ -78,6 +78,7 @@ class HomeController extends Controller
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
                 'city_id' => $city,
+                'signed_by_lec' => '0',
                 'signed_by_lp' => '3',
                 'cos_id' => $cos_id,
             ]);
