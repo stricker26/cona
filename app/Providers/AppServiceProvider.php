@@ -206,19 +206,19 @@ class AppServiceProvider extends ServiceProvider
             $rejected_count_all = 0;
             foreach($provinces as $province_id) {
                 $pending_a = count(DB::table('candidates')
-                                    ->where('signed_by_lp',0)
+                                    ->where('signed_by_lec',0)
                                     ->where('province_id',$province_id->province_code)
                                     ->get());
                 $pending_count_all = $pending_count_all + $pending_a;
 
                 $approved_a = count(DB::table('candidates')
-                                    ->where('signed_by_lp',1)
+                                    ->where('signed_by_lec',1)
                                     ->where('province_id',$province_id->province_code)
                                     ->get());
                 $approved_count_all = $approved_count_all + $approved_a;
 
                 $rejected_a = count(DB::table('candidates')
-                                    ->where('signed_by_lp',2)
+                                    ->where('signed_by_lec',2)
                                     ->where('province_id',$province_id->province_code)
                                     ->get());
                 $rejected_count_all = $rejected_count_all + $rejected_a;
@@ -233,7 +233,7 @@ class AppServiceProvider extends ServiceProvider
                     if($province->region === $region) {
                         $count_p = count(DB::table('candidates')
                                     ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lp',0)
+                                    ->where('signed_by_lec',0)
                                     ->get());
 
                         if(!isset($pending_count_region->$region)) {
@@ -244,7 +244,7 @@ class AppServiceProvider extends ServiceProvider
 
                         $count_a = count(DB::table('candidates')
                                     ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lp',1)
+                                    ->where('signed_by_lec',1)
                                     ->get());
 
                         if(!isset($approved_count_region->$region)) {
@@ -255,7 +255,7 @@ class AppServiceProvider extends ServiceProvider
 
                         $count_r = count(DB::table('candidates')
                                     ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lp',2)
+                                    ->where('signed_by_lec',2)
                                     ->get());
 
                         if(!isset($rejected_count_region->$region)) {
@@ -277,7 +277,7 @@ class AppServiceProvider extends ServiceProvider
                         if($province->type === 'HUC' && $region !== 'NCR') {
                             $candidates_HUC = DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',0)
+                                ->where('signed_by_lec',0)
                                 ->get();
                             foreach($candidates_HUC as $candidate_HUC) {
                                 $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
@@ -294,7 +294,7 @@ class AppServiceProvider extends ServiceProvider
 
                             $candidates_HUC = DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',1)
+                                ->where('signed_by_lec',1)
                                 ->get();
                             foreach($candidates_HUC as $candidate_HUC) {
                                 $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
@@ -310,7 +310,7 @@ class AppServiceProvider extends ServiceProvider
 
                             $candidates_HUC = DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',2)
+                                ->where('signed_by_lec',2)
                                 ->get();
                             foreach($candidates_HUC as $candidate_HUC) {
                                 $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
@@ -326,7 +326,7 @@ class AppServiceProvider extends ServiceProvider
                         } else {
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',0)
+                                ->where('signed_by_lec',0)
                                 ->get());
                             $province_key = $province->lgu;
                             if(!isset($pending_count_province->$province_key)) {
@@ -337,7 +337,7 @@ class AppServiceProvider extends ServiceProvider
 
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',1)
+                                ->where('signed_by_lec',1)
                                 ->get());
                             $province_key = $province->lgu;
                             if(!isset($approved_count_province->$province_key)) {
@@ -349,7 +349,7 @@ class AppServiceProvider extends ServiceProvider
 
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
-                                ->where('signed_by_lp',2)
+                                ->where('signed_by_lec',2)
                                 ->get());
                             $province_key = $province->lgu;
                             if(!isset($rejected_count_province->$province_key)) {

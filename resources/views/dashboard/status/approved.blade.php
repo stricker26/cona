@@ -16,7 +16,7 @@
 <hr class="mb-4">
 <div class="container pb-3">
     @if(count($candidates) !== 0 && $status_page === '1')
-		<form action="/hq/screening/profile" method="post">
+		<form action="{{asset('/hq/screening/profile')}}" method="post">
 			@csrf
 	      	@foreach($positions as $position)
 		      	<div class="card rounded mb-2">

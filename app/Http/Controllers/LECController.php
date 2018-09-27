@@ -27,7 +27,14 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
-        $data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
+        $data = DB::table('huc')
+            ->join('province as p', 'huc.province_code', '=', 'p.province_code')
+            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lp = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
+            ->where('huc.province_code', '=', $code)
+            ->orWhere('huc.parent_province_code', '=', $code)
+            ->distinct('huc.id')
+            ->get();
+        //$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
         return $data;
     }
 
@@ -37,10 +44,19 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         if ($code == '0505' || $code == '0630' || $code == '0155') {
-            $data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('lec', '=', $lecId)
+                ->where('m.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         }
         else {
-            $data = DB::table('municipality')->get()->where('province_code', '=', $code);
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('m.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('municipality')->get()->where('province_code', '=', $code);
         }
         return $data;
     }
@@ -51,10 +67,21 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         if ($code == '0505' || $code == '0630' || $code == '0155') {
-            $data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+            $data = DB::table('municipality as m')
+                ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('lec', '=', $lecId)
+                ->where('m.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         }
         else {
-            $data = DB::table('municipality')->get()->where('province_code', '=', $code);
+            $data = DB::table('municipality as m')
+                ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('m.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('municipality')->get()->where('province_code', '=', $code);
         }
         return $data;
     }
@@ -65,10 +92,19 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         if ($code == '0505' || $code == '0973' || $code == '0354' || $code == '0349' || $code == '0215' || $code == '0155') {
-            $data = DB::table('city')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
+            $data = DB::table('city')
+                ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('lec', '=', $lecId)
+                ->where('city.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('city')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         }
         else {
-            $data = DB::table('city')->get()->where('province_code', '=', $code);
+            $data = DB::table('city')
+                ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected'))
+                ->where('city.province_code', '=', $code)
+                ->get();
+            //$data = DB::table('city')->get()->where('province_code', '=', $code);
         }
         return $data;
     }
@@ -79,10 +115,21 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         if ($code == 'NCR') {
-            $data = DB::table('province')->get()->where('region', '=', $code)->where('lec', '=', $lecId);
+            $data = DB::table('province as p')
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->where('p.region', '=', $code)
+                ->where('lec', '=', $lecId)
+                ->get();
+            //$data = DB::table('province')->get()->where('region', '=', $code)->where('lec', '=', $lecId);
         }
         else {
-            $data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC')->where('lec', '=', $lecId);
+            $data = DB::table('province as p')
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected'))
+                ->where('p.region', '=', $code)
+                ->where('lec', '=', $lecId)
+                ->where('type', '!=', 'HUC')
+                ->get();
+            //$data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC')->where('lec', '=', $lecId);
         }
         return $data;
     }
@@ -187,7 +234,7 @@ class LECController extends Controller
             
             if($status == '0'){
                 $candidates = DB::table('candidates')
-                                    ->where('signed_by_lp',0)
+                                    ->where('signed_by_lec',0)
                                     ->whereIn('province_id',$province_arr)
                                     ->get();
                 if(count($candidates)) {
@@ -230,7 +277,7 @@ class LECController extends Controller
                 }
 
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.pending', compact(
@@ -253,7 +300,7 @@ class LECController extends Controller
                 ));
             } elseif($status == '1') {
                 $candidates = DB::table('candidates')
-                                    ->where('signed_by_lp',1)
+                                    ->where('signed_by_lec',1)
                                     ->whereIn('province_id',$province_arr)
                                     ->get();
                 if(count($candidates)) {
@@ -296,7 +343,7 @@ class LECController extends Controller
                 }
 
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.approved', compact(
@@ -319,7 +366,7 @@ class LECController extends Controller
                 ));
             } else {
                 $candidates = DB::table('candidates')
-                                    ->where('signed_by_lp',2)
+                                    ->where('signed_by_lec',2)
                                     ->whereIn('province_id',$province_arr)
                                     ->get();
                 if(count($candidates)) {
@@ -362,7 +409,7 @@ class LECController extends Controller
                 }
 
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.rejected', compact(
@@ -425,7 +472,7 @@ class LECController extends Controller
             $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
 
             foreach($candidates as $candidate){
-                if($status === '0' && $candidate->signed_by_lp === '0') {
+                if($status === '0' && $candidate->signed_by_lec === '0') {
                     if($candidate->candidate_for === "Governor") {
                         $governors = 'not empty';
                         $count_positions->governor = ($count_positions->governor) + 1;
@@ -460,7 +507,7 @@ class LECController extends Controller
                         $municipal_councilor = 'not empty';
                         $count_positions->municipal_councilor = ($count_positions->municipal_councilor) + 1;
                     }
-                } elseif($status === '1' && $candidate->signed_by_lp === '1') {
+                } elseif($status === '1' && $candidate->signed_by_lec === '1') {
                     if($candidate->candidate_for === "Governor") {
                         $governors = 'not empty';
                         $count_positions->governor = ($count_positions->governor) + 1;
@@ -495,7 +542,7 @@ class LECController extends Controller
                         $municipal_councilor = 'not empty';
                         $count_positions->municipal_councilor = ($count_positions->municipal_councilor) + 1;
                     }
-                } elseif($status === '2' && $candidate->signed_by_lp === '2') {
+                } elseif($status === '2' && $candidate->signed_by_lec === '2') {
                     if($candidate->candidate_for === "Governor") {
                         $governors = 'not empty';
                         $count_positions->governor = ($count_positions->governor) + 1;
@@ -535,7 +582,7 @@ class LECController extends Controller
 
             if($status === '0') {
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.pending', compact(
@@ -558,7 +605,7 @@ class LECController extends Controller
                 ));
             } elseif($status === '1') {
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.approved', compact(
@@ -581,7 +628,7 @@ class LECController extends Controller
                 ));
             } else {
                 foreach($candidates as $candidate) {
-                    if($candidate->signed_by_lp == $status)
+                    if($candidate->signed_by_lec == $status)
                         $status_page = $status;
                 }
                 return view('lec.status.rejected', compact(
@@ -626,7 +673,7 @@ class LECController extends Controller
                 $positions = array('city_mayor','city_vice_mayor','city_councilor');
 
                 foreach($candidates as $candidate){
-                    if($status === '0' && $candidate->signed_by_lp === '0') {
+                    if($status === '0' && $candidate->signed_by_lec === '0') {
                         if($candidate->candidate_for === "City Mayor") {
                             $city_mayor = 'not empty';
                             $count_positions->city_mayor = ($count_positions->city_mayor) + 1;
@@ -637,7 +684,7 @@ class LECController extends Controller
                             $city_councilor = 'not empty';
                             $count_positions->city_councilor = ($count_positions->city_councilor) + 1;
                         }
-                    } elseif($status === '1' && $candidate->signed_by_lp === '1') {
+                    } elseif($status === '1' && $candidate->signed_by_lec === '1') {
                         if($candidate->candidate_for === "City Mayor") {
                             $city_mayor = 'not empty';
                             $count_positions->city_mayor = ($count_positions->city_mayor) + 1;
@@ -648,7 +695,7 @@ class LECController extends Controller
                             $city_councilor = 'not empty';
                             $count_positions->city_councilor = ($count_positions->city_councilor) + 1;
                         }
-                    } elseif($status === '2' && $candidate->signed_by_lp === '2') {
+                    } elseif($status === '2' && $candidate->signed_by_lec === '2') {
                         if($candidate->candidate_for === "City Mayor") {
                             $city_mayor = 'not empty';
                             $count_positions->city_mayor = ($count_positions->city_mayor) + 1;
@@ -664,7 +711,7 @@ class LECController extends Controller
 
                 if($status === '0') {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.pending', compact(
@@ -679,7 +726,7 @@ class LECController extends Controller
                     ));
                 } elseif($status === '1') {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.approved', compact(
@@ -694,7 +741,7 @@ class LECController extends Controller
                     ));
                 } else {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.rejected', compact(
@@ -721,7 +768,7 @@ class LECController extends Controller
                 $positions = array('governor','vice_governor','board_members');
 
                 foreach($candidates as $candidate){
-                    if($status === '0' && $candidate->signed_by_lp === '0') {
+                    if($status === '0' && $candidate->signed_by_lec === '0') {
                         if($candidate->candidate_for === "Governor") {
                             $governors = 'not empty';
                             $count_positions->governor = ($count_positions->governor) + 1;
@@ -732,7 +779,7 @@ class LECController extends Controller
                             $board_members = 'not empty';
                             $count_positions->board_members = ($count_positions->board_members) + 1;
                         }
-                    } elseif($status === '1' && $candidate->signed_by_lp === '1') {
+                    } elseif($status === '1' && $candidate->signed_by_lec === '1') {
                         if($candidate->candidate_for === "Governor") {
                             $governors = 'not empty';
                             $count_positions->governor = ($count_positions->governor) + 1;
@@ -743,7 +790,7 @@ class LECController extends Controller
                             $board_members = 'not empty';
                             $count_positions->board_members = ($count_positions->board_members) + 1;
                         }
-                    } elseif($status === '2' && $candidate->signed_by_lp === '2') {
+                    } elseif($status === '2' && $candidate->signed_by_lec === '2') {
                         if($candidate->candidate_for === "Governor") {
                             $governors = 'not empty';
                             $count_positions->governor = ($count_positions->governor) + 1;
@@ -759,7 +806,7 @@ class LECController extends Controller
 
                 if($status === '0') {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.pending', compact(
@@ -774,7 +821,7 @@ class LECController extends Controller
                     ));
                 } elseif($status === '1') {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.approved', compact(
@@ -789,7 +836,7 @@ class LECController extends Controller
                     ));
                 } else {
                     foreach($candidates as $candidate) {
-                        if($candidate->signed_by_lp == $status)
+                        if($candidate->signed_by_lec == $status)
                             $status_page = $status;
                     }
                     return view('lec.status.rejected', compact(

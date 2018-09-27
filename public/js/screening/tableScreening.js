@@ -59,7 +59,6 @@ $(document).ready( function () {
 	    		$('.huc-districts').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.prov-districts').show(500);
-
     		break;
     		case 'PROVINCE':
     			$('tbody').html('');
@@ -131,13 +130,17 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
+		var name = $(this).html();
 		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		ajaxGet(code, '', type, undefined, part);
 		$('tbody').html('');
+		if (type == 'MUNICIPALITY') {
+			ajaxGet(code, name, type, undefined, part);
+		}
 		if (type == 'PROVINCE') {
-			ajaxGet(code, '', 'CITY', undefined, part);
 			ajaxGet(code, '', 'HUC', undefined, part);
+			ajaxGet(code, '', 'CITY', undefined, part);
 		}
 		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
@@ -213,6 +216,7 @@ $(document).ready( function () {
 			});
 		}
 		else {
+			console.log(e);
 			$.ajax({
 				method: 'GET',
 				url: '/' + path + '/screening/' + type + '/' + e,
@@ -229,9 +233,10 @@ $(document).ready( function () {
 					    			console.log(data);
 		    					}
 		    					else {
-		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
-						    			
-					    			console.log(data);
+		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
+		    							if ($('.MUNICIPALITY').length != 1)
+		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						}
 		    					}
 				    			console.log(data);
 		    				}
@@ -284,7 +289,7 @@ function loadTable(e, data) {
 					<td>` + data[x].pending + `</td>
 					<td>` + data[x].approved + `</td>
 					<td>` + data[x].rejected + `</td>
-					<td>Lorem Ipsum</td>
+					<td>` + data[x].assigned_lec + `</td>
 					<td class="type">` + type + `</td>
 					<td class="region" style="display:none;">` + data[x].region + `</td>
 				</tr>
@@ -331,6 +336,11 @@ function hucTable(e, data, region) {
 				if ($('.bcrumbs a').length <= 2) {
 					if (x == s) {
 						printRow(data, x, 'city', type);
+					}
+					else {
+						if (data[x].city != data[x-1].city) {
+							printRow(data, x, 'city', type);
+						}
 					}
 				}
 				else {
@@ -385,7 +395,7 @@ function printRow(data, x, name, type) {
 				<td>` + data[x].pending + `</td>
 				<td>` + data[x].approved + `</td>
 				<td>` + data[x].rejected + `</td>
-				<td>Lorem Ipsum</td>
+				<td>` + data[x].assigned_lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);

@@ -441,7 +441,7 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			@if ($candidate->signed_by_lp == null)
+			@if ($candidate->signed_by_lp == 0)
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
 				</div>

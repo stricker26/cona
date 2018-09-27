@@ -9,9 +9,9 @@ use DB;
 class statCandidatesController extends Controller
 {
     public function status(Request $request) {
-    	$status = $request->statusData;
-    	$data = explode(",", $status);
-    	$status = $data[0];
+        $status = $request->statusData;
+        $data = explode(",", $status);
+        $status = $data[0];
         $region = $data[1];
         $province = $data[2];
     	$province_type = $data[3];
@@ -45,7 +45,23 @@ class statCandidatesController extends Controller
             );
             $positions = array('governor','vice_governor','board_members','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
             
-        	if($status == '0'){
+            // $lec_names = (object)[];
+            // foreach($candidates as $candidate) {
+            //     $candidate_position = $candidate->candidate_for;
+
+            //     switch ($candidate_position) {
+            //         case 'Governor':
+            //             # code...
+            //             break;
+                    
+            //         default:
+            //             # code...
+            //             break;
+            //     }
+                
+            // }
+            
+            if($status == '0'){
                 $candidates = DB::table('candidates')->where('signed_by_lp',0)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
@@ -108,7 +124,7 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	} elseif($status == '1') {
+            } elseif($status == '1') {
                 $candidates = DB::table('candidates')->where('signed_by_lp',1)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {
@@ -171,7 +187,7 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	} else {
+            } else {
                 $candidates = DB::table('candidates')->where('signed_by_lp',2)->get();
                 if(count($candidates)) {
                     foreach($candidates as $candidate) {

@@ -14,7 +14,7 @@
 		        	Are you sure you want to approve this candidate?
 		      	</div>
 		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-success" id="approve_btn">Approve</button>
+		        	<button type="button" class="btn btn-success" id="lec_approve_btn">Approve</button>
 		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
@@ -88,6 +88,8 @@
 						<div>
 								@if ($candidate->signed_by_lp == 1)
 									<span class="text-success">Approved</span>
+								@elseif ($candidate->signed_by_lp == 0)
+									<span class="text-warning">Pending</span>
 								@elseif ($candidate->signed_by_lp ==2)
 									<span class="text-danger">Rejected</span>
 								@endif
@@ -422,14 +424,14 @@
 			<div class="d-inline pr-2">
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
 			</div>
-			@if ($candidate->signed_by_lp == null)
+			@if ($candidate->signed_by_lp == 3)
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
 				</div>
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject">Reject</button>
 				</div>
-			@else
+			@elseif ($candidate->signed_by_lp == 1)
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-warning" id="download_btn">Download CONA</button>
 				</div>

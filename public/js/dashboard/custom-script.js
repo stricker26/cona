@@ -79,7 +79,7 @@ jQuery(document).ready(function($){
 		        scrollTop: $("#tableGeo").offset().top
 		    }, 1000);
 	    }
-	    else if (path == '/hq/screening/profile') {
+	    else if (path == '/hq/screening/profile' || path == '/lec/screening/profile') {
 	    	window.location.href = '../screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	    else {

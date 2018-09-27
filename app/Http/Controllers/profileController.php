@@ -51,6 +51,48 @@ class profileController extends Controller
         ));
     }
 
+    public function profile_lec (Request $request) {
+        $profile = $request->screening_btn;
+        $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
+
+        $province = DB::table('province')
+                        ->select('lgu','type')
+                        ->where('province_code','=',$candidate->province_id)
+                        ->first();
+
+        $district = $candidate->district_id;
+        $city = $candidate->city_id;
+
+        if($province->type === 'HUC') {
+            $municipality = null;
+        } else {
+            $municipality = DB::table('municipality')
+                        ->select('municipality')
+                        ->where('district','=',$candidate->district_id)
+                        ->where('province_code','=',$candidate->province_id)
+                        ->first();
+
+            if($municipality) {         
+                if(isset($municipality) === 0) {
+                    $municipality = null;
+                } else {
+                    $municipality = $municipality->municipality;
+                }
+            }
+        }
+        
+        $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
+
+        return view('lec.screening.profile', compact(
+            'candidate',
+            'province',
+            'district',
+            'city',
+            'cos',
+            'municipality'
+        ));
+    }
+
     public function sent(Request $data_candidate) {
         $candidate_id = $data_candidate->id;
         date_default_timezone_set("Asia/Manila");
@@ -164,6 +206,30 @@ class profileController extends Controller
 
         $candidate_id = $data_candidate->id;
         $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '1']);
+        if($approve) {
+            $alert = 'Approved';
+            DB::table('edit_logs')->insert([
+                'updated_candidate_id' => $candidate_id,
+                'isAdmin' => Auth::user()->isAdmin,
+                'action' => 'HQ Approve Candidate',
+                'updated_by_id' => Auth::user()->id,
+                'url' => \Request::fullUrl(),
+                'ip' => \Request::ip(),
+                'updated_at' => $date_now
+            ]);
+        }
+        else {
+            $alert = 'Fail';
+        }
+        return $alert;
+    }
+
+    public function approve_lec(Request $data_candidate) {
+        date_default_timezone_set("Asia/Manila");
+        $date_now = date("Y-m-d h:i:s");
+
+        $candidate_id = $data_candidate->id;
+        $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '0', 'signed_by_lec' => '1']);
         if($approve) {
             $alert = 'Approved';
             DB::table('edit_logs')->insert([
