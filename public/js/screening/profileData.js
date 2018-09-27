@@ -213,7 +213,6 @@ $(document).ready(function(){
 	});
 
 	$('#download_btn').on('click', function() {
-		
 	});
 });
 
