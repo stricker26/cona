@@ -40,24 +40,25 @@
 				      	 		</thead>
 				      	 		<tbody>
 				      	 			@foreach($candidates as $candidate)
-				      	 				@if($candidate->candidate_for === ucwords(str_replace("_", " ", $position)))
-				      	 				<tr>
-				      	 					<td class="align-middle">
-				      	 						{{ $candidate->lastname }},&nbsp;{{ $candidate->firstname }}&nbsp;{{ $candidate->middlename }}
-				      	 					</td>
-				      	 					<td class="align-middle">
-				      	 						{{ $candidate->candidate_for }}
-				      	 					</td>
-				      	 					<td class="align-middle">
-				      	 						{{ $candidate->province_id }}
-				      	 					</td>
-				      	 					<td class="align-middle">
-				      	 						Lorem ipsum dolor.
-				      	 					</td>
-				      	 					<td>
-				      	 						<button type="submit" class="btn btn-success" name="screening_btn" value="{{ $candidate->id }}">View Profile</button>
-				      	 					</td>
-				      	 				</tr>
+				      	 				@if($candidate->candidate_for === ucwords(str_replace("_", " ", $position)) ||
+				      	 					$candidate->candidate_for == "Provincial Board Member")
+					      	 				<tr>
+					      	 					<td class="align-middle">
+					      	 						{{ $candidate->lastname }},&nbsp;{{ $candidate->firstname }}&nbsp;{{ $candidate->middlename }}
+					      	 					</td>
+					      	 					<td class="align-middle">
+					      	 						{{ $candidate->candidate_for }}
+					      	 					</td>
+					      	 					<td class="align-middle">
+					      	 						{{ $candidate->location }}
+					      	 					</td>
+					      	 					<td class="align-middle">
+					      	 						{{ $candidate->lec }}
+					      	 					</td>
+					      	 					<td>
+					      	 						<button type="submit" class="btn btn-success" name="screening_btn" value="{{ $candidate->id }}">View Profile</button>
+					      	 					</td>
+					      	 				</tr>
 				      	 				@endif
 				      	 			@endforeach
 				      	 		</tbody>
