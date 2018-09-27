@@ -78,6 +78,7 @@ $(document).ready(function(){
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			var nameToPass = idForAjax.replace("prof_","");
+			console.log(spanData);
 			objectData[nameToPass] = spanData;
 
 			// if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -130,7 +131,11 @@ $(document).ready(function(){
 
 			    $('.data-candidates .left-div').find(".row-body").each(function(){
 					var spanData = $(this).find(".row-content input").val();
-					$(this).find(".row-content span").html(spanData).show();
+					if(spanData == '') {
+						$(this).find(".row-content span").html("<i>--None--</i>").show();
+					} else {
+						$(this).find(".row-content span").html(spanData).show();
+					}
 					$(this).find(".row-content input").hide();
 					
 					var idForAjax = $(this).find(".row-content input").attr("id");
@@ -142,7 +147,11 @@ $(document).ready(function(){
 
 				$('.data-candidates .right-div').find(".row-body").each(function(){
 					var spanData = $(this).find(".row-content input").val();
-					$(this).find(".row-content span").html(spanData).show();
+					if(spanData == '') {
+						$(this).find(".row-content span").html("<i>--None--</i>").show();
+					} else {
+						$(this).find(".row-content span").html(spanData).show();
+					}
 					$(this).find(".row-content input").hide();
 					
 					var idForAjax = $(this).find(".row-content input").attr("id");
@@ -163,6 +172,7 @@ $(document).ready(function(){
 				$('.data-candidates .left-div').find(".row-body").each(function(){
 					var inputData = $(this).find(".row-content span").html();
 					$(this).find(".row-content span").show();
+
 					$(this).find(".row-content input").val(inputData).hide();
 
 					var idForAjax = $(this).find(".row-content input").attr("id");

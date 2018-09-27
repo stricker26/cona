@@ -216,7 +216,7 @@
 							@if($json['facebook'])
 								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="{{ $json['facebook'] }}">
 							@else
-								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook.." value="">
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" placeholder="facebook.com/yourfacebook..">
 							@endif
 						</div>
 					</div>
@@ -233,7 +233,7 @@
 							@if($json['twitter'])
 								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="{{ $json['twitter'] }}">
 							@else
-								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter.." value="">
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" placeholder="twitter.com/yourtwitter..">
 							@endif
 						</div>
 					</div>
@@ -250,7 +250,7 @@
 							@if($json['instagram'])
 								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
 							@else
-								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="">
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter..">
 							@endif
 						</div>
 					</div>
@@ -267,7 +267,7 @@
 							@if($json['website'])
 								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="{{ $json['website'] }}">
 							@else
-								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com.." value="">
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" placeholder="yourwebsite.com..">
 							@endif
 						</div>
 					</div>
@@ -289,7 +289,7 @@
 							<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="{{ucwords(strtolower($province->lgu))}}">
 						@else
 							<span><i>--None--</i></span>
-							<input type="text" class="form-control" id="prof_loc_province" style="display:none;" value="">
+							<input type="text" class="form-control" id="prof_loc_province" style="display:none;">
 						@endif
 					</div>
 				</div>
@@ -303,7 +303,7 @@
 							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="{{ucwords(strtolower($city))}}">
 						@else
 							<span><i>--None--</i></span>
-							<input type="text" class="form-control" id="prof_loc_city" style="display:none;" value="">
+							<input type="text" class="form-control" id="prof_loc_city" style="display:none;">
 						@endif
 					</div>
 				</div>
@@ -317,7 +317,7 @@
 							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="{{ucwords(strtolower($district))}}">
 						@else
 							<span><i>--None--</i></span>
-							<input type="text" class="form-control" id="prof_loc_district" style="display:none;" value="">
+							<input type="text" class="form-control" id="prof_loc_district" style="display:none;">
 						@endif
 					</div>
 				</div>
@@ -331,7 +331,7 @@
 							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="{{ucwords(strtolower($municipality))}}">
 						@else
 							<span><i>--None--</i></span>
-							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;" value="">
+							<input type="text" class="form-control" id="prof_loc_municipality" style="display:none;">
 						@endif
 					</div>
 				</div>
