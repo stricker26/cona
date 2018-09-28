@@ -462,17 +462,22 @@ function getProvinceCandidate(provinceCode, type, part) {
 			//Governor
 			if(data.governor.length > 0) {
 				jQuery('#prov-governor').html('');
-				jQuery('#prov-governor').append(`
-					<div class="col-sm-7 pt-1">
-						<h5 class="font-weight-normal">` + data.governor[0].name + `</h5>
-					</div>
-					<div class="col-sm-3 pt-1">
-						` + candidateStatus(data.governor[0].status) + `
-					</div>
-					<div class="col-sm-2">
-						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.governor[0].id + `">View Profile</button>
-					</div>
-				`);
+				var governors = data.governor;
+				$.each(governors, function(index, value) {
+					jQuery('#prov-governor').append(`
+						<div class="row mb-2">
+							<div class="col-sm-7 pt-1">
+								<h5 class="font-weight-normal">` + value.name + `</h5>
+							</div>
+							<div class="col-sm-3 pt-1">
+								` + candidateStatus(value.status) + `
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+							</div>
+						</div>
+					`);
+				});
 			} else {
 				jQuery('#prov-governor').html('');
 				jQuery('#prov-governor').append(`
@@ -486,17 +491,20 @@ function getProvinceCandidate(provinceCode, type, part) {
 			//V-Governor
 			if(data.vgovernor.length > 0) {
 				jQuery('#prov-vgovernor').html('');
-				jQuery('#prov-vgovernor').append(`
-					<div class="col-sm-7 pt-1">
-						<h5 class="font-weight-normal">` + data.vgovernor[0].name + `</h5>
-					</div>
-					<div class="col-sm-3 pt-1">
-						` + candidateStatus(data.vgovernor[0].status) + `
-					</div>
-					<div class="col-sm-2">
-						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.vgovernor[0].id + `">View Profile</button>
-					</div>
-				`);
+				var vgovernors = data.vgovernor;
+				$.each(vgovernors, function(index, value) {
+					jQuery('#prov-vgovernor').append(`
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+						</div>
+					`);
+				});
 			} else {
 				jQuery('#prov-vgovernor').html('');
 				jQuery('#prov-vgovernor').append(`
@@ -531,17 +539,20 @@ function getCityCandidate(provinceCode, type, part, name) {
 			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
-				jQuery('#huc-mayor').append(`
-					<div class="col-sm-7 pt-1">
-						<h5 class="font-weight-normal">` + data.mayor[0].name + `</h5>
-					</div>
-					<div class="col-sm-3 pt-1">
-						` + candidateStatus(data.mayor[0].status) + `
-					</div>
-					<div class="col-sm-2">
-						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.mayor[0].id + `">View Profile</button>
-					</div>
-				`);
+				var hucmayors = data.mayor;
+				$.each(hucmayors, function(index, value) {
+					jQuery('#huc-mayor').append(`
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+						</div>
+					`);
+				});
 			} else {
 				jQuery('#huc-mayor').html('');
 				jQuery('#huc-mayor').append(`
@@ -630,17 +641,20 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			// //HUC Congressman
 			if(data.congressman.length > 0) {
 				jQuery('#huc-congressman').html('');
-				jQuery('#huc-congressman').append(`
-					<div class="col-sm-7 pt-1">
-						<h5 class="font-weight-normal">` + data.congressman[0].name + `</h5>
-					</div>
-					<div class="col-sm-3 pt-1">
-						` + candidateStatus(data.congressman[0].status) + `
-					</div>
-					<div class="col-sm-2">
-						<button type="submit" class="btn btn-success" name="screening_btn" value="` + data.congressman[0].id + `">View Profile</button>
-					</div>
-				`);
+				var congressmans = data.congressman;
+				$.each(congressmans, function(index, value) {
+					jQuery('#huc-congressman').append(`
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
+						</div>
+					`);
+				});
 			} else {
 				jQuery('#huc-congressman').html('');
 				jQuery('#huc-congressman').append(`
@@ -684,7 +698,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			}
 			// Board Members
 			if(data.bmember.length > 0) {
-				jQuery('#huc-congressman').html('');
+				jQuery('#bmembers').html('');
 				var bmembers = data.bmember;
 				$.each(bmembers, function(index, value) {
 					jQuery('#bmembers').append(`

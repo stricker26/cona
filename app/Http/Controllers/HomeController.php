@@ -61,14 +61,6 @@ class HomeController extends Controller
                 $city = $request->input('city');
             }
 
-            if($request->input('position') == 'Senator') {
-                $signed_by_lec = '3';
-                $signed_by_lp = '0';
-            } else {
-                $signed_by_lec = '0';
-                $signed_by_lp = '3';
-            }
-
             $candidate = Candidate::create([
                 'firstname' => $request->input('firstname'),
                 'middlename' => $request->input('middlename'),
@@ -83,8 +75,8 @@ class HomeController extends Controller
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
                 'city_id' => $city,
-                'signed_by_lec' => $signed_by_lec,
-                'signed_by_lp' => $signed_by_lp,
+                'signed_by_lec' => 0,
+                'signed_by_lp' => 3,
                 'cos_id' => $cos_id,
             ]);
 
