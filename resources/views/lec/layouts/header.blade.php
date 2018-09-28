@@ -20,14 +20,13 @@
                     <img class="user-avatar rounded-circle" src="{{ asset('img/dashboard/admin.png') }}" alt="User Avatar">
                 </a>
                 <div class="user-menu dropdown-menu">
-                    <span class="nav-link">Hello, {{ Auth::user()->name }}!</span>
                     {{-- <a class="nav-link" href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;My Profile</a> --}}
 
                     {{-- <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a> --}}
 
                     {{-- <a class="nav-link" href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;Settings</a> --}}
 
-                    
+                    <span class="nav-link font-weight-normal text-center">Hello, {{ Auth::user()->name }}!</span>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" style="color:#212529;"><i class="fas fa-sign-out-alt pr-4"></i><span>Logout</span></a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
