@@ -34,7 +34,8 @@ class CertificateController extends Controller
 
         		// create object list of candidates to generate certificate
         	$c->name = $cand->firstname . ' ' . substr($cand->middlename,0,1) . '. ' . $cand->lastname;
-
+            $cand->city_id = $cand->city_id == '' ? $province : $cand->city_id;
+            
         		// full name of the candidate with middle initial, FirstName M. Lastname
             $c->position = $cand->candidate_for;
             $provinces = ($province == 'MANILA' ? 'METRO MANILA' : $province);
