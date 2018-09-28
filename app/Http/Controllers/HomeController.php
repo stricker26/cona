@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 use App\Candidate;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -78,7 +79,7 @@ class HomeController extends Controller
                 'signed_by_lec' => 0,
                 'signed_by_lp' => 3,
                 'cos_id' => $cos_id,
-            ]);
+            ])->id;
 
             $query = DB::table('chief_of_staff')->insertGetId([
                 'cos_id' => $cos_id,
@@ -89,6 +90,30 @@ class HomeController extends Controller
                 'contact' => $request->input('cos_contact'),
                 'email' => $request->input('cos_email'),
             ]);
+
+            date_default_timezone_set("Asia/Manila");
+            $date_now = date("Y-m-d H:i:s");
+            if(Auth::check()) {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate,
+                    'isAdmin' => Auth::user()->isAdmin,
+                    'action' => 'Nominate Candidate',
+                    'updated_by_id' => Auth::user()->id,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+            } else {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate,
+                    'isAdmin' => null,
+                    'action' => 'Nominate Candidate',
+                    'updated_by_id' => null,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+            }
 
             return response()->json(['success' => 'Successfully Registered!!!']);
 

@@ -94,7 +94,7 @@
                     </ul>
                 </li>
                 <li class="pl-2">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt pr-4"></i><span>Logout</span></a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt pr-4"></i><span>&nbsp;Logout</span></a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
