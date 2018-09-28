@@ -83,7 +83,7 @@ jQuery(document).ready(function($){
 	    	window.location.href = '../screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	    else {
-	    	window.location.href = 'screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
+	    	window.location.href = '/' + part + '/screening?e=' + e + '&name=' + name + '&type=' + type + '&region=' + region;
 	    }
 	});
 
