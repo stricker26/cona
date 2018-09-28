@@ -40,8 +40,7 @@
 				      	 		</thead>
 				      	 		<tbody>
 				      	 			@foreach($candidates as $candidate)
-				      	 				@if($candidate->candidate_for === ucwords(str_replace("_", " ", $position)) ||
-				      	 					$candidate->candidate_for == "Provincial Board Member")
+				      	 				@if($candidate->candidate_for === ucwords(str_replace("_", " ", $position)))
 					      	 				<tr>
 					      	 					<td class="align-middle">
 					      	 						{{ $candidate->lastname }},&nbsp;{{ $candidate->firstname }}&nbsp;{{ $candidate->middlename }}

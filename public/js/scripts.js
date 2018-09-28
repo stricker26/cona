@@ -137,7 +137,7 @@
 				var requestType = 'district';
 				var target = '#district';
 				var position = jQuery('#position').val();
-				if(position == 'Provincial Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
+				if(position == 'Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('#district').attr('required', 'required');
 					jQuery('#district').html('<option>Loading...</option>');
@@ -209,7 +209,7 @@
 
 				jQuery('#city').html('<option>Loading...</option>');
 
-				if(position == 'Congressman' || position == 'Provincial Board Member') {
+				if(position == 'Congressman' || position == 'Board Member') {
 					jQuery('.city-wrapper').fadeOut(500);
 					jQuery('#city').removeAttr('required');
 				} else {
@@ -255,7 +255,7 @@
 					}
 				},
 				error: function(data) {
-					//console.log(data);
+					console.log(data);
 				}
 
 			});

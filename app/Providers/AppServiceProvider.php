@@ -190,8 +190,9 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('lec.layouts.sidebar', function($view){
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+            $lec_name = $lec->name;
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', '=', $lecId)->get();
+            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
             $regions = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {
@@ -373,7 +374,8 @@ class AppServiceProvider extends ServiceProvider
                 'rejected_count_region',
                 'pending_count_province',
                 'approved_count_province',
-                'rejected_count_province'
+                'rejected_count_province',
+                'lec_name'
             ));
         });
 
@@ -414,7 +416,7 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', '=', $lecId)->get();
+            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
             $regions = array();
             $municipalities = array();
             $cities = array();
@@ -447,7 +449,7 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->get()->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', '=', $lecId)->get();
+            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
             $regions = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {

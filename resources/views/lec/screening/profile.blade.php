@@ -426,10 +426,10 @@
 			</div>
 			@if ($candidate->signed_by_lec == 0)
 				<div class="d-inline pr-2">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove">Approve</button>
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove" id="approve_btn_1">Approve</button>
 				</div>
 				<div class="d-inline pr-2">
-					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject">Reject</button>
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
 				</div>
 			@elseif ($candidate->signed_by_lp == 1)
 				<div class="d-inline pr-2">

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Session;
 use App\Candidate;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -61,14 +62,6 @@ class HomeController extends Controller
                 $city = $request->input('city');
             }
 
-            if($request->input('position') == 'Senator') {
-                $signed_by_lec = '3';
-                $signed_by_lp = '0';
-            } else {
-                $signed_by_lec = '0';
-                $signed_by_lp = '3';
-            }
-
             $candidate = Candidate::create([
                 'firstname' => $request->input('firstname'),
                 'middlename' => $request->input('middlename'),
@@ -83,10 +76,10 @@ class HomeController extends Controller
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
                 'city_id' => $city,
-                'signed_by_lec' => $signed_by_lec,
-                'signed_by_lp' => $signed_by_lp,
+                'signed_by_lec' => 0,
+                'signed_by_lp' => 3,
                 'cos_id' => $cos_id,
-            ]);
+            ])->id;
 
             $query = DB::table('chief_of_staff')->insertGetId([
                 'cos_id' => $cos_id,
@@ -97,6 +90,31 @@ class HomeController extends Controller
                 'contact' => $request->input('cos_contact'),
                 'email' => $request->input('cos_email'),
             ]);
+
+            date_default_timezone_set("Asia/Manila");
+            $date_now = date("Y-m-d H:i:s");
+            if(Auth::check()) {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate,
+                    'isAdmin' => Auth::user()->isAdmin,
+                    'action' => 'Nominate Candidate',
+                    'updated_by_id' => Auth::user()->id,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+                
+            } else {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate,
+                    'isAdmin' => null,
+                    'action' => 'Nominate Candidate',
+                    'updated_by_id' => null,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+            }
 
             return response()->json(['success' => 'Successfully Registered!!!']);
 
