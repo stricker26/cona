@@ -24,7 +24,7 @@
 						@foreach($senators as $senator)
 							<div class="row pb-2">
 								<div class="col-sm-7 pt-1">					
-									<h5>{{ $senator->lastname }},&nbsp;{{ $senator->firstname }}&nbsp;{{ strtoupper($senator->middlename[0]) }}</h5>
+									<h5 class="font-weight-normal">{{ $senator->lastname }},&nbsp;{{ $senator->firstname }}&nbsp;{{ strtoupper($senator->middlename[0]) }}</h5>
 								</div>
 								<div class="col-sm-3 pt-1">
 									<span class="badge badge-pill badge-warning p-2">Pending</span>
@@ -35,6 +35,12 @@
 								</div>
 							</div>
 						@endforeach
+					@else
+						<div class="row pb-2">
+							<div class="col-sm-12">
+								<h5 class="font-weight-normal">No candidates</h5>
+							</div>
+						</div>
 					@endif
 				</form>
 			</div>
