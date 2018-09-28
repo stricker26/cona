@@ -209,23 +209,21 @@ class LECController extends Controller
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
                                     'status' => 'Approved' 
                                 );
-                            }
-                            elseif($row->signed_by_lp == 0) {
+                            } elseif ($row->signed_by_lp == 0) {
                                 $mayor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
                                     'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec 
                                 );
                             }
-                        } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
+                        } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
                             if ($row->signed_by_lp == 1) {
                                 $vmayor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
                                     'status' => 'Approved' 
                                 );
-                            }
-                            elseif($row->signed_by_lp == 0) {
+                            } elseif($row->signed_by_lp == 0) {
                                 $vmayor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -239,8 +237,7 @@ class LECController extends Controller
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
                                     'status' => 'Approved'
                                 );
-                            }
-                            elseif($row->signed_by_lp == 0) {
+                            } elseif($row->signed_by_lp == 0) {
                                 $councilor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
@@ -294,7 +291,7 @@ class LECController extends Controller
 
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
-                    if($row->candidate_for == 'HUC Congressman') {if($row->signed_by_lp != 2) {
+                    if($row->candidate_for == 'HUC Congressman') {
                         if ($row->signed_by_lp == 1) {
                             $congressman[] = array(
                                 'id' => $row->id,
