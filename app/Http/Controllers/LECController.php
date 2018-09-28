@@ -44,7 +44,7 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         $data = DB::table('municipality as m')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected'))
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
             ->where('lec', '=', $lecId)
             ->where('m.province_code', '=', $code)
             ->get();
@@ -58,7 +58,7 @@ class LECController extends Controller
         $lecId = $lec->id;
         $data = DB::table('municipality as m')
             ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected'))
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
             ->where('lec', '=', $lecId)
             ->where('m.province_code', '=', $code)
             ->get();
@@ -72,7 +72,7 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         $data = DB::table('city')
-            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected'))
+            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
             ->where('lec', '=', $lecId)
             ->where('city.province_code', '=', $code)
             ->get();
@@ -87,7 +87,7 @@ class LECController extends Controller
 
         if ($code == 'NCR') {
             $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected'))
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
                 ->where('p.region', '=', $code)
                 ->where('lec', '=', $lecId)
                 ->get();
@@ -95,10 +95,10 @@ class LECController extends Controller
         }
         else {
             $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected'))
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
                 ->where('p.region', '=', $code)
-                ->where('lec', '=', $lecId)
-                ->where('type', '!=', 'HUC')
+                ->where('lec', 'like', '%'.$lecId.'%')
+                ->where('type', '<>', 'HUC')
                 ->get();
             //$data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC')->where('lec', '=', $lecId);
         }
@@ -324,7 +324,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if ($row->candidate_for == 'Provincial Board Member') {
+                    } else if ($row->candidate_for == 'Board Member') {
                         if ($row->signed_by_lp == 1) {
                             $bmember[] = array(
                                 'id' => $row->id,
@@ -533,7 +533,7 @@ class LECController extends Controller
 
                 if($candidate->candidate_for == 'Governor' ||
                     $candidate->candidate_for == 'Vice Governor' ||
-                    $candidate->candidate_for == 'Provincial Board Member' ||
+                    $candidate->candidate_for == 'Board Member' ||
                     $candidate->candidate_for == 'HUC Congressman')
                 {
                     $lec_id_province = DB::table('province')
@@ -741,7 +741,7 @@ class LECController extends Controller
 
                 if($candidate->candidate_for == 'Governor' ||
                     $candidate->candidate_for == 'Vice Governor' ||
-                    $candidate->candidate_for == 'Provincial Board Member' ||
+                    $candidate->candidate_for == 'Board Member' ||
                     $candidate->candidate_for == 'HUC Congressman')
                 {
                     $lec_id_province = DB::table('province')
@@ -915,7 +915,7 @@ class LECController extends Controller
 
                     if($candidate->candidate_for == 'Governor' ||
                         $candidate->candidate_for == 'Vice Governor' ||
-                        $candidate->candidate_for == 'Provincial Board Member' ||
+                        $candidate->candidate_for == 'Board Member' ||
                         $candidate->candidate_for == 'HUC Congressman')
                     {
                         $lec_id_province = DB::table('province')
@@ -1092,7 +1092,7 @@ class LECController extends Controller
 
                     if($candidate->candidate_for == 'Governor' ||
                         $candidate->candidate_for == 'Vice Governor' ||
-                        $candidate->candidate_for == 'Provincial Board Member' ||
+                        $candidate->candidate_for == 'Board Member' ||
                         $candidate->candidate_for == 'HUC Congressman')
                     {
                         $lec_id_province = DB::table('province')

@@ -1,6 +1,6 @@
 var path = window.location.pathname;
 var part = path.split('/')[1];
-console.log(path);
+
 jQuery(document).ready(function($){
 	$('.loader').hide();
 	$('.body-toload').show();
