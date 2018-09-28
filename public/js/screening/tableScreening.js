@@ -195,6 +195,7 @@ $(document).ready( function () {
 	loadPagination();
 
 	function ajaxGet(e, name, type, region) {
+		console.log('ajaxget: '+type);
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
@@ -228,6 +229,7 @@ $(document).ready( function () {
 		    					}
 		    					else {
 		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
+										console.log('#e.length != 1 or type is municipality');
 		    							if ($('.MUNICIPALITY').length != 1) {
 		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    							}
