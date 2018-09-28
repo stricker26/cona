@@ -454,10 +454,10 @@ function getProvinceCandidate(provinceCode, type, part) {
 			if(data.governor.length > 0) {
 				jQuery('#prov-governor').html('');
 				jQuery('#prov-governor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.governor[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.governor[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -467,7 +467,7 @@ function getProvinceCandidate(provinceCode, type, part) {
 			} else {
 				jQuery('#prov-governor').html('');
 				jQuery('#prov-governor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
@@ -478,10 +478,10 @@ function getProvinceCandidate(provinceCode, type, part) {
 			if(data.vgovernor.length > 0) {
 				jQuery('#prov-vgovernor').html('');
 				jQuery('#prov-vgovernor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.vgovernor[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.vgovernor[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -492,7 +492,7 @@ function getProvinceCandidate(provinceCode, type, part) {
 				jQuery('#prov-vgovernor').html('');
 				jQuery('#prov-vgovernor').append(`
 					<div class="col-sm-7">
-						<h5 class="font-weight-normal">No Candidate</h5>
+						<h5 class="font-weight-normal pt-1">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
 					<div class="col-sm-2"></div>
@@ -523,10 +523,10 @@ function getCityCandidate(provinceCode, type, part, name) {
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
 				jQuery('#huc-mayor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.mayor[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.mayor[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -536,7 +536,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 			} else {
 				jQuery('#huc-mayor').html('');
 				jQuery('#huc-mayor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
@@ -547,10 +547,10 @@ function getCityCandidate(provinceCode, type, part, name) {
 			if(data.vmayor.length > 0) {
 				jQuery('#huc-vmayor').html('');
 				jQuery('#huc-vmayor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.vmayor[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.vmayor[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -560,7 +560,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 			} else {
 				jQuery('#huc-vmayor').html('');
 				jQuery('#huc-vmayor').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1 pt-1">
 						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
@@ -574,10 +574,10 @@ function getCityCandidate(provinceCode, type, part, name) {
 					$.each(councilors, function(index, value) {
 						jQuery('#cc-councilor').append(`
 							<div class="row">
-								<div class="col-sm-7">
+								<div class="col-sm-7 pt-1">
 									<h5 class="font-weight-normal">` + value.name + `</h5>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-3 pt-1">
 									` + candidateStatus(value.status) + `
 								</div>
 								<div class="col-sm-2">
@@ -590,7 +590,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 					jQuery('#cc-councilor').html('');
 					jQuery('#cc-councilor').append(`
 						<div class="row">
-							<div class="col-sm-7">
+							<div class="col-sm-7 pt-1">
 								<h5 class="font-weight-normal">No Candidate</h5>
 							</div>
 							<div class="col-sm-3"></div>
@@ -622,10 +622,10 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			if(data.congressman.length > 0) {
 				jQuery('#huc-congressman').html('');
 				jQuery('#huc-congressman').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.congressman[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.congressman[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -635,7 +635,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			} else {
 				jQuery('#huc-congressman').html('');
 				jQuery('#huc-congressman').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
@@ -649,10 +649,10 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				$.each(councilors, function(index, value) {
 					jQuery('#huc-councilors').append(`
 						<div class="row mb-2">
-							<div class="col-sm-7">
+							<div class="col-sm-7 pt-1">
 								<h5 class="font-weight-normal">` + value.name + `</h5>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-3 pt-1">
 								` + candidateStatus(value.status) + `
 							</div>
 							<div class="col-sm-2">
@@ -665,7 +665,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				jQuery('#huc-councilors').html('');
 				jQuery('#huc-councilors').append(`
 					<div class="row mb-2">
-						<div class="col-sm-7">
+						<div class="col-sm-7 pt-1">
 							<h5 class="font-weight-normal">No Candidate</h5>
 						</div>
 						<div class="col-sm-3"></div>
@@ -680,10 +680,10 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				$.each(bmembers, function(index, value) {
 					jQuery('#bmembers').append(`
 						<div class="row mb-2">
-							<div class="col-sm-7">
+							<div class="col-sm-7 pt-1">
 								<h5 class="font-weight-normal">` + value.name + `</h5>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-3 pt-1">
 								` + candidateStatus(value.status) + `
 							</div>
 							<div class="col-sm-2">
@@ -696,7 +696,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				jQuery('#bmembers').html('');
 				jQuery('#bmembers').append(`
 					<div class="row mb-2">
-						<div class="col-sm-7">
+						<div class="col-sm-7 pt-1">
 							<h5 class="font-weight-normal">No Candidate</h5>
 						</div>
 						<div class="col-sm-3"></div>
@@ -708,10 +708,10 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			if(data.provCongressman.length > 0) {
 				jQuery('#prov-congressman').html('');
 				jQuery('#prov-congressman').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">` + data.provCongressman[0].name + `</h5>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-3 pt-1">
 						` + candidateStatus(data.provCongressman[0].status) + `
 					</div>
 					<div class="col-sm-2">
@@ -721,7 +721,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 			} else {
 				jQuery('#prov-congressman').html('');
 				jQuery('#prov-congressman').append(`
-					<div class="col-sm-7">
+					<div class="col-sm-7 pt-1">
 						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
 					<div class="col-sm-3"></div>
