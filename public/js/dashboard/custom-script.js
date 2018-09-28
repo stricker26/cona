@@ -50,7 +50,7 @@ jQuery(document).ready(function($){
 		var type = data[1];
 		var region = data[3];
 		$('tbody').html('');
-		if (path == '/hq/screening') {
+		if (path == '/' + part + '/screening') {
 			if (type == 'DISTRICT') {
 	    		ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
 	    		$('.list-candidates').show();
