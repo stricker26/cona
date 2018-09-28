@@ -121,24 +121,30 @@ class ScreeningController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
-                            $mayor[] = array(
-                                'id' => $row->id,
-                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                            );
+                            if($row->signed_by_lp != 2) {
+                                $mayor[] = array(
+                                    'id' => $row->id,
+                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                );
+                            }
                             
                         } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
-                            $vmayor[] = array(
-                                'id' => $row->id,
-                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                            );
+                            if($row->signed_by_lp != 2) {
+                                $vmayor[] = array(
+                                    'id' => $row->id,
+                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                );
+                            }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            $councilor[] = array(
-                                'id' => $row->id,
-                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                            );
+                            if($row->signed_by_lp != 2) {
+                                $councilor[] = array(
+                                    'id' => $row->id,
+                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                );
+                            }
                         } 
                     }
                     return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
@@ -195,29 +201,37 @@ class ScreeningController extends Controller
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
                     if($row->candidate_for == 'HUC Congressman') {
-                        $congressman[] = array(
-                            'id' => $row->id,
-                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                        );
+                        if($row->signed_by_lp != 2) {
+                            $congressman[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
                     } else if($row->candidate_for == 'City Councilor') {
-                        $councilor[] = array(
-                            'id' => $row->id,
-                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                        );
-                    } else if ($row->candidate_for == 'Provincial Board Member') {
+                        if($row->signed_by_lp != 2) {
+                            $councilor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
+                    } else if ($row->candidate_for == 'Board Member') {
+                        if($row->signed_by_lp != 2) {
                             $bmember[] = array(
-                            'id' => $row->id,
-                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                        );
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
                     } else if ($row->candidate_for == 'Congressman') {
-                        $prvcongressman[] = array(
-                            'id' => $row->id,
-                            'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                            'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                        );
+                        if($row->signed_by_lp != 2) {
+                            $prvcongressman[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
                     }
                 }
                 return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
@@ -255,18 +269,22 @@ class ScreeningController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'Governor') {
-                            $governor[] = array(
-                                'id' => $row->id,
-                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                            );
+                            if($row->signed_by_lp != 2) {
+                                $governor[] = array(
+                                    'id' => $row->id,
+                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                );
+                            }
                             
                         } else if ($row->candidate_for == 'Vice-Governor') {
-                            $vgovernor[] = array(
-                                'id' => $row->id,
-                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                            );
+                            if($row->signed_by_lp != 2) {
+                                $vgovernor[] = array(
+                                    'id' => $row->id,
+                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                );
+                            }
                         }
                     }
                     return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode, 'province', '')]);

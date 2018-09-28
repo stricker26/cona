@@ -38,8 +38,7 @@
 						<div class="col-sm-3">
 							<h5 class="font-weight-bold pt-1">Governor:</h5>
 						</div>
-						<div class="col-sm-9">
-							<div class="row" id="prov-governor"></div>
+						<div class="col-sm-9" id="prov-governor">
 						</div>
 					</div>
 					<hr>
