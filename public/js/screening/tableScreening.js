@@ -136,6 +136,9 @@ $(document).ready( function () {
 		$(this).nextAll().remove();
 		ajaxGet(code, '', type);
 		$('tbody').html('');
+		if (type == 'MUNICIPALITY') {
+			ajaxGet(code, name, type, undefined, part);
+		}
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'CITY');
 			ajaxGet(code, '', 'HUC');
@@ -224,8 +227,11 @@ $(document).ready( function () {
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
-		    						if ($('#' + e).length == 0)
-		    							$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
+		    							if ($('.MUNICIPALITY').length != 1) {
+		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+		    							}
+		    						}
 		    					}
 		    				}
 		    			}
@@ -322,10 +328,14 @@ function hucTable(e, data, region) {
 				printRow(data, x, 'city', type);
 			}
 			else if (region != 'NCR') {
-				console.log($('.bcrumbs a').length);
 				if ($('.bcrumbs a').length <= 2) {
 					if (x == s) {
 						printRow(data, x, 'city', type);
+					}
+					else {
+						if (data[x].city != data[x-1].city) {
+							printRow(data, x, 'city', type);
+						}
 					}
 				}
 				else {
@@ -442,7 +452,6 @@ function loadPagination() {
 
 //Display Province Candidate
 function getProvinceCandidate(provinceCode, type, part) {
-	console.log('getProvinceCandidate: ' + part);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/governor',
 		method: 'GET',
