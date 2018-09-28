@@ -272,6 +272,7 @@ class LECController extends Controller
             
             $provinceCode = $request->input('provinceCode');
             $district = $request->input('district');
+            $type = $request->input('type');
 
             $query = DB:: table('candidates')
                 ->where('province_id', '=', $provinceCode)
