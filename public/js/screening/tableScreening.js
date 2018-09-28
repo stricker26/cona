@@ -21,6 +21,7 @@ $(document).ready( function () {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
     		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
+    		ajaxGet(urlCode, urlName, 'ICC', urlRegion);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -31,7 +32,7 @@ $(document).ready( function () {
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
-		    getCityCandidate(urlCode, urlType, part);
+		    getCityCandidate(urlCode, urlType, part, urlName);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -77,7 +78,7 @@ $(document).ready( function () {
     		case 'MUNICIPAL':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type, part);
+    			getCityCandidate(e, type, part, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -101,7 +102,7 @@ $(document).ready( function () {
     		case 'CC':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type, part);
+    			getCityCandidate(e, type, part, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -115,6 +116,7 @@ $(document).ready( function () {
     		default:
     			$('tbody').html('');
     			ajaxGet(e, name, type, region);
+    			getCityCandidate(e, type, part, name);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -267,14 +269,19 @@ function loadTable(e, data) {
 			if (data[x].type != undefined) {
 				type = data[x].type;
 			}
+			if(data[x].assigned_lec == null) {
+				var lec = 'No assigned LEC';
+			} else {
+				var lec = data[x].assigned_lec;
+			}
 			$('tbody').append(`
 					<tr class='item'>
 						<td class="code">` + data[x].province_code + `</td>
 						<td class="description">` + data[x].lgu + `</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Lorem Ipsum</td>
+						<td>` + data[x].pending + `</td>
+						<td>` + data[x].approved + `</td>
+						<td>` + data[x].rejected + `</td>
+						<td>` + lec + `</td>
 						<td class="type">` + type + `</td>
 						<td class="region" style="display:none;">` + data[x].region + `</td>
 					</tr>
@@ -366,14 +373,20 @@ function cityTable(e, data, name) {
 }
 
 function printRow(data, x, name, type) {
+	if(data[x].assigned_lec == null) {
+		var lec = 'No assigned LEC';
+	} else {
+		var lec = data[x].assigned_lec;
+	}
+
 	$('tbody').append(`
 			<tr class='item'>
 				<td class="code">` + data[x].province_code + `</td>
 				<td class="description">` + data[x][name] + `</td>
-				<td>0</td>
-				<td>0</td>
-				<td>0</td>
-				<td>Lorem Ipsum</td>
+				<td>` + data[x].pending + `</td>
+				<td>` + data[x].approved + `</td>
+				<td>` + data[x].rejected + `</td>
+				<td>` + lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);
@@ -496,12 +509,12 @@ function getProvinceCandidate(provinceCode, type, part) {
 }
 
 // Display City Candidate
-function getCityCandidate(provinceCode, type, part) {
+function getCityCandidate(provinceCode, type, part, name) {
 	console.log('getCityCandidate: ' + part);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
-		data: {provinceCode: provinceCode, requesType: type},
+		data: {provinceCode: provinceCode, requesType: type, name: name},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {
@@ -554,7 +567,7 @@ function getCityCandidate(provinceCode, type, part) {
 					<div class="col-sm-2"></div>
 				`);
 			}
-			if(type == 'CC' || type == 'MUNICIPAL') {
+			if(type == 'CC' || type == 'MUNICIPAL' || type == 'ICC') {
 				if(data.councilor.length > 0) {
 					jQuery('#cc-councilor').html('');
 					var councilors = data.councilor;
@@ -601,7 +614,7 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 	$.ajax({
 		url: '/' + part + '/screening/candidate/district',
 		method: 'GET',
-		data: {provinceCode: provinceCode, 'district': district},
+		data: {provinceCode: provinceCode, 'district': district, type: type},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {

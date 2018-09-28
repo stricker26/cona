@@ -121,11 +121,28 @@ class LECController extends Controller
                 return 'No assigned LEC';
             }
 
-        } elseif($type == 'municipal_district') {
+        } elseif($type == 'district') {
+
             $query = DB::table('municipality AS muni')
                 ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
                 ->select('lc.name')
                 ->where('muni.province_code', '=', $province_code)
+                ->where('muni.district', '=', $city)
+                ->limit(1)
+                ->get();
+
+            if(count($query) > 0) {
+                return $query[0]->name;
+            } else {
+                return 'No assigned LEC';
+            }
+
+        } elseif($type == 'municipal') {
+            $query = DB::table('municipality AS muni')
+                ->join('lec AS lc', 'muni.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('muni.province_code', '=', $province_code)
+                ->where('muni.municipality', '=', $city)
                 ->limit(1)
                 ->get();
 
@@ -136,15 +153,16 @@ class LECController extends Controller
             }
 
         } elseif($type == 'component_city') {
-            $query = DB::table('city')
-                ->select('lec')
-                ->where('province_code', '=', $province_code)
-                ->where('city', '=', $city)
+            $query = DB::table('city AS ct')
+                ->join('lec AS lc', 'ct.lec', '=', 'lc.id')
+                ->select('lc.name')
+                ->where('ct.province_code', '=', $province_code)
+                ->where('ct.city', '=', $city)
                 ->limit(1)
                 ->get();
 
             if(count($query) > 0) {
-                return $query[0]->lec;
+                return $query[0]->name;
             } else {
                 return 'No assigned LEC';
             }
@@ -166,6 +184,17 @@ class LECController extends Controller
             $mayor = array();
             $vmayor = array();
             $councilor = array();
+
+            if($requesType == 'MUNICIPAL') {
+                $lec_type = 'municipal_district';
+                $lec_city = '';
+            } elseif($requesType == 'CC') {
+                $lec_type = 'component_city';
+                $lec_city = $city;
+            } else {
+                $lec_type = 'huc_district';
+                $lec_city = '';
+            }
 
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
@@ -220,9 +249,9 @@ class LECController extends Controller
                             }
                         } 
                     }
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
                 } else {
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode), 'pass' => $requesType]);
+                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city), 'pass' => $requesType]);
                 }
 
             }  
@@ -253,6 +282,14 @@ class LECController extends Controller
             $councilor = array();
             $bmember = array();
             $prvcongressman = array();
+
+            if($type == 'HUC DISTRICT') {
+                $lec_type = 'huc_district';
+                $lec_city = '';
+            } else {
+                $lec_type = 'municipal_district';
+                $lec_city = '';
+            }
 
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
@@ -318,9 +355,9 @@ class LECController extends Controller
                         }
                     }
                 }
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
             } else {
-                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode)]);
+                return response()->json(['congressman' => $congressman, 'councilor' => $councilor, 'provCongressman' => $prvcongressman, 'bmember' => $bmember, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
             }      
 
         } else {
@@ -384,9 +421,9 @@ class LECController extends Controller
                             }
                         }
                     }
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode, 'province', '')]);
                 } else {
-                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode)]);
+                    return response()->json(['governor' => $governor, 'vgovernor' => $vgovernor, 'lec' => $lec->lec_candidate($provinceCode, 'province', '')]);
                 }
 
             } else {

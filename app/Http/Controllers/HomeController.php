@@ -40,10 +40,7 @@ class HomeController extends Controller
 
         if($validator->fails()) {
 
-           return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput(); 
+            return response()->json(['warning' => 'Fields with (*) are mandatory.']);
 
         } else {
 
@@ -64,6 +61,14 @@ class HomeController extends Controller
                 $city = $request->input('city');
             }
 
+            if($request->input('position') == 'Senator') {
+                $signed_by_lec = '3';
+                $signed_by_lp = '0';
+            } else {
+                $signed_by_lec = '0';
+                $signed_by_lp = '3';
+            }
+
             $candidate = Candidate::create([
                 'firstname' => $request->input('firstname'),
                 'middlename' => $request->input('middlename'),
@@ -78,8 +83,8 @@ class HomeController extends Controller
                 'province_id' => $request->input('province'),
                 'district_id' => $request->input('district'),
                 'city_id' => $city,
-                'signed_by_lec' => '0',
-                'signed_by_lp' => '3',
+                'signed_by_lec' => $signed_by_lec,
+                'signed_by_lp' => $signed_by_lp,
                 'cos_id' => $cos_id,
             ]);
 
@@ -93,8 +98,7 @@ class HomeController extends Controller
                 'email' => $request->input('cos_email'),
             ]);
 
-            Session::flash('success', 'Successfully Registered!!!');
-           return redirect()->back();
+            return response()->json(['success' => 'Successfully Registered!!!']);
 
         }
 

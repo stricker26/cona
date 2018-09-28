@@ -124,12 +124,26 @@ body p {
 }
 
 .page_body .sign {
-  display: inline-block;
   position: absolute;
-  left: 300px;
+  right: 0;
+  left: auto;
+  width: 450px;
+  display: block;
 }
 
 .page_body .sign p {
+  text-align: center;
+}
+
+.page_body .lec_container {
+  position: absolute;
+  right: 0;
+  left: auto;
+  width: 450px;
+  display: block;
+}
+
+.page_body .lec_container p {
   text-align: center;
 }
 

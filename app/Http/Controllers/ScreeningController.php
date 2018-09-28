@@ -103,8 +103,8 @@ class ScreeningController extends Controller
             $councilor = array();
 
             if($requesType == 'MUNICIPAL') {
-                $lec_type = 'municipal_district';
-                $lec_city = '';
+                $lec_type = 'municipal';
+                $lec_city = $city;
             } elseif($requesType == 'CC') {
                 $lec_type = 'component_city';
                 $lec_city = $city;
@@ -181,9 +181,15 @@ class ScreeningController extends Controller
             if($type == 'HUC DISTRICT') {
                 $lec_type = 'huc_district';
                 $lec_city = '';
-            } else {
-                $lec_type = 'municipal_district';
+            } elseif($type == 'DISTRICT') {
+                $lec_type = 'district';
+                $lec_city = $district;
+            } elseif($type == 'CC') {
+                $lec_type = 'component_city';
                 $lec_city = '';
+            } else {
+                $lec_type = 'municipal';
+                $lec_city = $district;
             }
 
             if(count($query) > 0) {
