@@ -18,6 +18,7 @@ class profileController extends Controller
                 'lgu' => 'Philippines',
                 'type'=> 'Nation'
             );
+            
             $municipality = null;
             $district = null;
             $city = null;
