@@ -16,8 +16,13 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse mt-3">
             <ul class="nav navbar-nav">
                 <li class="pl-2">
-                    <a href="/lec"><i class="far fa-address-card pr-4"></i><span>Profile</span></a>
+                    <a href="/lec"><i class="far fa-address-card pr-4"></i><span>&nbsp;Profile</span></a>
                 </li>
+                @if($lec_name === 'HQ')
+                    <li class="pl-2">
+                        <a href="/lec/senators"><i class="fas fa-user-alt pr-4"></i>&nbsp;Senators </a>
+                    </li>
+                @endif
                 <li class="pl-2">
                     <div class="float-right stat-check">
                         <div class="d-inline pr-2 pl-1">

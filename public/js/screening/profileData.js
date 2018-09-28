@@ -27,8 +27,8 @@ $(document).ready(function(){
 			}
 		});
 
-		$('#approve_btn').hide();
-		$('#reject_btn').hide();
+		$('#approve_btn_1').hide();
+		$('#reject_btn_1').hide();
 		$('#download_btn').hide();
 		$('#save_btn').show();
 		$('#close_btn').show();
@@ -39,7 +39,11 @@ $(document).ready(function(){
 		$('.data-candidates .left-div').find(".row-body").each(function(){
 			var inputData = $(this).find(".row-content span").html();
 			$(this).find(".row-content span").show();
-			$(this).find(".row-content input").val(inputData).hide();
+			if(inputData == '<i>--None--</i>') {
+				$(this).find(".row-content input").hide();
+			} else {
+				$(this).find(".row-content input").val(inputData).hide();
+			}
 
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -50,16 +54,20 @@ $(document).ready(function(){
 		$('.data-candidates .right-div').find(".row-body").each(function(){
 			var inputData = $(this).find(".row-content span").html();
 			$(this).find(".row-content span").show();
-			$(this).find(".row-content input").val(inputData).hide();
-
+			if(inputData == '<i>--None--</i>') {
+				$(this).find(".row-content input").hide();
+			} else {
+				$(this).find(".row-content input").val(inputData).hide();
+			}
+			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			if($.inArray(idForAjax, a_href_id) !== -1) {
 				$(this).find("a").show();
 			}
 		});
 
-		$('#approve_btn').show();
-		$('#reject_btn').show();
+		$('#approve_btn_1').show();
+		$('#reject_btn_1').show();
 		$('#download_btn').show();
 		$('#save_btn').hide();
 		$('#edit_btn').show();
@@ -78,7 +86,7 @@ $(document).ready(function(){
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			var nameToPass = idForAjax.replace("prof_","");
-			console.log(spanData);
+			console.log(nameToPass);
 			objectData[nameToPass] = spanData;
 
 			// if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -93,6 +101,7 @@ $(document).ready(function(){
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			var nameToPass = idForAjax.replace("prof_","");
+			console.log(nameToPass);
 			objectData[nameToPass] = spanData;
 
 			// if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -100,16 +109,17 @@ $(document).ready(function(){
 			// }
 		});
 
-		$('#approve_btn').show();
-		$('#reject_btn').show();
+		$('#approve_btn_1').show();
+		$('#reject_btn_1').show();
 		$('#download_btn').show();
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
+		console.log(objectData);
 
 		$.ajax({
 			method: 'POST',
-			url: './hq/screening/profile/sent',
+			url: '/hq/screening/profile/sent',
 			data: objectData,
 			success:function(alert){
 	    		if(alert == 'cos failed') {
@@ -172,8 +182,11 @@ $(document).ready(function(){
 				$('.data-candidates .left-div').find(".row-body").each(function(){
 					var inputData = $(this).find(".row-content span").html();
 					$(this).find(".row-content span").show();
-
-					$(this).find(".row-content input").val(inputData).hide();
+					if(inputData == '<i>--None--</i>') {
+						$(this).find(".row-content input").hide();
+					} else {
+						$(this).find(".row-content input").val(inputData).hide();
+					}
 
 					var idForAjax = $(this).find(".row-content input").attr("id");
 					if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -184,7 +197,11 @@ $(document).ready(function(){
 				$('.data-candidates .right-div').find(".row-body").each(function(){
 					var inputData = $(this).find(".row-content span").html();
 					$(this).find(".row-content span").show();
-					$(this).find(".row-content input").val(inputData).hide();
+					if(inputData == '<i>--None--</i>') {
+						$(this).find(".row-content input").hide();
+					} else {
+						$(this).find(".row-content input").val(inputData).hide();
+					}
 
 					var idForAjax = $(this).find(".row-content input").attr("id");
 					if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -199,7 +216,7 @@ $(document).ready(function(){
 		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
-			url: './profile/approve',
+			url: 'profile/approve',
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
@@ -225,7 +242,7 @@ $(document).ready(function(){
 		var id_candidate = $('#id_candidate').val();
 		$.ajax({
 			method: 'POST',
-			url: './profile/reject',
+			url: 'profile/reject',
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{

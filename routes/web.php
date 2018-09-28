@@ -64,6 +64,7 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::post('/status', 'LECController@status');
 	Route::post('/screening/profile', 'LECController@profile');
 	Route::get('/screening/profile', 'LECController@redirect');
+	Route::get('/senators','LECController@senator');
 	
 	Route::get('/screening', 'LECController@screening');
 	Route::get('/screening/HUC/{code}', 'LECController@huc');

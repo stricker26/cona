@@ -106,7 +106,7 @@ class profileController extends Controller
     public function sent(Request $data_candidate) {
         $candidate_id = $data_candidate->id;
         date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d h:i:s");
+        $date_now = date("Y-m-d H:i:s");
 
         if(isset($data_candidate->cos_name)) {
             $data_update_cos = array(
@@ -116,8 +116,8 @@ class profileController extends Controller
                 'contact' => $data_candidate->cos_contact,
                 'email' => $data_candidate->cos_email
             );
-            $cos_id = DB::table('candidates')->where('id',$candidate_id)->first();
-            $update_cos = DB::table('chief_of_staff')->where('cos_id',$candidate->cos_id)->update($data_update_cos);
+            $cos_id = DB::table('candidates')->where('id',$candidate_id)->first()->cos_id;
+            $update_cos = DB::table('chief_of_staff')->where('cos_id','=',$cos_id)->update($data_update_cos);
 
             if($update_cos) {
                 if(Auth::user()->isAdmin == 1) {
@@ -248,7 +248,7 @@ class profileController extends Controller
 
     public function approve(Request $data_candidate) {
         date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d h:i:s");
+        $date_now = date("Y-m-d H:i:s");
 
         $candidate_id = $data_candidate->id;
         $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '1']);
@@ -272,7 +272,7 @@ class profileController extends Controller
 
     public function approve_lec(Request $data_candidate) {
         date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d h:i:s");
+        $date_now = date("Y-m-d H:i:s");
 
         $candidate_id = $data_candidate->id;
         $approve = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '0', 'signed_by_lec' => '1']);
@@ -296,7 +296,7 @@ class profileController extends Controller
 
     public function reject(Request $data_candidate) {
         date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d h:i:s");
+        $date_now = date("Y-m-d H:i:s");
 
         $candidate_id = $data_candidate->id;
         $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2', 'signed_by_lec' => '2']);
@@ -320,7 +320,7 @@ class profileController extends Controller
 
     public function reject_lec(Request $data_candidate) {
         date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d h:i:s");
+        $date_now = date("Y-m-d H:i:s");
 
         $candidate_id = $data_candidate->id;
         $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lec' => '2']);
