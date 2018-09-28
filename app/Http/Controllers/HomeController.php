@@ -103,6 +103,7 @@ class HomeController extends Controller
                     'ip' => \Request::ip(),
                     'updated_at' => $date_now
                 ]);
+                
             } else {
                 DB::table('edit_logs')->insert([
                     'updated_candidate_id' => $candidate,
