@@ -548,9 +548,15 @@ class LECController extends Controller
                     $candidate->candidate_for == 'City Vice Mayor' ||
                     $candidate->candidate_for == 'City Councilor')
                 {
-                    $lec_id_province = DB::table('city')
-                        ->where('province_code',$candidate->province_id)
-                        ->first();
+                    if(strpos("-", $candidate->province_id) !== -1) {
+                        $lec_id_province = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    } else {
+                        $lec_id_province = DB::table('city')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    }
 
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
@@ -756,9 +762,15 @@ class LECController extends Controller
                     $candidate->candidate_for == 'City Vice Mayor' ||
                     $candidate->candidate_for == 'City Councilor')
                 {
-                    $lec_id_province = DB::table('city')
-                        ->where('province_code',$candidate->province_id)
-                        ->first();
+                    if(strpos("-", $candidate->province_id) !== -1) {
+                        $lec_id_province = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    } else {
+                        $lec_id_province = DB::table('city')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    }
 
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
@@ -930,9 +942,15 @@ class LECController extends Controller
                         $candidate->candidate_for == 'City Vice Mayor' ||
                         $candidate->candidate_for == 'City Councilor')
                     {
-                        $lec_id_province = DB::table('city')
-                            ->where('province_code',$candidate->province_id)
-                            ->first();
+                        if(strpos("-", $candidate->province_id) !== -1) {
+                            $lec_id_province = DB::table('province')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        } else {
+                            $lec_id_province = DB::table('city')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        }
 
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -1107,9 +1125,15 @@ class LECController extends Controller
                         $candidate->candidate_for == 'City Vice Mayor' ||
                         $candidate->candidate_for == 'City Councilor')
                     {
-                        $lec_id_province = DB::table('city')
-                            ->where('province_code',$candidate->province_id)
-                            ->first();
+                        if(strpos("-", $candidate->province_id) !== -1) {
+                            $lec_id_province = DB::table('province')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        } else {
+                            $lec_id_province = DB::table('city')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        }
 
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')

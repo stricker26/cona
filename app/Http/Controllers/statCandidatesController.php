@@ -94,6 +94,7 @@ class statCandidatesController extends Controller
                     $lec_id_province = DB::table('province')
                         ->where('province_code',$candidate->province_id)
                         ->first();
+                        
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
@@ -105,10 +106,16 @@ class statCandidatesController extends Controller
                 } elseif($candidate->candidate_for == 'City Mayor' ||
                     $candidate->candidate_for == 'City Vice Mayor' ||
                     $candidate->candidate_for == 'City Councilor')
-                {
-                    $lec_id_province = DB::table('city')
-                        ->where('province_code',$candidate->province_id)
-                        ->first();
+                {   
+                    if(strpos("-", $candidate->province_id) !== -1) {
+                        $lec_id_province = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    } else {
+                        $lec_id_province = DB::table('city')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    }
 
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
@@ -300,6 +307,7 @@ class statCandidatesController extends Controller
                     $lec_id_province = DB::table('province')
                         ->where('province_code',$candidate->province_id)
                         ->first();
+
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
@@ -312,9 +320,15 @@ class statCandidatesController extends Controller
                     $candidate->candidate_for == 'City Vice Mayor' ||
                     $candidate->candidate_for == 'City Councilor')
                 {
-                    $lec_id_province = DB::table('city')
-                        ->where('province_code',$candidate->province_id)
-                        ->first();
+                    if(strpos("-", $candidate->province_id) !== -1) {
+                        $lec_id_province = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    } else {
+                        $lec_id_province = DB::table('city')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                    }
 
                     if(is_numeric($lec_id_province->lec)) {
                         $lec_id = DB::table('lec')
@@ -476,6 +490,7 @@ class statCandidatesController extends Controller
                         $lec_id_province = DB::table('province')
                             ->where('province_code',$candidate->province_id)
                             ->first();
+
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
@@ -488,9 +503,15 @@ class statCandidatesController extends Controller
                         $candidate->candidate_for == 'City Vice Mayor' ||
                         $candidate->candidate_for == 'City Councilor')
                     {
-                        $lec_id_province = DB::table('city')
-                            ->where('province_code',$candidate->province_id)
-                            ->first();
+                        if(strpos("-", $candidate->province_id) !== -1) {
+                            $lec_id_province = DB::table('province')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        } else {
+                            $lec_id_province = DB::table('city')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        }
 
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -661,6 +682,7 @@ class statCandidatesController extends Controller
                         $lec_id_province = DB::table('province')
                             ->where('province_code',$candidate->province_id)
                             ->first();
+
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
@@ -673,9 +695,15 @@ class statCandidatesController extends Controller
                         $candidate->candidate_for == 'City Vice Mayor' ||
                         $candidate->candidate_for == 'City Councilor')
                     {
-                        $lec_id_province = DB::table('city')
-                            ->where('province_code',$candidate->province_id)
-                            ->first();
+                        if(strpos("-", $candidate->province_id) !== -1) {
+                            $lec_id_province = DB::table('province')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        } else {
+                            $lec_id_province = DB::table('city')
+                                ->where('province_code',$candidate->province_id)
+                                ->first();
+                        }
 
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
