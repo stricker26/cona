@@ -27,7 +27,7 @@
 		        	Are you sure you want to reject this candidate?
 		      	</div>
 		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-danger" id="lec_reject_btn">Reject</button>
+		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
 		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>

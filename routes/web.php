@@ -78,7 +78,7 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	Route::get('/screening/count/{province}/{district}', 'LECController@count');
 	Route::post('/screening/profile', 'profileController@profile_lec');
 	Route::post('/screening/profile/approve', 'profileController@approve_lec');
-	Route::post('/screening/profile/reject', 'profileController@reject_lec');
+	Route::post('/screening/profile/reject', 'profileController@reject');
 	Route::get('/screening/candidate/city', 'LECController@candidate');
 	Route::get('/screening/candidate/district', 'LECController@districtCandidate');
 	Route::get('/screening/candidate/governor', 'LECController@governor');
