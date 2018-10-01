@@ -533,7 +533,6 @@ function getProvinceCandidate(provinceCode, type, part) {
 
 // Display City Candidate
 function getCityCandidate(provinceCode, type, part, name) {
-	console.log('getCityCandidate: ' + part);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
