@@ -68,7 +68,7 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	
 	Route::get('/screening', 'LECController@screening');
 	Route::get('/screening/HUC/{code}', 'LECController@huc');
-	Route::get('/screening/PROVINCE/{code}', 'LECController@municipality');
+	Route::get('/screening/PROVINCE/{code}', 'LECController@district');
 	Route::get('/screening/CITY/{code}', 'LECController@city');
 	Route::get('/screening/CC/{code}', 'LECController@cc');
 	Route::get('/screening/ICC/{code}', 'LECController@cc');
