@@ -184,6 +184,7 @@ class LECController extends Controller
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
+            $city = $request->input('name');
 
             $mayor = array();
             $vmayor = array();
