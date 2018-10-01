@@ -137,7 +137,7 @@
 				var requestType = 'district';
 				var target = '#district';
 				var position = jQuery('#position').val();
-				if(position == 'Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice-Mayor' || position == 'Municipal Councilor') {
+				if(position == 'Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice Mayor' || position == 'Municipal Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('#district').attr('required', 'required');
 					jQuery('#district').html('<option>Loading...</option>');

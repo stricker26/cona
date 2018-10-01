@@ -129,7 +129,7 @@ class ScreeningController extends Controller
                                 );
                             }
                             
-                        } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
+                        } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
                             if($row->signed_by_lp != 2) {
                                 $vmayor[] = array(
                                     'id' => $row->id,
@@ -277,7 +277,7 @@ class ScreeningController extends Controller
                                 );
                             }
                             
-                        } else if ($row->candidate_for == 'Vice-Governor') {
+                        } else if ($row->candidate_for == 'Vice Governor') {
                             if($row->signed_by_lp != 2) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
