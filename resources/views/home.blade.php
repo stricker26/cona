@@ -87,7 +87,7 @@
                         <input type="text" name="address" class="form-control" id="address" maxlength="200">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email <span>*</span></label>
+                        <label for="email">Email</label>
                         <input type="email" name="email" class="form-control" id="email" maxlength="190">
                     </div>
                     <div class="form-group">

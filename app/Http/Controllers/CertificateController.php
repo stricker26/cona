@@ -9,12 +9,16 @@ use DB;
 
 class CertificateController extends Controller
 {
-    public static function create(Request $request){
+    public static function create($ids){
 
-        $can = DB::table('candidates')->where('id','=',$request->candidate)->get();
-       
+        if(is_array($ids)) {
+             $can = DB::table('candidates')->whereIn('id',$ids)->get();
+        } else {
+             $can = DB::table('candidates')->where('id',$ids)->get();
+        }
 
     	$candidate = [];
+
         foreach($can as $cand){
             $prov = DB::table('province')->where('province_code','=',$cand->province_id)->get();
 
@@ -113,6 +117,7 @@ class CertificateController extends Controller
         	array_push($candidate, $c);
         		// Repeat for multiple certificates   
         }
+
         $pdf = PDF::loadView('certificate.main',compact('candidate'));
         $pdf->setPaper('legal', 'portrait');
 

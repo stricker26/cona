@@ -452,7 +452,7 @@
 				</div>
 			@elseif ($candidate->signed_by_lp == 1)
 				<div class="d-inline pr-2">
-					<a href="{{url('/hq/certificate?candidate=')}}{{ $candidate->id }}" type="button" class="btn btn-warning" id="download_btn"target="blank">Download CONA</a>
+					<a href="{{url('/hq/status/export')}}/{{ $candidate->id }}" type="button" class="btn btn-warning" id="download_btn"target="blank">Download CONA</a>
 				</div>
 			@endif
 		</div>
