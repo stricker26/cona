@@ -144,7 +144,7 @@
                             <option value="">Position</option>
                             <option data-group="PROV" value="Senator">Senator</option>
                             <option data-group="PROV" value="Governor">Governor</option>
-                            <option data-group="PROV" value="Vice-Governor">Vice Governor</option>
+                            <option data-group="PROV" value="Vice Governor">Vice Governor</option>
                             <option data-group="PROV" value="Board Member">Board Member</option>
                             <option data-group="PROV" value="Congressman">Congressman</option>
                             <option data-group="HUC" value="HUC Congressman">HUC Congressman</option>
