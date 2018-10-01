@@ -66,6 +66,10 @@ class LECController extends Controller
         return $data;
     }
 
+    public function cc($code) {
+        return null;
+    }
+
     public function city($code) {
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
