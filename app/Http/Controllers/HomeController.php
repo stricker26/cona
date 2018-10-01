@@ -32,8 +32,8 @@ class HomeController extends Controller
             'birthday' => 'required',
             'birthyear' => 'required',
             'address' => 'required',
-            'email' => 'required|email|unique:candidates',
-            'mobile' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required|unique:candidates',
             'position' => 'required',
         );
 

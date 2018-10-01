@@ -48,6 +48,8 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/screening/candidate/governor', 'ScreeningController@governor');
 	Route::post('/status', 'statCandidatesController@status');
 	Route::get('/status', 'profileController@redirect');
+	Route::get('/status/export/{position}/{province}', 'ExportController@export');
+	Route::get('/status/export/{id}', 'ExportController@exportByID');
 
 	Route::get('/senators','profileController@senator');
 
