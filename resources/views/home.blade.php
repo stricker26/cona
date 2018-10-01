@@ -37,15 +37,15 @@
                     </div>
                     <div class="form-group">
                         <label for="firstname">Firstname <span>*</span></label>
-                        <input type="text" name="firstname" class="form-control" id="firstname" maxlength="150">
+                        <input type="text" name="firstname" class="form-control" id="firstname" maxlength="150" required="required">
                     </div>
                     <div class="form-group">
                         <label for="middlename">Middle Name</label>
-                        <input type="text" name="middlename" class="form-control" id="middlename" maxlength="150">
+                        <input type="text" name="middlename" class="form-control" id="middlename" maxlength="150" required="required">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Last Name <span>*</span></label>
-                        <input type="text" name="lastname" class="form-control" id="lastname" maxlength="150">
+                        <input type="text" name="lastname" class="form-control" id="lastname" maxlength="150" required="required">
                     </div>
                     <div class="form-group">
                         <label for="birthdate">Birthdate <span>*</span></label>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address <span>*</span></label>
-                        <input type="text" name="address" class="form-control" id="address" maxlength="200">
+                        <input type="text" name="address" class="form-control" id="address" maxlength="200" required="required">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group">
                         <label for="mobile">Mobile <span>*</span></label>
-                        <input type="text" name="mobile" class="form-control" id="mobile" maxlength="15">
+                        <input type="text" name="mobile" class="form-control" id="mobile" maxlength="15" required="required">
                     </div>
                     <div class="form-group a">
                         <h2>Public Social Media Accounts</h2>
@@ -152,7 +152,7 @@
                             <option data-group="HUC" value="City Vice Mayor">City Vice Mayor</option>
                             <option data-group="HUC" value="City Councilor">City Councilor</option>
                             <option data-group="PROV" value="Municipal Mayor">Municipal Mayor</option>
-                            <option data-group="PROV" value="Municipal Vice Mayor">Municipal Vice-Mayor</option>
+                            <option data-group="PROV" value="Municipal Vice Mayor">Municipal Vice Mayor</option>
                             <option data-group="PROV" value="Municipal Councilor">Municipal Councilor</option>
                         </select>
                     </div>
