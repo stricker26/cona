@@ -136,14 +136,14 @@ class statCandidatesController extends Controller
                         ->where('municipality','like',$candidate->city_id)
                         ->first();
 
-                    // if($lec_id_province->lec) {
-                    //     $lec_id = DB::table('lec')
-                    //         ->where('id',$lec_id_province->lec)
-                    //         ->first();
-                    //     $candidate->lec = $lec_id->name;
-                    // } else {
-                    //     $candidate->lec = $lec_id_province->lec;
-                    // }
+                    if($lec_id_province->lec) {
+                        $lec_id = DB::table('lec')
+                            ->where('id',$lec_id_province->lec)
+                            ->first();
+                        $candidate->lec = $lec_id->name;
+                    } else {
+                        $candidate->lec = $lec_id_province->lec;
+                    }
                 }
 
                 $candidate_provinceLGU = DB::table('province')

@@ -257,12 +257,9 @@ class LECController extends Controller
                     return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city), 'pass' => $requesType]);
                 }
 
-        // }  else {
+            }
 
         //     return response()->json(['warning' => 'Invalid request.']);
-
-        // }
-
     }
 
     public function districtCandidate(Request $request) {
