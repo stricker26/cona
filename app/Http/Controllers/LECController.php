@@ -481,7 +481,7 @@ class LECController extends Controller
             $location = "All Region";
             $governor = 'empty';
             $vice_governor = 'empty';
-            $provincial_board_member = 'empty';
+            $board_member = 'empty';
             $congressman = 'empty';
             $HUC_congressman = 'empty';
             $city_mayor = 'empty';
@@ -493,7 +493,7 @@ class LECController extends Controller
             $count_positions = (object) array(
                 'governor' => 0,
                 'vice_governor' => 0,
-                'provincial_board_member' => 0,
+                'board_member' => 0,
                 'congressman' => 0,
                 'HUC_congressman' => 0,
                 'city_mayor' => 0,
@@ -503,7 +503,7 @@ class LECController extends Controller
                 'municipal_vice_mayor' => 0,
                 'municipal_councilor' => 0
             );
-            $positions = array('governor','vice_governor','provincial_board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
+            $positions = array('governor','vice_governor','board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
             
             $candidates = DB::table('candidates')
                                 ->where('signed_by_lec',$status)
@@ -517,9 +517,9 @@ class LECController extends Controller
                 } elseif($candidate->candidate_for === "Vice Governor") {
                     $vice_governors = 'not empty';
                     $count_positions->vice_governor = ($count_positions->vice_governor) + 1;
-                } elseif($candidate->candidate_for === "Provincial Board Member") {
-                    $provincial_board_member = 'not empty';
-                    $count_positions->provincial_board_member = ($count_positions->provincial_board_member) + 1;
+                } elseif($candidate->candidate_for === "Board Member") {
+                    $board_member = 'not empty';
+                    $count_positions->board_member = ($count_positions->board_member) + 1;
                 } elseif($candidate->candidate_for === "Congressman") {
                     $congressman = 'not empty';
                     $count_positions->congressman = ($count_positions->congressman) + 1;
@@ -551,7 +551,7 @@ class LECController extends Controller
 
                 if($candidate->candidate_for == 'Governor' ||
                     $candidate->candidate_for == 'Vice Governor' ||
-                    $candidate->candidate_for == 'Provincial Board Member' ||
+                    $candidate->candidate_for == 'Board Member' ||
                     $candidate->candidate_for == 'HUC Congressman')
                 {
                     $lec_id_province = DB::table('province')
@@ -658,7 +658,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -677,7 +677,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -696,7 +696,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -728,7 +728,7 @@ class LECController extends Controller
                             ->get();
             $governor = 'empty';
             $vice_governor = 'empty';
-            $provincial_board_member = 'empty';
+            $board_member = 'empty';
             $congressman = 'empty';
             $HUC_congressman = 'empty';
             $city_mayor = 'empty';
@@ -740,7 +740,7 @@ class LECController extends Controller
             $count_positions = (object) array(
                 'governor' => 0,
                 'vice_governor' => 0,
-                'provincial_board_member' => 0,
+                'board_member' => 0,
                 'congressman' => 0,
                 'HUC_congressman' => 0,
                 'city_mayor' => 0,
@@ -750,7 +750,7 @@ class LECController extends Controller
                 'municipal_vice_mayor' => 0,
                 'municipal_councilor' => 0
             );
-            $positions = array('governor','vice_governor','provincial_board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
+            $positions = array('governor','vice_governor','board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
 
             foreach($candidates as $candidate){
                 if($candidate->candidate_for === "Governor") {
@@ -759,9 +759,9 @@ class LECController extends Controller
                 } elseif($candidate->candidate_for === "Vice Governor") {
                     $vice_governors = 'not empty';
                     $count_positions->vice_governor = ($count_positions->vice_governor) + 1;
-                } elseif($candidate->candidate_for === "Provincial Board Member") {
-                    $provincial_board_member = 'not empty';
-                    $count_positions->provincial_board_member = ($count_positions->provincial_board_member) + 1;
+                } elseif($candidate->candidate_for === "Board Member") {
+                    $board_member = 'not empty';
+                    $count_positions->board_member = ($count_positions->board_member) + 1;
                 } elseif($candidate->candidate_for === "Congressman") {
                     $congressman = 'not empty';
                     $count_positions->congressman = ($count_positions->congressman) + 1;
@@ -793,7 +793,7 @@ class LECController extends Controller
 
                 if($candidate->candidate_for == 'Governor' ||
                     $candidate->candidate_for == 'Vice Governor' ||
-                    $candidate->candidate_for == 'Provincial Board Member' ||
+                    $candidate->candidate_for == 'Board Member' ||
                     $candidate->candidate_for == 'HUC Congressman')
                 {
                     $lec_id_province = DB::table('province')
@@ -900,7 +900,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -919,7 +919,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -938,7 +938,7 @@ class LECController extends Controller
                     'candidates',
                     'governor',
                     'vice_governor',
-                    'provincial_board_member',
+                    'board_member',
                     'congressman',
                     'HUC_congressman',
                     'city_mayor',
@@ -1001,7 +1001,7 @@ class LECController extends Controller
 
                     if($candidate->candidate_for == 'Governor' ||
                         $candidate->candidate_for == 'Vice Governor' ||
-                        $candidate->candidate_for == 'Provincial Board Member' ||
+                        $candidate->candidate_for == 'Board Member' ||
                         $candidate->candidate_for == 'HUC Congressman')
                     {
                         $lec_id_province = DB::table('province')
@@ -1147,7 +1147,7 @@ class LECController extends Controller
                 //governor
                 $governor = 'empty';
                 $vice_governor = 'empty';
-                $provincial_board_member = 'empty';
+                $board_member = 'empty';
                 $congressman = 'empty';
                 $HUC_congressman = 'empty';
                 $city_mayor = 'empty';
@@ -1159,7 +1159,7 @@ class LECController extends Controller
                 $count_positions = (object) array(
                     'governor' => 0,
                     'vice_governor' => 0,
-                    'provincial_board_member' => 0,
+                    'board_member' => 0,
                     'congressman' => 0,
                     'HUC_congressman' => 0,
                     'city_mayor' => 0,
@@ -1169,7 +1169,7 @@ class LECController extends Controller
                     'municipal_vice_mayor' => 0,
                     'municipal_councilor' => 0
                 );
-                $positions = array('governor','vice_governor','provincial_board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
+                $positions = array('governor','vice_governor','board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
 
                 foreach($candidates as $candidate){
                     if($candidate->candidate_for === "Governor") {
@@ -1178,9 +1178,9 @@ class LECController extends Controller
                     } elseif($candidate->candidate_for === "Vice Governor") {
                         $vice_governors = 'not empty';
                         $count_positions->vice_governor = ($count_positions->vice_governor) + 1;
-                    } elseif($candidate->candidate_for === "Provincial Board Member") {
-                        $provincial_board_member = 'not empty';
-                        $count_positions->provincial_board_member = ($count_positions->provincial_board_member) + 1;
+                    } elseif($candidate->candidate_for === "Board Member") {
+                        $board_member = 'not empty';
+                        $count_positions->board_member = ($count_positions->board_member) + 1;
                     } elseif($candidate->candidate_for === "Congressman") {
                         $congressman = 'not empty';
                         $count_positions->congressman = ($count_positions->congressman) + 1;
@@ -1212,7 +1212,7 @@ class LECController extends Controller
 
                     if($candidate->candidate_for == 'Governor' ||
                         $candidate->candidate_for == 'Vice Governor' ||
-                        $candidate->candidate_for == 'Provincial Board Member' ||
+                        $candidate->candidate_for == 'Board Member' ||
                         $candidate->candidate_for == 'HUC Congressman')
                     {
                         $lec_id_province = DB::table('province')
@@ -1319,7 +1319,7 @@ class LECController extends Controller
                         'candidates',
                         'governor',
                         'vice_governor',
-                        'provincial_board_member',
+                        'board_member',
                         'congressman',
                         'HUC_congressman',
                         'city_mayor',
@@ -1338,7 +1338,7 @@ class LECController extends Controller
                         'candidates',
                         'governor',
                         'vice_governor',
-                        'provincial_board_member',
+                        'board_member',
                         'congressman',
                         'HUC_congressman',
                         'city_mayor',
@@ -1357,7 +1357,7 @@ class LECController extends Controller
                         'candidates',
                         'governor',
                         'vice_governor',
-                        'provincial_board_member',
+                        'board_member',
                         'congressman',
                         'HUC_congressman',
                         'city_mayor',
