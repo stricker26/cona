@@ -841,6 +841,7 @@ class statCandidatesController extends Controller
                     $candidate_provinceLGU = DB::table('province')
                         ->where('province_code',$candidate->province_id)
                         ->first();
+                        
                     if($candidate->city_id) {
                         if($candidate->district_id) {
                             $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
