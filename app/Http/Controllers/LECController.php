@@ -605,8 +605,6 @@ class LECController extends Controller
                         } else {
                             $candidate->lec = $lec_id_prov[0];
                         }
-
-                        dd('false');
                     } else {
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -846,8 +844,6 @@ class LECController extends Controller
                         } else {
                             $candidate->lec = $lec_id_prov[0];
                         }
-
-                        dd('false');
                     } else {
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -1053,8 +1049,6 @@ class LECController extends Controller
                             } else {
                                 $candidate->lec = $lec_id_prov[0];
                             }
-
-                            dd('false');
                         } else {
                             if(is_numeric($lec_id_province->lec)) {
                                 $lec_id = DB::table('lec')
@@ -1263,8 +1257,6 @@ class LECController extends Controller
                             } else {
                                 $candidate->lec = $lec_id_prov[0];
                             }
-
-                            dd('false');
                         } else {
                             if(is_numeric($lec_id_province->lec)) {
                                 $lec_id = DB::table('lec')
