@@ -196,7 +196,7 @@ class LECController extends Controller
 
         $lec = new LECController;
 
-        //if($request->ajax()) {
+        if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
@@ -220,6 +220,7 @@ class LECController extends Controller
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
+                    ->where('city_id', '=', $lec_city)
                     ->get();
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
@@ -273,6 +274,7 @@ class LECController extends Controller
                 }
 
             }
+        }
 
         //     return response()->json(['warning' => 'Invalid request.']);
     }
