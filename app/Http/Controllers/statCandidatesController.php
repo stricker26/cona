@@ -140,8 +140,6 @@ class statCandidatesController extends Controller
                         } else {
                             $candidate->lec = $lec_id_prov[0];
                         }
-
-                        dd('false');
                     } else {
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -379,8 +377,6 @@ class statCandidatesController extends Controller
                         } else {
                             $candidate->lec = $lec_id_prov[0];
                         }
-
-                        dd('false');
                     } else {
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
@@ -588,8 +584,6 @@ class statCandidatesController extends Controller
                             } else {
                                 $candidate->lec = $lec_id_prov[0];
                             }
-
-                            dd('false');
                         } else {
                             if(is_numeric($lec_id_province->lec)) {
                                 $lec_id = DB::table('lec')
@@ -806,8 +800,6 @@ class statCandidatesController extends Controller
                             } else {
                                 $candidate->lec = $lec_id_prov[0];
                             }
-
-                            dd('false');
                         } else {
                             if(is_numeric($lec_id_province->lec)) {
                                 $lec_id = DB::table('lec')
@@ -841,7 +833,7 @@ class statCandidatesController extends Controller
                     $candidate_provinceLGU = DB::table('province')
                         ->where('province_code',$candidate->province_id)
                         ->first();
-                        
+
                     if($candidate->city_id) {
                         if($candidate->district_id) {
                             $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
