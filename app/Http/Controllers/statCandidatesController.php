@@ -14,7 +14,7 @@ class statCandidatesController extends Controller
         $status = $data[0];
         $region = $data[1];
         $province = $data[2];
-    	$province_type = $data[3];
+        $province_type = $data[3];
         $status_page = null;
 
         if($region == "ph"){
@@ -191,7 +191,7 @@ class statCandidatesController extends Controller
             }
 
             if($status == '0') {
-        		return view('dashboard.status.pending', compact(
+                return view('dashboard.status.pending', compact(
                     'candidates',
                     'governor',
                     'vice_governor',
@@ -247,7 +247,7 @@ class statCandidatesController extends Controller
                     'location',
                     'status_page'
                 ));
-        	}
+            }
 
         } elseif($province === 'empty') {
             //region sidebar clicked

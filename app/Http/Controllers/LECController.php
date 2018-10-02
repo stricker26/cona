@@ -234,7 +234,7 @@ class LECController extends Controller
                                 $mayor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                                 );
                             }
                         } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
@@ -248,7 +248,7 @@ class LECController extends Controller
                                 $vmayor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                                 );
                             }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
@@ -341,7 +341,7 @@ class LECController extends Controller
                             $councilor[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
                     } else if ($row->candidate_for == 'Board Member') {
@@ -371,7 +371,7 @@ class LECController extends Controller
                             $prvcongressman[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                                'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
                     }
