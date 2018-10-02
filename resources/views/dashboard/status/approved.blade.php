@@ -28,8 +28,6 @@
 				  	</div>
 				  	<div class="card-body" style="display: none;">
 			      	 	@if($count_positions->$position !== 0)
-			      	 		@php($candidate = str_replace(" ", "-", $candidates[0]->candidate_for))
-			      	 		<a href="{{ url()->current() . '/export/' . $candidate . '/' . $candidates[0]->province_id }}" class="btn btn-primary mb-3" target="_blank">Download CONA</a>
 				      	 	<table class="table table-bordered">
 				      	 		<thead>
 				      	 			<tr>
@@ -60,8 +58,19 @@
 					      	 						<button type="submit" class="btn btn-success" name="screening_btn" value="{{ $candidate->id }}">View Profile</button>
 					      	 					</td>
 					      	 				</tr>
+					      	 				@php($getposition = $candidate->candidate_for)
+					      	 				@php($getprovinceID = $candidate->province_id)
 				      	 				@endif
 				      	 			@endforeach
+				      	 			@php($candidate = str_replace(" ", "-", $getposition))
+					      	 		@php($region = explode(" ", $location))
+					      	 		@if(ucwords($region[0]) == 'Region')
+										<a href="{{ url()->current() . '/export/' . $candidate . '/' . $getprovinceID . '/' . $region[1] }}" class="btn btn-primary mb-3" target="_blank">Download CONA</a>
+									@elseif(ucwords($region[0]) == 'All')
+										<a href="{{ url()->current() . '/export/' . $candidate . '/0/national' }}" class="btn btn-primary mb-3" target="_blank">Download CONA</a>
+									@else
+					      	 			<a href="{{ url()->current() . '/export/' . $candidate . '/' . $getprovinceID . '/province' }}" class="btn btn-primary mb-3" target="_blank">Download CONA</a>
+					      	 		@endif
 				      	 		</tbody>
 				      	 	</table>
 				      	@else
