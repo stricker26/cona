@@ -52,6 +52,7 @@ jQuery(document).ready(function($){
 		$('tbody').html('');
 		if (path == '/' + part + '/screening') {
 			if (type == 'DISTRICT') {
+				console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
 	    		ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
@@ -59,8 +60,9 @@ jQuery(document).ready(function($){
     			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
+	    		console.log('CLICKED PROVINCE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
 	    		ajaxGet(e, name, type, region, part);
-	    		ajaxGet(e, name, 'HUC', region, part);
+	    		ajaxGet(e, name, 'HUCs', region, part);
 	    		ajaxGet(e, name, 'CITY', region, part);
 	    		getProvinceCandidate(e, type, part);
 	    		$('.list-candidates').show();
@@ -69,6 +71,7 @@ jQuery(document).ready(function($){
     			$('.gov-districts').hide(500);
 	    	}
 	    	else {
+	    		console.log('CLICKED ELSE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
 	    		ajaxGet(e, name, type, region, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
@@ -124,6 +127,10 @@ jQuery(document).ready(function($){
 			    		console.log(type);
 	    			}
 	    			switch (type) {
+	    				case 'HUCs':
+	    					hucTable(e, data, region);
+	    					getCityCandidate(e, type, part);
+	    				break;
 	    				case 'HUC':
 	    					hucTable(e, data, region);
 	    					getCityCandidate(e, type, part);

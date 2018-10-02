@@ -19,7 +19,7 @@ $(document).ready( function () {
     	}
     	else if (urlType == 'PROVINCE') {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
-    		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
+    		ajaxGet(urlCode, urlName, 'HUCs', urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
     		ajaxGet(urlCode, urlName, 'ICC', urlRegion);
     		$('#locationModal').html(name);
@@ -48,8 +48,9 @@ $(document).ready( function () {
     	var region = $(this).find(".region").html();
     	switch (type) {
     		case 'DISTRICT':
+    			console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: undefined');
     			$('tbody').html('');
-    			ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
+    			ajaxGet(e, name, 'MUNICIPALITY', undefined);
     			getDistrictCandidate(e, type, name, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -59,12 +60,12 @@ $(document).ready( function () {
 	    		$('.huc-districts').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.prov-districts').show(500);
-
     		break;
     		case 'PROVINCE':
+    			console.log('CLICKED PROVINCE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
 	    		ajaxGet(e, name, type, region);
-	    		ajaxGet(e, name, 'HUC', region);
+	    		ajaxGet(e, name, 'HUCs', region);
 	    		ajaxGet(e, name, 'CITY', region);
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -76,6 +77,7 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'MUNICIPAL':
+    			console.log('CLICKED MUNICIPAL: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type, part, name);
@@ -90,6 +92,7 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
+    			console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			getDistrictCandidate(e, type, name, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -100,6 +103,7 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'CC':
+    			console.log('CLICKED CC: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type, part, name);
@@ -114,6 +118,7 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		default:
+    			console.log('CLICKED default: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
     			ajaxGet(e, name, type, region);
     			getCityCandidate(e, type, part, name);
@@ -137,11 +142,11 @@ $(document).ready( function () {
 		ajaxGet(code, '', type);
 		$('tbody').html('');
 		if (type == 'MUNICIPALITY') {
-			ajaxGet(code, name, type, undefined, part);
+			ajaxGet(code, name, type, undefined);
 		}
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'CITY');
-			ajaxGet(code, '', 'HUC');
+			ajaxGet(code, '', 'HUCs');
 		}
 		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
@@ -219,10 +224,12 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
+		    		console.log('ajaxGet e: ' + e + ', name: ' + name + ', type: ' + type + '. region: ' + region);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
-    						console.log('type: ' + type);
-    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+    						if (region != undefined) {
+    							$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+    						}
     					}
 		    		}
 		    		else  {
@@ -243,6 +250,9 @@ $(document).ready( function () {
 		    			}
 		    			switch (type) {
 		    				case 'HUC':
+		    					hucTable(e, data, region);
+		    				break;
+		    				case 'HUCs':
 		    					hucTable(e, data, region);
 		    				break;
 		    				case 'PROVINCE':
@@ -533,6 +543,10 @@ function getProvinceCandidate(provinceCode, type, part) {
 
 // Display City Candidate
 function getCityCandidate(provinceCode, type, part, name) {
+	if (type == 'HUC' || type == 'HUCs') {
+		var u = provinceCode.split('-');
+		provinceCode = u[0];
+	}
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
@@ -541,6 +555,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
+			console.log('getCityCandidate: ' + data);
 			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');

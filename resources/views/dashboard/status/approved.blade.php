@@ -52,7 +52,7 @@
 					      	 						{{ $candidate->location }}
 					      	 					</td>
 					      	 					<td class="align-middle">
-					      	 						
+					      	 						{{ $candidate->lec }}
 					      	 					</td>
 					      	 					<td>
 					      	 						<button type="submit" class="btn btn-success" name="screening_btn" value="{{ $candidate->id }}">View Profile</button>
