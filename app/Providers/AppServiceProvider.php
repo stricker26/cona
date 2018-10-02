@@ -383,32 +383,18 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', '=', $lecId)->get();
+            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
             $regions = array();
-            $municipalities = array();
-            $cities = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {
                     array_push($regions, $prov_region->region);
-                }
-
-                $municipality_table = DB::table('municipality')->where('province_code',$prov_region->province_code)->get()->toArray();
-                if(count($municipality_table) !== 0) {
-                    array_merge($municipalities, $municipality_table);
-                }
-
-                $city_table = DB::table('city')->where('province_code',$prov_region->province_code)->get()->toArray();
-                if(count($city_table) !== 0) {
-                    array_merge($cities, $city_table);
                 }
             }
             sort($regions);
 
             $view->with(compact(
                 'provinces',
-                'regions',
-                'municipalities',
-                'cities'
+                'regions'
             ));
         });
 
