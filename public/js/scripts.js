@@ -1,4 +1,43 @@
-(function($) {
+/************************************************************
+LOADING ANIMATION
+************************************************************/
+var c=document.getElementById('loading'),
+    ctx=c.getContext('2d'),
+    pi = Math.PI,
+    xCenter = c.width/2,
+    yCenter = c.height/2,
+    radius = c.width/3,
+    startSize = radius/3,
+    num=5,
+    posX=[],posY=[],angle,size,i;
+
+window.setInterval(function() {
+    num++;
+    ctx.clearRect ( 0 , 0 , xCenter*2 , yCenter*2 );
+    for (i=0; i<9; i++){
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,'+.1*i+')';
+      if (posX.length==i){
+        angle = pi*i*.25;
+        posX[i] = xCenter + radius * Math.cos(angle);
+        posY[i] = yCenter + radius * Math.sin(angle);
+      }
+      ctx.arc(
+        posX[(i+num)%8],
+        posY[(i+num)%8],
+        startSize/9*i,
+        0, pi*2, 1); 
+      ctx.fill();
+    }
+}, 100);
+
+(function( $ ) {
+
+	jQuery(window).on('load', function() {
+		setTimeout( function() {
+			jQuery('.loader').fadeOut('slow');
+		}, 1000 );
+	});
 
 	jQuery(document).ready(function() {
 
@@ -55,7 +94,7 @@
 			jQuery('#district').removeAttr('required');
 			jQuery('#huc-city').removeAttr('required');
 			jQuery('#city').removeAttr('required');
-			jQuery('#province').html('<option>Loading...</option>');
+			jQuery('#province').html('<option value="">Loading...</option>');
 
 			if(groupType == 'PROV') {
 
@@ -140,7 +179,7 @@
 				if(position == 'Board Member' || position == 'Congressman' || position == 'Municipal Mayor' || position == 'Municipal Vice Mayor' || position == 'Municipal Councilor') {
 					jQuery('.district-wrapper').fadeIn(500);
 					jQuery('#district').attr('required', 'required');
-					jQuery('#district').html('<option>Loading...</option>');
+					jQuery('#district').html('<option value="">Loading...</option>');
 				} else {
 					jQuery('#district').removeAttr('required');
 					jQuery('.district-wrapper').fadeOut(500);
@@ -176,7 +215,7 @@
 			} else {
 
 				jQuery('.district-wrapper').fadeIn(500);
-				jQuery('#district').html('<option>Loading...</option>');
+				jQuery('#district').html('<option value="">Loading...</option>');
 
 				$.ajax({
 					url: './geo',
@@ -207,8 +246,6 @@
 
 			} else {
 
-				jQuery('#city').html('<option>Loading...</option>');
-
 				if(position == 'Congressman' || position == 'Board Member') {
 					jQuery('.city-wrapper').fadeOut(500);
 					jQuery('#city').removeAttr('required');
@@ -221,6 +258,8 @@
 						jQuery('.city-wrapper').fadeIn(500);
 						jQuery('#city').attr('required', 'required');
 					}
+
+					jQuery('#city').html('<option value="">Loading...</option>');
 
 					$.ajax({
 						url: './geo',
@@ -252,6 +291,12 @@
 					} else {
 						jQuery('#response').html('<div class="alert alert-success">' + data.success + '</div>');
 						jQuery("#register").get(0).reset();
+						dataLayer.push({'event':'CONA2018candidate', 'countrycode': 'PH', 'languagecode':'en', 'device':'W'});
+						jQuery('.region-wrapper').fadeOut(500);
+						jQuery('.province-wrapper').fadeOut(500);
+						jQuery('.huc-city-wrapper').fadeOut(500);
+						jQuery('.district-wrapper').fadeOut(500);
+						jQuery('.city-wrapper').fadeOut(500);
 					}
 				},
 				error: function(data) {

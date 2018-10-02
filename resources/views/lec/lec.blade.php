@@ -19,7 +19,7 @@
 				<strong>Name : </strong>
 			</div>
 			<div class="col-sm-9">
-				<span>Binchuan Recto</span>
+				<span>Lorem Ipsum Dolor</span>
 			</div>
 		</div>
 		<div class="row">
