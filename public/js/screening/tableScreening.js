@@ -19,7 +19,7 @@ $(document).ready( function () {
     	}
     	else if (urlType == 'PROVINCE') {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
-    		ajaxGet(urlCode, urlName, 'HUC', urlRegion);
+    		ajaxGet(urlCode, urlName, 'HUCs', urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
     		ajaxGet(urlCode, urlName, 'ICC', urlRegion);
     		$('#locationModal').html(name);
@@ -60,13 +60,12 @@ $(document).ready( function () {
 	    		$('.huc-districts').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.prov-districts').show(500);
-
     		break;
     		case 'PROVINCE':
     			console.log('CLICKED PROVINCE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
 	    		ajaxGet(e, name, type, region);
-	    		ajaxGet(e, name, 'HUC', region);
+	    		ajaxGet(e, name, 'HUCs', region);
 	    		ajaxGet(e, name, 'CITY', region);
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -147,7 +146,7 @@ $(document).ready( function () {
 		}
 		if (type == 'PROVINCE') {
 			ajaxGet(code, '', 'CITY');
-			ajaxGet(code, '', 'HUC');
+			ajaxGet(code, '', 'HUCs');
 		}
 		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
@@ -208,7 +207,6 @@ $(document).ready( function () {
 				url: './screening/' + e,
 				success:function(data)  
 		    	{
-		    		console.log('ajaxGet e: ' + e + ', name: ' + name + ', type: ' + type + '. region: ' + region);
 		    		if (data == '') {
 		    		}
 		    		else  {
@@ -252,6 +250,9 @@ $(document).ready( function () {
 		    			}
 		    			switch (type) {
 		    				case 'HUC':
+		    					hucTable(e, data, region);
+		    				break;
+		    				case 'HUCs':
 		    					hucTable(e, data, region);
 		    				break;
 		    				case 'PROVINCE':
@@ -542,6 +543,10 @@ function getProvinceCandidate(provinceCode, type, part) {
 
 // Display City Candidate
 function getCityCandidate(provinceCode, type, part, name) {
+	if (type == 'HUC' || type == 'HUCs') {
+		var u = provinceCode.split('-');
+		provinceCode = u[0];
+	}
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
@@ -550,6 +555,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
+			console.log('getCityCandidate: ' + data);
 			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
