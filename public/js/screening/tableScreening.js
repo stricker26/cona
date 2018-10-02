@@ -48,7 +48,6 @@ $(document).ready( function () {
     	var region = $(this).find(".region").html();
     	switch (type) {
     		case 'DISTRICT':
-    			console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: undefined');
     			$('tbody').html('');
     			ajaxGet(e, name, 'MUNICIPALITY', undefined);
     			getDistrictCandidate(e, type, name, part);
@@ -62,7 +61,6 @@ $(document).ready( function () {
 	    		$('.prov-districts').show(500);
     		break;
     		case 'PROVINCE':
-    			console.log('CLICKED PROVINCE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUCs', region);
@@ -77,7 +75,6 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'MUNICIPAL':
-    			console.log('CLICKED MUNICIPAL: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type, part, name, region, region);
@@ -92,7 +89,6 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
-    			console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			getDistrictCandidate(e, type, name, part);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
@@ -103,7 +99,6 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'CC':
-    			console.log('CLICKED CC: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type, part, name, region);
@@ -118,7 +113,6 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		default:
-    			console.log('CLICKED default: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
     			ajaxGet(e, name, type, region);
     			getCityCandidate(e, type, part, name, region);
@@ -137,7 +131,6 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
-		console.log('Type: ' + type);
 		$(this).nextAll().remove();
 		ajaxGet(code, '', type);
 		$('tbody').html('');
@@ -200,7 +193,6 @@ $(document).ready( function () {
 	loadPagination();
 
 	function ajaxGet(e, name, type, region) {
-		console.log('ajaxget: '+type);
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
@@ -224,7 +216,6 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
-		    		console.log('ajaxGet e: ' + e + ', name: ' + name + ', type: ' + type + '. region: ' + region);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
     						if (region != undefined) {
@@ -236,7 +227,6 @@ $(document).ready( function () {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
 		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
-		    						console.log('type: ' + type);
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
@@ -547,7 +537,6 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}
-	console.log('provinceCode: ' + provinceCode);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
@@ -556,8 +545,6 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
-			console.log('getCityCandidate: ' + data);
-			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
 				var hucmayors = data.mayor;
@@ -651,7 +638,6 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 
 //Display District Candidate
 function getDistrictCandidate(provinceCode, type, district, part) {
-	console.log('getDistrictCandidate: ' + part);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/district',
 		method: 'GET',
