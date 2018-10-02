@@ -72,8 +72,7 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
         $data = DB::table('municipality as m')
-            ->join('candidates as c', 'c.province_id', '=', 'm.province_code')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
+            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = m.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = m.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = m.province_code) AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
             ->where('lec', '=', $lecId)
             ->where('m.province_code', '=', $code)
             ->get();
@@ -219,7 +218,6 @@ class LECController extends Controller
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
-                    ->where('signed_by_lp', '<>', 3)
                     ->get();
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {

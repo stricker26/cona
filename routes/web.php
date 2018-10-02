@@ -36,6 +36,7 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::post('/screening/profile/approve', 'profileController@approve');
 	Route::post('/screening/profile/reject', 'profileController@reject');
 	Route::get('/screening/HUC/{code}', 'ScreeningController@huc');
+	Route::get('/screening/HUCs/{code}', 'ScreeningController@hucs');
 	Route::get('/screening/PROVINCE/{code}', 'ScreeningController@district');
 	Route::get('/screening/CITY/{code}', 'ScreeningController@city');
 	Route::get('/screening/CC/{code}', 'ScreeningController@city');
@@ -69,7 +70,7 @@ Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {
 	
 	Route::get('/screening', 'LECController@screening');
 	Route::get('/screening/HUC/{code}', 'LECController@huc');
-	Route::get('/screening/PROVINCE/{code}', 'LECController@municipality');
+	Route::get('/screening/PROVINCE/{code}', 'LECController@district');
 	Route::get('/screening/HUCs/{code}', 'LECController@hucs');
 	Route::get('/screening/CITY/{code}', 'LECController@city');
 	Route::get('/screening/CC/{code}', 'LECController@city');

@@ -547,6 +547,7 @@ function getCityCandidate(provinceCode, type, part, name) {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}
+	console.log('provinceCode: ' + provinceCode);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
