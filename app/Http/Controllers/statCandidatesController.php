@@ -189,7 +189,7 @@ class statCandidatesController extends Controller
                     $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
                 }
             }
-            
+
             if($status == '0') {
         		return view('dashboard.status.pending', compact(
                     'candidates',
@@ -831,7 +831,7 @@ class statCandidatesController extends Controller
                             ->where('district',$candidate->district_id)
                             ->where('municipality','like',$candidate->city_id)
                             ->first();
-
+                            
                         if(is_numeric($lec_id_province->lec)) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
