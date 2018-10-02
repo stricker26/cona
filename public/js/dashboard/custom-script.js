@@ -129,19 +129,19 @@ jQuery(document).ready(function($){
 	    			switch (type) {
 	    				case 'HUCs':
 	    					hucTable(e, data, region);
-	    					getCityCandidate(e, type, part);
+	    					getCityCandidate(e, type, part, name, region);
 	    				break;
 	    				case 'HUC':
 	    					hucTable(e, data, region);
-	    					getCityCandidate(e, type, part);
+	    					getCityCandidate(e, type, part, name, region);
 	    				break;
 	    				case 'PROVINCE':
 	    					districtTable(e, data);
-	    					getProvinceCandidate(e, type, part);
+	    					getProvinceCandidate(e, type, part, name, region);
 	    				break;
 	    				case 'CITY':
 	    					cityTable(e, data, name);
-	    					getCityCandidate(e, type, part);
+	    					getCityCandidate(e, type, part, name, region);
 	    				break;
 	    			}
 	    			//loadTable(e, data);

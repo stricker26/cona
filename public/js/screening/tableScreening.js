@@ -32,7 +32,7 @@ $(document).ready( function () {
     	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
-		    getCityCandidate(urlCode, urlType, part, urlName);
+		    getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -80,7 +80,7 @@ $(document).ready( function () {
     			console.log('CLICKED MUNICIPAL: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type, part, name);
+    			getCityCandidate(e, type, part, name, region, region);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -106,7 +106,7 @@ $(document).ready( function () {
     			console.log('CLICKED CC: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type, part, name);
+    			getCityCandidate(e, type, part, name, region);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -121,7 +121,7 @@ $(document).ready( function () {
     			console.log('CLICKED default: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
     			$('tbody').html('');
     			ajaxGet(e, name, type, region);
-    			getCityCandidate(e, type, part, name);
+    			getCityCandidate(e, type, part, name, region);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -542,8 +542,8 @@ function getProvinceCandidate(provinceCode, type, part) {
 }
 
 // Display City Candidate
-function getCityCandidate(provinceCode, type, part, name) {
-	if (type == 'HUC' || type == 'HUCs') {
+function getCityCandidate(provinceCode, type, part, name, region) {
+	if ((type == 'HUC' && region != 'NCR') || type == 'HUCs') {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}
