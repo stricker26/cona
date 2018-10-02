@@ -315,7 +315,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
                     if($row->candidate_for == 'HUC Congressman') {
-                        if($row->signed_by_lp != 2) {
+                        if($row->signed_by_lp == 1) {
                             $congressman[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -345,7 +345,7 @@ class LECController extends Controller
                             );
                         }
                     } else if ($row->candidate_for == 'Board Member') {
-                        if($row->signed_by_lp != 2) {
+                        if($row->signed_by_lp == 1) {
                             $bmember[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
