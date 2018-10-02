@@ -90,7 +90,7 @@ jQuery(document).ready(function($){
 	function ajaxGet(e, name, type, region, part) {
 		$.ajax({
 			method: 'GET',
-			url: '/hq/screening/' + type + '/' + e,
+			url: '/' + part + '/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
 	    		console.log(e);
@@ -99,8 +99,10 @@ jQuery(document).ready(function($){
 	    		console.log(region);
 	    		console.log(part);
 	    		if (data == '') {
-
-		    		console.log(data);
+	    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+						console.log('type: ' + type);
+						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+					}
 	    		}
 	    		else  {
 	    			if (name != undefined && name != '') {

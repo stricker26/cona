@@ -28,6 +28,8 @@
 				  	</div>
 				  	<div class="card-body" style="display: none;">
 			      	 	@if($count_positions->$position !== 0)
+			      	 		@php($candidate = str_replace(" ", "-", $candidates[0]->candidate_for))
+			      	 		<a href="{{ url()->current() . '/export/' . $candidate . '/' . $candidates[0]->province_id }}" class="btn btn-primary mb-3" target="_blank">Download CONA</a>
 				      	 	<table class="table table-bordered">
 				      	 		<thead>
 				      	 			<tr>
@@ -52,7 +54,7 @@
 					      	 						{{ $candidate->location }}
 					      	 					</td>
 					      	 					<td class="align-middle">
-					      	 						{{ $candidate->lec }}
+					      	 						
 					      	 					</td>
 					      	 					<td>
 					      	 						<button type="submit" class="btn btn-success" name="screening_btn" value="{{ $candidate->id }}">View Profile</button>

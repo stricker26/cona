@@ -220,16 +220,20 @@ $(document).ready( function () {
 				success:function(data)  
 		    	{
 		    		if (data == '') {
+		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+    						console.log('type: ' + type);
+    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
+    					}
 		    		}
 		    		else  {
 		    			if (name != undefined && name != '') {
 		    				if (type != 'CITY') {
 		    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+		    						console.log('type: ' + type);
 		    						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
 		    					else {
 		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
-										console.log('#e.length != 1 or type is municipality');
 		    							if ($('.MUNICIPALITY').length != 1) {
 		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    							}
@@ -529,7 +533,6 @@ function getProvinceCandidate(provinceCode, type, part) {
 
 // Display City Candidate
 function getCityCandidate(provinceCode, type, part, name) {
-	console.log('getCityCandidate: ' + part);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',

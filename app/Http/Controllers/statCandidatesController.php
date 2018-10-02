@@ -95,7 +95,7 @@ class statCandidatesController extends Controller
                         ->where('province_code',$candidate->province_id)
                         ->first();
                         
-                    if(is_numeric($lec_id_province->lec)) {
+                    if($lec_id_province->lec) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
                             ->first();
@@ -117,7 +117,7 @@ class statCandidatesController extends Controller
                             ->first();
                     }
 
-                    if(is_numeric($lec_id_province->lec)) {
+                    if($lec_id_province->lec) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
                             ->first();
@@ -136,14 +136,14 @@ class statCandidatesController extends Controller
                         ->where('municipality','like',$candidate->city_id)
                         ->first();
 
-                    if(is_numeric($lec_id_province->lec)) {
-                        $lec_id = DB::table('lec')
-                            ->where('id',$lec_id_province->lec)
-                            ->first();
-                        $candidate->lec = $lec_id->name;
-                    } else {
-                        $candidate->lec = $lec_id_province->lec;
-                    }
+                    // if($lec_id_province->lec) {
+                    //     $lec_id = DB::table('lec')
+                    //         ->where('id',$lec_id_province->lec)
+                    //         ->first();
+                    //     $candidate->lec = $lec_id->name;
+                    // } else {
+                    //     $candidate->lec = $lec_id_province->lec;
+                    // }
                 }
 
                 $candidate_provinceLGU = DB::table('province')
@@ -308,7 +308,7 @@ class statCandidatesController extends Controller
                         ->where('province_code',$candidate->province_id)
                         ->first();
 
-                    if(is_numeric($lec_id_province->lec)) {
+                    if($lec_id_province->lec) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
                             ->first();
@@ -330,7 +330,7 @@ class statCandidatesController extends Controller
                             ->first();
                     }
 
-                    if(is_numeric($lec_id_province->lec)) {
+                    if($lec_id_province->lec) {
                         $lec_id = DB::table('lec')
                             ->where('id',$lec_id_province->lec)
                             ->first();
@@ -349,14 +349,18 @@ class statCandidatesController extends Controller
                         ->where('municipality','like',$candidate->city_id)
                         ->first();
 
-                    if(is_numeric($lec_id_province->lec)) {
-                        $lec_id = DB::table('lec')
-                            ->where('id',$lec_id_province->lec)
-                            ->first();
-                        $candidate->lec = $lec_id->name;
-                    } else {
-                        $candidate->lec = $lec_id_province->lec;
-                    }
+                    // if($lec_id_province->lec) {
+                    //     $lec_id = DB::table('lec')
+                    //         ->where('id',$lec_id_province->lec)
+                    //         ->first();
+                    //     $candidate->lec = $lec_id->name;
+                    // } else {
+                    //     $candidate->lec = $lec_id_province->lec;
+                    // }
+
+                    //print_r($lec_id_province);
+                    //print($lec_id_province->lec);
+
                 }
 
                 $candidate_provinceLGU = DB::table('province')
@@ -491,7 +495,7 @@ class statCandidatesController extends Controller
                             ->where('province_code',$candidate->province_id)
                             ->first();
 
-                        if(is_numeric($lec_id_province->lec)) {
+                        if($lec_id_province->lec) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
                                 ->first();
@@ -513,7 +517,7 @@ class statCandidatesController extends Controller
                                 ->first();
                         }
 
-                        if(is_numeric($lec_id_province->lec)) {
+                        if($lec_id_province->lec) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
                                 ->first();
@@ -532,14 +536,14 @@ class statCandidatesController extends Controller
                             ->where('municipality','like',$candidate->city_id)
                             ->first();
 
-                        if(is_numeric($lec_id_province->lec)) {
-                            $lec_id = DB::table('lec')
-                                ->where('id',$lec_id_province->lec)
-                                ->first();
-                            $candidate->lec = $lec_id->name;
-                        } else {
-                            $candidate->lec = $lec_id_province->lec;
-                        }
+                        // if($lec_id_province->lec) {
+                        //     $lec_id = DB::table('lec')
+                        //         ->where('id',$lec_id_province->lec)
+                        //         ->first();
+                        //     $candidate->lec = $lec_id->name;
+                        // } else {
+                        //     $candidate->lec = $lec_id_province->lec;
+                        // }
                     }
 
                     $candidate_provinceLGU = DB::table('province')
@@ -683,7 +687,7 @@ class statCandidatesController extends Controller
                             ->where('province_code',$candidate->province_id)
                             ->first();
 
-                        if(is_numeric($lec_id_province->lec)) {
+                        if($lec_id_province->lec) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
                                 ->first();
@@ -705,7 +709,7 @@ class statCandidatesController extends Controller
                                 ->first();
                         }
 
-                        if(is_numeric($lec_id_province->lec)) {
+                        if($lec_id_province->lec) {
                             $lec_id = DB::table('lec')
                                 ->where('id',$lec_id_province->lec)
                                 ->first();
@@ -722,16 +726,16 @@ class statCandidatesController extends Controller
                             ->where('province_code',$candidate->province_id)
                             ->where('district',$candidate->district_id)
                             ->where('municipality','like',$candidate->city_id)
-                            ->first();
+                            ->first()->lec;
 
-                        if(is_numeric($lec_id_province->lec)) {
-                            $lec_id = DB::table('lec')
-                                ->where('id',$lec_id_province->lec)
-                                ->first();
-                            $candidate->lec = $lec_id->name;
-                        } else {
-                            $candidate->lec = $lec_id_province->lec;
-                        }
+                        // if($lec_id_province->lec) {
+                        //     $lec_id = DB::table('lec')
+                        //         ->where('id',$lec_id_province->lec)
+                        //         ->first();
+                        //     $candidate->lec = $lec_id->name;
+                        // } else {
+                        //     $candidate->lec = $lec_id_province->lec;
+                        // }
                     }
 
                     $candidate_provinceLGU = DB::table('province')

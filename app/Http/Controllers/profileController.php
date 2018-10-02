@@ -318,30 +318,6 @@ class profileController extends Controller
         return $alert;
     }
 
-    public function reject_lec(Request $data_candidate) {
-        date_default_timezone_set("Asia/Manila");
-        $date_now = date("Y-m-d H:i:s");
-
-        $candidate_id = $data_candidate->id;
-        $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lec' => '2']);
-        if($reject) {
-            $alert = 'Rejected';
-            DB::table('edit_logs')->insert([
-                'updated_candidate_id' => $candidate_id,
-                'isAdmin' => Auth::user()->isAdmin,
-                'action' => 'LEC Reject Candidate',
-                'updated_by_id' => Auth::user()->id,
-                'url' => \Request::fullUrl(),
-                'ip' => \Request::ip(),
-                'updated_at' => $date_now
-            ]);
-        }
-        else {
-            $alert = 'Fail';
-        }
-        return $alert;
-    }
-
     public function senator(){
         $senators = DB::table('candidates')->where('candidate_for','Senator')->get();
         return view('dashboard.screening.senator')->with('senators',$senators);

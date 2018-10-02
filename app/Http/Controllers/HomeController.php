@@ -32,7 +32,6 @@ class HomeController extends Controller
             'birthday' => 'required',
             'birthyear' => 'required',
             'address' => 'required',
-            'email' => 'required|email|unique:candidates',
             'mobile' => 'required',
             'position' => 'required',
         );
@@ -45,78 +44,86 @@ class HomeController extends Controller
 
         } else {
 
-            $cos_id = strftime(time());
+            if(Candidate::where('mobile', $request->mobile)->first()) {
 
-            $smaObj = array(
-                'facebook' => $request->input('facebook'),
-                'twitter' => $request->input('twitter'),
-                'instagram' => $request->input('instagram'),
-                'website' => $request->input('website'),
-            );
+                return response()->json(['warning' => 'Sorry you have already a record to our database.']);
 
-            $sma = json_encode($smaObj);
-
-            if(empty($request->input('city'))) {
-                $city = $request->input('huc_city');
             } else {
-                $city = $request->input('city');
-            }
 
-            $candidate = Candidate::create([
-                'firstname' => $request->input('firstname'),
-                'middlename' => $request->input('middlename'),
-                'lastname' => $request->input('lastname'),
-                'birthdate' => $request->input('birthyear') . '-' . $request->input('birthmonth') . '-' . $request->input('birthday'),
-                'address' => $request->input('address'),
-                'email' => $request->input('email'),
-                'landline' => $request->input('landline'),
-                'mobile' => $request->input('mobile'),
-                'candidate_for' => $request->input('position'),
-                'sma' => $sma,
-                'province_id' => $request->input('province'),
-                'district_id' => $request->input('district'),
-                'city_id' => $city,
-                'signed_by_lec' => 0,
-                'signed_by_lp' => 3,
-                'cos_id' => $cos_id,
-            ])->id;
+                $cos_id = strftime(time());
 
-            $query = DB::table('chief_of_staff')->insertGetId([
-                'cos_id' => $cos_id,
-                'name' => $request->input('cos_name'),
-                'relationship' => $request->input('relation'),
-                'position' => $request->input('cos_position'),
-                'address' => $request->input('cos_address'),
-                'contact' => $request->input('cos_contact'),
-                'email' => $request->input('cos_email'),
-            ]);
+                $smaObj = array(
+                    'facebook' => $request->input('facebook'),
+                    'twitter' => $request->input('twitter'),
+                    'instagram' => $request->input('instagram'),
+                    'website' => $request->input('website'),
+                );
 
-            date_default_timezone_set("Asia/Manila");
-            $date_now = date("Y-m-d H:i:s");
-            if(Auth::check()) {
-                DB::table('edit_logs')->insert([
-                    'updated_candidate_id' => $candidate,
-                    'isAdmin' => Auth::user()->isAdmin,
-                    'action' => 'Nominate Candidate',
-                    'updated_by_id' => Auth::user()->id,
-                    'url' => \Request::fullUrl(),
-                    'ip' => \Request::ip(),
-                    'updated_at' => $date_now
+                $sma = json_encode($smaObj);
+
+                if(empty($request->input('city'))) {
+                    $city = $request->input('huc_city');
+                } else {
+                    $city = $request->input('city');
+                }
+
+                $candidate = Candidate::create([
+                    'firstname' => $request->input('firstname'),
+                    'middlename' => $request->input('middlename'),
+                    'lastname' => $request->input('lastname'),
+                    'birthdate' => $request->input('birthyear') . '-' . $request->input('birthmonth') . '-' . $request->input('birthday'),
+                    'address' => $request->input('address'),
+                    'email' => $request->input('email'),
+                    'landline' => $request->input('landline'),
+                    'mobile' => $request->input('mobile'),
+                    'candidate_for' => $request->input('position'),
+                    'sma' => $sma,
+                    'province_id' => $request->input('province'),
+                    'district_id' => $request->input('district'),
+                    'city_id' => $city,
+                    'signed_by_lec' => 0,
+                    'signed_by_lp' => 3,
+                    'cos_id' => $cos_id,
+                ])->id;
+
+                $query = DB::table('chief_of_staff')->insertGetId([
+                    'cos_id' => $cos_id,
+                    'name' => $request->input('cos_name'),
+                    'relationship' => $request->input('relation'),
+                    'position' => $request->input('cos_position'),
+                    'address' => $request->input('cos_address'),
+                    'contact' => $request->input('cos_contact'),
+                    'email' => $request->input('cos_email'),
                 ]);
-                
-            } else {
-                DB::table('edit_logs')->insert([
-                    'updated_candidate_id' => $candidate,
-                    'isAdmin' => null,
-                    'action' => 'Nominate Candidate',
-                    'updated_by_id' => null,
-                    'url' => \Request::fullUrl(),
-                    'ip' => \Request::ip(),
-                    'updated_at' => $date_now
-                ]);
-            }
 
-            return response()->json(['success' => 'Successfully Registered!!!']);
+                date_default_timezone_set("Asia/Manila");
+                $date_now = date("Y-m-d H:i:s");
+                if(Auth::check()) {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate,
+                        'isAdmin' => Auth::user()->isAdmin,
+                        'action' => 'Nominate Candidate',
+                        'updated_by_id' => Auth::user()->id,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                    
+                } else {
+                    DB::table('edit_logs')->insert([
+                        'updated_candidate_id' => $candidate,
+                        'isAdmin' => null,
+                        'action' => 'Nominate Candidate',
+                        'updated_by_id' => null,
+                        'url' => \Request::fullUrl(),
+                        'ip' => \Request::ip(),
+                        'updated_at' => $date_now
+                    ]);
+                }
+
+                return response()->json(['success' => 'Successfully Registered!!!']);
+
+            }
 
         }
 
