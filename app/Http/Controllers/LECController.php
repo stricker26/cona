@@ -118,7 +118,7 @@ class LECController extends Controller
                 ->where('pv.province_code', '=', $province_code)
                 ->limit(1)
                 ->get();
-
+                
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
