@@ -160,7 +160,6 @@ class statCandidatesController extends Controller
                     $lec_id_province = DB::table('municipality')
                         ->where('province_code',$candidate->province_id)
                         ->where('district',$candidate->district_id)
-                        ->where('municipality','like',$candidate->city_id)
                         ->first();
 
                     if(is_numeric($lec_id_province->lec)) {
@@ -400,7 +399,6 @@ class statCandidatesController extends Controller
                     $lec_id_province = DB::table('municipality')
                         ->where('province_code',$candidate->province_id)
                         ->where('district',$candidate->district_id)
-                        ->where('municipality','like',$candidate->city_id)
                         ->first();
 
                     if(is_numeric($lec_id_province->lec)) {
@@ -610,7 +608,6 @@ class statCandidatesController extends Controller
                         $lec_id_province = DB::table('municipality')
                             ->where('province_code',$candidate->province_id)
                             ->where('district',$candidate->district_id)
-                            ->where('municipality','like',$candidate->city_id)
                             ->first();
 
                         if(is_numeric($lec_id_province->lec)) {
@@ -829,7 +826,6 @@ class statCandidatesController extends Controller
                         $lec_id_province = DB::table('municipality')
                             ->where('province_code',$candidate->province_id)
                             ->where('district',$candidate->district_id)
-                            ->where('municipality','like',$candidate->city_id)
                             ->first();
                             
                         if(is_numeric($lec_id_province->lec)) {

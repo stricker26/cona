@@ -53,20 +53,6 @@
 							<td>lorem</td>
 							<td>lorem</td>
 						</tr>
-						@foreach($regions as $region)
-							@php
-								$rowspan_region = 0;
-								foreach($provinces as $province) {
-									if($province->region === $region) {
-										foreach($cities as $city) {
-											if($city->province_code === $province->province_code) {
-												
-											}
-										}
-									}
-								}
-							@endphp
-						@endforeach
 					</tbody>
 				</table>
 			</div>
