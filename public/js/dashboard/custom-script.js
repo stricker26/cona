@@ -65,6 +65,19 @@ jQuery(document).ready(function($){
 	    		$('.gov-governor').show(500);
     			$('.gov-districts').hide(500);
 	    	}
+	    	else if (type == 'ICC') {
+	    		ajaxGet(e, name, type, region, part);
+	    		getCityCandidate(e, type, part, name, region);
+	    		$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('#cc-councilor-wrapper').show(500);
+	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
+	    	}
 	    	else {
 	    		ajaxGet(e, name, type, region, part);
 	    		$('.list-candidates').show();
@@ -91,7 +104,7 @@ jQuery(document).ready(function($){
 			success:function(data)  
 	    	{
 	    		if (data == '') {
-	    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+	    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
 						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 					}
 	    		}
