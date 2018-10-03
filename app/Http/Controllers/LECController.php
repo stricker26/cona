@@ -238,7 +238,7 @@ class LECController extends Controller
                                     'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                                 );
                             }
-                        } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice-Mayor') {
+                        } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
                             if ($row->signed_by_lp == 1) {
                                 $vmayor[] = array(
                                     'id' => $row->id,
@@ -427,7 +427,7 @@ class LECController extends Controller
                                 );
                             }
                             
-                        } else if ($row->candidate_for == 'Vice-Governor') {
+                        } else if ($row->candidate_for == 'Vice Governor') {
                             if ($row->signed_by_lec == 1) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
