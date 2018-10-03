@@ -20,6 +20,9 @@
                     <a href="{{ route('hqPanel') }}"><i class="fas fa-tachometer-alt pr-4"></i>Dashboard </a>
                 </li>
                 <li class="pl-2">
+                    <a href="{{ route('candidates') }}"><i class="fas fa-users pr-4"></i>Registered Candidates </a>
+                </li>
+                <li class="pl-2">
                     <a href="/hq/senators"><i class="fas fa-user-alt pr-4"></i>&nbsp;Senators </a>
                 </li>
                 <li class="pl-2">

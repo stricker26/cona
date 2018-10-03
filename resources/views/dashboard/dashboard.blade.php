@@ -29,7 +29,7 @@
                      <th>Position</th>
                      <th>Location</th>
                      <th>Action</th>
-                     <th>User ID</th>
+                     <th>Approved/Rejected By</th>
                      <th>Assign LEC</th>
                      <th>IP Address</th>
                      <th>Date</th>
@@ -56,7 +56,7 @@
                      <th>Position</th>
                      <th>Location</th>
                      <th>Action</th>
-                     <th>User ID</th>
+                     <th>Approved/Rejected By</th>
                      <th>Assign LEC</th>
                      <th>IP Address</th>
                      <th>Date</th>
