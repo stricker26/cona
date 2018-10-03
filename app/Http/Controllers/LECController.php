@@ -587,9 +587,8 @@ class LECController extends Controller
                     $candidate->candidate_for == 'City Councilor')
                 {   
                     if(strpos($candidate->province_id, "-") !== false) {
-                        $lec_id_province = DB::table('city')
+                        $lec_id_province = DB::table('huc')
                             ->where('province_code',$candidate->province_id)
-                            ->where('city',$candidate->city_id)
                             ->first();
                     } else {
                         $lec_id_province = DB::table('province')
@@ -826,9 +825,8 @@ class LECController extends Controller
                     $candidate->candidate_for == 'City Councilor')
                 {   
                     if(strpos($candidate->province_id, "-") !== false) {
-                        $lec_id_province = DB::table('city')
+                        $lec_id_province = DB::table('huc')
                             ->where('province_code',$candidate->province_id)
-                            ->where('city',$candidate->city_id)
                             ->first();
                     } else {
                         $lec_id_province = DB::table('province')
@@ -1031,9 +1029,8 @@ class LECController extends Controller
                         $candidate->candidate_for == 'City Councilor')
                     {   
                         if(strpos($candidate->province_id, "-") !== false) {
-                            $lec_id_province = DB::table('city')
+                            $lec_id_province = DB::table('huc')
                                 ->where('province_code',$candidate->province_id)
-                                ->where('city',$candidate->city_id)
                                 ->first();
                         } else {
                             $lec_id_province = DB::table('province')
@@ -1239,9 +1236,8 @@ class LECController extends Controller
                         $candidate->candidate_for == 'City Councilor')
                     {   
                         if(strpos($candidate->province_id, "-") !== false) {
-                            $lec_id_province = DB::table('city')
+                            $lec_id_province = DB::table('huc')
                                 ->where('province_code',$candidate->province_id)
-                                ->where('city',$candidate->city_id)
                                 ->first();
                         } else {
                             $lec_id_province = DB::table('province')
