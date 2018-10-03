@@ -317,41 +317,41 @@ class dashboardPageController extends Controller
     //Political Structure Format
     static function political_structure($position, $province, $district, $city) {
 
-        if(!$province) {
-            $location = 'Philippines';
+        $query = DB::table('province')
+            ->select('region', 'lgu', 'type')
+            ->where('province_code', '=', $province)
+            ->first();
+
+        if($position == 'Senator') {
+
+            $location = 'Philipines';
+
+        } elseif($position == 'Governor' || $position == 'Vice Governor') {
+
+            $location = $query->region . ', ' . $query->lgu;
+
+        } elseif($position == 'Board Member' || $position == 'Congressman') {
+
+            $location = $query->region . ', ' . $query->lgu;
+
+        } elseif($query->type == 'HUC' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
+
+            $location = $query->region . ', ' . $query->lgu . ', ' . $district;
+
+        } elseif ($query->type == 'HUC' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
+            
+            $location = $query->region . ', ' . $query->lgu;
+
+        } elseif($query->type == 'PROVINCE' && ($position == 'HUC Congressman')) {
+
+            $location = $query->region . ', ' . $query->lgu;
+
+        } elseif ($query->type == 'PROVINCE' && ($position == 'City Mayor' || $position == 'City Vice Mayor' || $position == 'City Councilor')) {
+            
+            $location = $query->region . ', ' . $query->lgu . ', ' . $city;
+
         } else {
-            $query = DB::table('province')
-                ->select('region', 'lgu', 'type')
-                ->where('province_code', '=', $province)
-                ->first();
-
-            if($position == 'Governor' || $position == 'Vice Governor') {
-
-                $location = $query->region . ', ' . $query->lgu;
-
-            } elseif($position == 'Board Member' || $position == 'Congressman') {
-
-                $location = $query->region . ', ' . $query->lgu;
-
-            } elseif($query->type == 'HUC' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
-
-                $location = $query->region . ', ' . $query->lgu . ', ' . $district;
-
-            } elseif ($query->type == 'HUC' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
-                
-                $location = $query->region . ', ' . $query->lgu;
-
-            } elseif($query->type == 'PROVINCE' && ($position == 'HUC Congressman')) {
-
-                $location = $query->region . ', ' . $query->lgu;
-
-            } elseif ($query->type == 'PROVINCE' && ($position == 'City Mayor' || $position == 'City Vice Mayor' || $position == 'City Councilor')) {
-                
-                $location = $query->region . ', ' . $query->lgu . ', ' . $city;
-
-            } else {
-                $location = $query->region . ', ' . $query->lgu . ', ' . $district . ', ' . $city;
-            }
+            $location = $query->region . ', ' . $query->lgu . ', ' . $district . ', ' . $city;
         }
         
         return $location;
