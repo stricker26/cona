@@ -1381,7 +1381,10 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lec_name = $lec->name;
         if($lec_name === 'HQ') {
-            $senators = DB::table('candidates')->where('candidate_for','Senator')->get();
+            $senators = DB::table('candidates')
+                ->where('candidate_for','Senator')
+                ->where('signed_by_lec','!=',2)
+                ->get();
             return view('lec.screening.senator')->with('senators',$senators);
         } else {
             return redirect()->action('LECController@lec_dashboard');
