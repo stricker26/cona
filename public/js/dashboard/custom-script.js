@@ -28,14 +28,12 @@ jQuery(document).ready(function($){
 	//whole Philippines
 	$('#left-panel #main-menu .stat-check span').on('click', function(){
 		var value = $(this).data("value");
-		console.log(value);
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
 	//regional and provincial
 	$('#left-panel #main-menu .dropdown-menu li .reg-stat span').on('click', function(){
 		var value = $(this).data("value");
-		console.log(value);
 		$('#left-panel #statusCandidates #statusData').val(value);
 		$('#left-panel #statusCandidates').submit();
 	});
@@ -43,7 +41,6 @@ jQuery(document).ready(function($){
 	$('.dropdown-menu .dropdown-submenu .submenu a').on('click', function(event){
 		event.preventDefault();
 		var dataProvince = $(this).data("value");
-		console.log(this);
 		var data = dataProvince.split(',');
 		var e = data[0];
 		var name = data[2];
@@ -52,15 +49,13 @@ jQuery(document).ready(function($){
 		$('tbody').html('');
 		if (path == '/' + part + '/screening') {
 			if (type == 'DISTRICT') {
-				console.log('CLICKED DISTRICT: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
-	    		ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
+				ajaxGet(e, name, 'MUNICIPALITY', undefined, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
     			$('.gov-districts').hide(500);
 	    	}
 	    	else if (type == 'PROVINCE') {
-	    		console.log('CLICKED PROVINCE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
 	    		ajaxGet(e, name, type, region, part);
 	    		ajaxGet(e, name, 'HUCs', region, part);
 	    		ajaxGet(e, name, 'CITY', region, part);
@@ -70,8 +65,20 @@ jQuery(document).ready(function($){
 	    		$('.gov-governor').show(500);
     			$('.gov-districts').hide(500);
 	    	}
+	    	else if (type == 'ICC') {
+	    		ajaxGet(e, name, type, region, part);
+	    		getCityCandidate(e, type, part, name, region);
+	    		$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('#cc-councilor-wrapper').show(500);
+	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
+	    	}
 	    	else {
-	    		console.log('CLICKED ELSE: e: ' + e + ', name: ' + name + ', type: ' + type + ', region: ' + region);
 	    		ajaxGet(e, name, type, region, part);
 	    		$('.list-candidates').show();
 	    		$('.gov-mayor').show(500);
@@ -96,14 +103,8 @@ jQuery(document).ready(function($){
 			url: '/' + part + '/screening/' + type + '/' + e,
 			success:function(data)  
 	    	{
-	    		console.log(e);
-	    		console.log(name);
-	    		console.log(type);
-	    		console.log(region);
-	    		console.log(part);
 	    		if (data == '') {
-	    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
-						console.log('type: ' + type);
+	    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
 						$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 					}
 	    		}
@@ -112,19 +113,13 @@ jQuery(document).ready(function($){
 	    				if (type != 'CITY') {
 	    					if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
 		    					$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');				
-					    		console.log(data);
 		    				}
 		    				else {
 		    					if ($('#' + e).length == 0) {
-						    		console.log(data);
 		    						$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    					}
-					    		console.log(data);
 		    				}
-				    		console.log(data);
 	    				}
-			    		console.log(data);
-			    		console.log(type);
 	    			}
 	    			switch (type) {
 	    				case 'HUCs':
@@ -145,8 +140,6 @@ jQuery(document).ready(function($){
 	    				break;
 	    			}
 	    			//loadTable(e, data);
-		    		console.log(data);
-				    console.log(type);
 	    		}
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);

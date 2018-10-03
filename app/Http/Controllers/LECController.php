@@ -31,6 +31,7 @@ class LECController extends Controller
             ->join('province as p', 'huc.province_code', '=', 'p.province_code')
             ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
             ->where('huc.province_code', '=', $code)
+            ->where('huc.lec', '=', $lecId)
             ->orWhere('huc.parent_province_code', '=', $code)
             ->distinct('huc.id')
             ->get();
@@ -47,6 +48,7 @@ class LECController extends Controller
             ->join('province as p', 'huc.province_code', '=', 'p.province_code')
             ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = huc.city AND signed_by_lec = 0 AND province_id = huc.parent_province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = huc.city AND signed_by_lec = 1 AND province_id = huc.parent_province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = huc.city AND signed_by_lec = 2 AND province_id = huc.parent_province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
             ->where('huc.parent_province_code', '=', $code)
+            ->where('huc.lec', '=', $lecId)
             ->distinct('huc.id')
             ->get();
         //$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
@@ -194,7 +196,7 @@ class LECController extends Controller
 
         $lec = new LECController;
 
-        //if($request->ajax()) {
+        if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
@@ -215,9 +217,10 @@ class LECController extends Controller
                 $lec_city = '';
             }
 
-            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
+            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
+                    ->where('city_id', '=', $lec_city)
                     ->get();
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
@@ -250,7 +253,7 @@ class LECController extends Controller
                                 );
                             }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            if($row->signed_by_lp != 2) {
+                            if($row->signed_by_lp == 1) {
                                 $councilor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -271,6 +274,7 @@ class LECController extends Controller
                 }
 
             }
+        }
 
         //     return response()->json(['warning' => 'Invalid request.']);
     }
@@ -313,7 +317,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
                     if($row->candidate_for == 'HUC Congressman') {
-                        if($row->signed_by_lp != 2) {
+                        if($row->signed_by_lp == 1) {
                             $congressman[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -343,7 +347,7 @@ class LECController extends Controller
                             );
                         }
                     } else if ($row->candidate_for == 'Board Member') {
-                        if($row->signed_by_lp != 2) {
+                        if($row->signed_by_lp == 1) {
                             $bmember[] = array(
                                 'id' => $row->id,
                                 'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,

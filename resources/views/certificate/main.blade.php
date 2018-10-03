@@ -42,7 +42,7 @@
                 <h1>CERTIFICATE OF NOMINATION AND ACCEPTANCE</h1>
                 <br>
                 <p class="indented">
-                    By virtue of the powers and authority vested in me by the Constitution and By-Laws of the Liberal Party, I, the President of the Party and duly authorized signatory for and in behalf of the party, hereby nominate:
+                    By virtue of the powers and authority vested in me by the Constitution and By-Laws of the Liberal Party, I, a duly authorized signatory for and on behalf of the party, hereby nominate:
                 </p>
                 <br>
                 <br>

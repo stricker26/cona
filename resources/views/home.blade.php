@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <label for="middlename">Middle Name</label>
-                        <input type="text" name="middlename" class="form-control" id="middlename" maxlength="150" required="required">
+                        <input type="text" name="middlename" class="form-control" id="middlename" maxlength="150">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Last Name <span>*</span></label>
