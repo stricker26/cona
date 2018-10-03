@@ -383,18 +383,24 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
-            $regions = array();
-            foreach($provinces as $prov_region) {
-                if(!in_array($prov_region->region, $regions)) {
-                    array_push($regions, $prov_region->region);
-                }
-            }
-            sort($regions);
+            $lec_name = $lec->name;
+            $lec_des = $lec->designation_gov;
+            $lec_user1 = DB::table('users')->where('id',$lec->user)->first();
+            $lec_user2 = DB::table('users')->where('id',$lec->user_2)->first();
+            // $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+            // $regions = array();
+            // foreach($provinces as $prov_region) {
+            //     if(!in_array($prov_region->region, $regions)) {
+            //         array_push($regions, $prov_region->region);
+            //     }
+            // }
+            // sort($regions);
 
             $view->with(compact(
-                'provinces',
-                'regions'
+                'lec_name',
+                'lec_user1',
+                'lec_user2',
+                'lec_des'
             ));
         });
 

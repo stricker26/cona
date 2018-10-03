@@ -27,7 +27,7 @@
 				<div class="gov-governor" style="display: none;">
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">LEC:</h5>
+							<h5 class="font-weight-bold pt-1">LEC:</h5>
 						</div>
 						<div class="col-sm-9">
 							<h5 class="font-weight-normal gov-lec"></h5>
@@ -36,7 +36,7 @@
 					<hr>
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Governor:</h5>
+							<h5 class="font-weight-bold pt-1">Governor:</h5>
 						</div>
 						<div class="col-sm-9">
 							<div class="row" id="prov-governor"></div>
@@ -45,7 +45,7 @@
 					<hr>
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Vice Governor:</h5>
+							<h5 class="font-weight-bold pt-1">Vice Governor:</h5>
 						</div>
 						<div class="col-sm-9">
 							<div class="row" id="prov-vgovernor"></div>
@@ -55,7 +55,7 @@
 				<div class="gov-mayor" style="display: none;">
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">LEC:</h5>
+							<h5 class="font-weight-bold pt-1">LEC:</h5>
 						</div>
 						<div class="col-sm-9">
 							<h5 class="font-weight-normal gov-lec"></h5>
@@ -64,7 +64,7 @@
 					<hr>
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Mayor:</h5>
+							<h5 class="font-weight-bold pt-1">Mayor:</h5>
 						</div>
 						<div class="col-sm-9">
 							<div class="row" id="huc-mayor"></div>
@@ -73,7 +73,7 @@
 					<hr>
 					<div class="row pb-2 pt-2">
 						<div class="col-sm-3">
-							<h5 class="font-weight-bold">Vice Mayor:</h5>
+							<h5 class="font-weight-bold pt-1">Vice Mayor:</h5>
 						</div>
 						<div class="col-sm-9">
 							<div class="row" id="huc-vmayor"></div>
@@ -83,7 +83,7 @@
 						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">Councilors:</h5>
+								<h5 class="font-weight-bold pt-1">Councilors:</h5>
 							</div>
 							<div class="col-sm-9">
 								<div class="row" id="cc-councilor"></div>
@@ -95,7 +95,7 @@
 					<div class="huc-districts" style="display: none;">
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">LEC:</h5>
+								<h5 class="font-weight-bold pt-1">LEC:</h5>
 							</div>
 							<div class="col-sm-9">
 								<h5 class="font-weight-normal gov-lec"></h5>
@@ -104,7 +104,7 @@
 						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">Congressman:</h5>
+								<h5 class="font-weight-bold pt-1">Congressman:</h5>
 							</div>
 							<div class="col-sm-9">
 								<div class="row" id="huc-congressman"></div>
@@ -113,7 +113,7 @@
 						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">Councilors:</h5>
+								<h5 class="font-weight-bold pt-1">Councilors:</h5>
 							</div>
 							<div class="col-sm-9">
 								<div class="row" id="huc-councilors"></div>
@@ -123,7 +123,7 @@
 					<div class="prov-districts" style="display: none;">
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">LEC:</h5>
+								<h5 class="font-weight-bold pt-1">LEC:</h5>
 							</div>
 							<div class="col-sm-9">
 								<h5 class="font-weight-normal gov-lec"></h5>
@@ -132,7 +132,7 @@
 						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">Board Members:</h5>
+								<h5 class="font-weight-bold pt-1">Board Members:</h5>
 							</div>
 							<div class="col-sm-9">
 								<div class="row" id="bmembers"></div>
@@ -141,7 +141,7 @@
 						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
-								<h5 class="font-weight-bold">Congressman:</h5>
+								<h5 class="font-weight-bold pt-1">Congressman:</h5>
 							</div>
 							<div class="col-sm-9">
 								<div class="row" id="prov-congressman"></div>

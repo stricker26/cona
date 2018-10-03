@@ -38,7 +38,8 @@
 						<div class="col-sm-3">
 							<h5 class="font-weight-bold pt-1">Governor:</h5>
 						</div>
-						<div class="col-sm-9" id="prov-governor">
+						<div class="col-sm-9">
+							<div class="row" id="prov-governor"></div>
 						</div>
 					</div>
 					<hr>
@@ -84,7 +85,8 @@
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">Councilors:</h5>
 							</div>
-							<div class="col-sm-9" id="cc-councilor">
+							<div class="col-sm-9">
+								<div class="row" id="cc-councilor"></div>
 							</div>
 						</div>
 					</div>
@@ -113,7 +115,8 @@
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">Councilors:</h5>
 							</div>
-							<div class="col-sm-9" id="huc-councilors">
+							<div class="col-sm-9">
+								<div class="row" id="huc-councilors"></div>
 							</div>
 						</div>
 					</div>
@@ -131,8 +134,11 @@
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">Board Members:</h5>
 							</div>
-							<div class="col-sm-9" id="bmembers"></div>
+							<div class="col-sm-9">
+								<div class="row" id="bmembers"></div>
+							</div>
 						</div>
+						<hr>
 						<div class="row pb-2 pt-2">
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">Congressman:</h5>

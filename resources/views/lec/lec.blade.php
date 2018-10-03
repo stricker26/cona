@@ -14,49 +14,62 @@
 			</div>
 		</div>
 		<hr>
-		<div class="row pt-2 mb-3">
+		<h3>Profile Data</h3>
+		<hr>
+		<div class="row mb-3">
 			<div class="col-sm-3">
 				<strong>Name : </strong>
 			</div>
 			<div class="col-sm-9">
-				<span>Lorem Ipsum Dolor</span>
+				<span>{{ $lec_name }}</span>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row mb-3">
 			<div class="col-sm-3">
-				<strong>Location Assigned : </strong>
+				<strong>User 1 : </strong>
 			</div>
 			<div class="col-sm-9">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>REGION</th>
-							<th>PROVINCE</th>
-							<th>CITY</th>
-							<th>MUNICIPALITY/DISTRICT</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td rowspan="2" class="align-middle">lorem</td>
-							<td>lorem</td>
-							<td>lorem</td>
-							<td>lorem</td>
-						</tr>
-						<tr>
-							<td rowspan="2">lorem</td>
-							<td>lorem</td>
-							<td>lorem</td>
-						</tr>
-						<tr>
-							<td>lorem</td>
-							<td>lorem</td>
-							<td>lorem</td>
-						</tr>
-					</tbody>
-				</table>
+				@if($lec_user1)
+					<span>{{ $lec_user1->email }}</span>
+				@else
+					<span><i>{{ __('-- No Assigned Email --') }}</i></span>
+				@endif
 			</div>
 		</div>
+		<div class="row mb-3">
+			<div class="col-sm-3">
+				<strong>User 2 : </strong>
+			</div>
+			<div class="col-sm-9">
+				@if($lec_user2)
+					<span>{{ $lec_user2->email }}</span>
+				@else
+					<span><i>{{ __('-- No Assigned Email --') }}</i></span>
+				@endif
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm-3">
+				<strong>Designation Gov. : </strong>
+			</div>
+			<div class="col-sm-9">
+				@if($lec_des)
+					<span>{{ $lec_des }}</span>
+				@else
+					<span><i>{{ __('-- No Designated Position --') }}</i></span>
+				@endif
+			</div>
+		</div>
+		{{-- <div class="pt-2">
+			<hr>
+			<h3>Location Assigned</h3>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-12">
+
+			</div>
+		</div> --}}
 	</div>
 @stop
 
