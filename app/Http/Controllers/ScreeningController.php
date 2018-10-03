@@ -124,47 +124,56 @@ class ScreeningController extends Controller
                 $lec_city = '';
             }
 
-            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
+            if($requesType == 'HUC' || $requesType == 'ICC') {
+                $query = DB::table('candidates')
+                    ->where('province_id', '=', $provinceCode)
+                    ->where('signed_by_lp', '<>', 3)
+                    ->get();
+                
+
+            }  else {
+
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
                     ->where('city_id', '=', $city)
                     ->where('signed_by_lp', '<>', 3)
                     ->get();
-                if(count($query) > 0) {
-                    foreach ($query as $rows => $row) {
-                        if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
-                            if($row->signed_by_lp != 2) {
-                                $mayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                                );
-                            }
-                            
-                        } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
-                            if($row->signed_by_lp != 2) {
-                                $vmayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                                );
-                            }
-                        } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            if($row->signed_by_lp != 2) {
-                                $councilor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                    'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
-                                );
-                            }
-                        } 
-                    }
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
-                } else {
-                    return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city), 'pass' => $requesType]);
-                }
 
-            }  
+            }
+
+            if(count($query) > 0) {
+                foreach ($query as $rows => $row) {
+                    if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
+                        if($row->signed_by_lp != 2) {
+                            $mayor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
+                        
+                    } else if ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
+                        if($row->signed_by_lp != 2) {
+                            $vmayor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
+                    } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
+                        if($row->signed_by_lp != 2) {
+                            $councilor[] = array(
+                                'id' => $row->id,
+                                'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                'status' => $row->signed_by_lp == 0 ? 'Pending' : $row->signed_by_lp
+                            );
+                        }
+                    } 
+                }
+                return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city)]);
+            } else {
+                return response()->json(['mayor' => $mayor, 'vmayor' => $vmayor, 'councilor' => $councilor, 'lec' => $lec->lec_candidate($provinceCode, $lec_type, $lec_city), 'pass' => $requesType]);
+            }
 
         }  else {
 

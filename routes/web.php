@@ -51,10 +51,12 @@ Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/status', 'profileController@redirect');
 	Route::get('/status/export/{position}/{provincecode}/{type}', 'ExportController@export');
 	Route::get('/status/export/{id}', 'ExportController@exportByID');
-
 	Route::get('/senators','profileController@senator');
-
 	Route::get('/certificate','CertificateController@create');
+	Route::get('/candidates', [
+		'as' => 'candidates',
+		'uses' => 'dashboardPageController@candidates'
+	]);
 });
 
 Route::group(['prefix' => 'lec', 'middleware' => 'auth'], function() {

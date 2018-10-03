@@ -572,6 +572,11 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}
+
+	console.log(provinceCode);
+	console.log(type);
+	console.log(name);
+
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
@@ -580,6 +585,7 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
+			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
 				var hucmayors = data.mayor;
