@@ -328,7 +328,7 @@ class dashboardPageController extends Controller
 
         if($position == 'Senator') {
 
-            $location = 'Philipines';
+            $location = 'Philippines';
 
         } elseif($position == 'Governor' || $position == 'Vice Governor') {
 
