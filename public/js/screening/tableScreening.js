@@ -77,7 +77,7 @@ $(document).ready( function () {
     		case 'MUNICIPAL':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
-    			getCityCandidate(e, type, part, name, region, region);
+    			getCityCandidate(e, type, part, name, region);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -89,14 +89,19 @@ $(document).ready( function () {
 	    		$('.prov-districts').hide(500);
     		break;
     		case 'HUC DISTRICT':
-    			getDistrictCandidate(e, type, name, part);
+    			getDistrictCandidate(e, type, name, part, region);
     			$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.huc-districts').show(500);
 	    		$('#cc-councilor-wrapper').hide(500);
-	    		$('.prov-districts').hide(500);
+	    		$('.prov-districts').hide(500); 
+	    		console.log(e);
+	    		console.log(type);
+	    		console.log(part);
+	    		console.log(name);
+	    		console.log(region);
     		break;
     		case 'CC':
     			//$('tbody').html('');
@@ -111,6 +116,11 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
 	    		$('.prov-districts').hide(500);
+	    		console.log(e);
+	    		console.log(type);
+	    		console.log(part);
+	    		console.log(name);
+	    		console.log(region);
     		break;
     		default:
     			$('tbody').html('');
@@ -124,6 +134,16 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
 	    		$('.prov-districts').hide(500);
+	    		if(type != 'HUC DISTRICT') {
+	    			$('#cc-councilor-wrapper').show(500);
+	    		} else {
+	    			$('#cc-councilor-wrapper').hide(500);
+	    		}
+	    		console.log(e);
+	    		console.log(type);
+	    		console.log(part);
+	    		console.log(name);
+	    		console.log(region);
     	}
 	});
 
@@ -595,7 +615,7 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 					<div class="col-sm-2"></div>
 				`);
 			}
-			if(type == 'CC' || type == 'MUNICIPAL' || type == 'ICC') {
+			if(type == 'CC' || type == 'MUNICIPAL' || type == 'ICC' || type != 'HUC DISTRICT') {
 				if(data.councilor.length > 0) {
 					jQuery('#cc-councilor').html('');
 					var councilors = data.councilor;
