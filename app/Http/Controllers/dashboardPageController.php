@@ -152,11 +152,9 @@ class dashboardPageController extends Controller
             ->select('region', 'lgu', 'type')
             ->where('province_code', '=', $province)
             ->first();
-
+            
         if($position == 'Senator') {
-
             $lec = 'HQ';
-
         } elseif($position == 'Governor' || $position == 'Vice Governor') {
 
             $query = DB::table('province AS p')
