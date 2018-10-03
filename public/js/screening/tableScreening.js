@@ -572,10 +572,12 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}
+	console.log('provinceCode: ' + provinceCode);
+	console.log('name: ' + name);
 	$.ajax({
 		url: '/' + part + '/screening/candidate/city',
 		method: 'GET',
-		data: {provinceCode: provinceCode, requesType: type, name: name},
+		data: {provinceCode: provinceCode, requesType: type, name: name, region: region},
 		dataType: 'json',
 		cache: false,
 		success: function(data) {
