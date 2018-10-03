@@ -12,15 +12,15 @@ class profileController extends Controller
     public function profile(Request $request) {
         $profile = $request->screening_btn;
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
-
-        if($candidate->candidate_for === 'Senator') {
-            $province = (object) array(
-                'lgu' => 'Philippines',
-                'type'=> 'Nation'
-            );
-            $municipality = null;
+        
+        if(!$candidate->province_id) {
+            $province = (object)[];
+            $province->loc = "Republic of the Philippines";
+            $province->type = "Nation";
+            $province->lgu = "Philippines";
             $district = null;
             $city = null;
+            $municipality = null;
         } else {
             $province = DB::table('province')
                             ->select('lgu','type')
@@ -65,34 +65,43 @@ class profileController extends Controller
         $profile = $request->screening_btn;
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
 
-        $province = DB::table('province')
-                        ->select('lgu','type')
-                        ->where('province_code','=',$candidate->province_id)
-                        ->first();
-
-        $district = $candidate->district_id;
-        $city = $candidate->city_id;
-
-        if($province->type === 'HUC') {
+        if(!$candidate->province_id) {
+            $province = (object)[];
+            $province->loc = "Republic of the Philippines";
+            $province->type = "Nation";
+            $province->lgu = "Philippines";
+            $district = null;
+            $city = null;
             $municipality = null;
         } else {
-            $municipality = DB::table('municipality')
-                        ->select('municipality')
-                        ->where('district','=',$candidate->district_id)
-                        ->where('province_code','=',$candidate->province_id)
-                        ->first();
+            $province = DB::table('province')
+                            ->select('lgu','type')
+                            ->where('province_code','=',$candidate->province_id)
+                            ->first();
 
-            if($municipality) {         
-                if(isset($municipality) === 0) {
-                    $municipality = null;
-                } else {
-                    $municipality = $municipality->municipality;
+            $district = $candidate->district_id;
+            $city = $candidate->city_id;
+
+            if($province->type === 'HUC') {
+                $municipality = null;
+            } else {
+                $municipality = DB::table('municipality')
+                            ->select('municipality')
+                            ->where('district','=',$candidate->district_id)
+                            ->where('province_code','=',$candidate->province_id)
+                            ->first();
+
+                if($municipality) {         
+                    if(isset($municipality) === 0) {
+                        $municipality = null;
+                    } else {
+                        $municipality = $municipality->municipality;
+                    }
                 }
-            }
+            } 
         }
-        
-        $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
 
+        $cos = DB::table('chief_of_staff')->where('cos_id','=',$candidate->cos_id)->first();
         return view('lec.screening.profile', compact(
             'candidate',
             'province',
@@ -319,7 +328,11 @@ class profileController extends Controller
     }
 
     public function senator(){
-        $senators = DB::table('candidates')->where('candidate_for','Senator')->get();
+        $senators = DB::table('candidates')
+            ->where('candidate_for','Senator')
+            ->where('signed_by_lp','!=',3)
+            ->where('signed_by_lp','!=',2)
+            ->get();
         return view('dashboard.screening.senator')->with('senators',$senators);
     }
 

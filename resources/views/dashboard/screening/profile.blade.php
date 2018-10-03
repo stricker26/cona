@@ -93,7 +93,8 @@
 									} else {
 										$location = $province->lgu;
 									}
-									
+								} elseif($province->type == 'Nation') {
+									$location = $province->loc;
 								} else {
 									if($district) {
 										$location = $province->lgu . ', ' . $municipality . ', ' . $district;
