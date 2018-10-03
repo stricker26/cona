@@ -651,29 +651,25 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 					var councilors = data.councilor;
 					$.each(councilors, function(index, value) {
 						jQuery('#cc-councilor').append(`
-							<div class="row">
-								<div class="col-sm-7 pt-1">
-									<h5 class="font-weight-normal">` + value.name + `</h5>
-								</div>
-								<div class="col-sm-3 pt-1">
-									` + candidateStatus(value.status) + `
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
-								</div>
+							<div class="col-sm-7 pt-1">
+								<h5 class="font-weight-normal">` + value.name + `</h5>
+							</div>
+							<div class="col-sm-3 pt-1">
+								` + candidateStatus(value.status) + `
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
 							</div>
 						`);
 					});
 				} else {
 					jQuery('#cc-councilor').html('');
 					jQuery('#cc-councilor').append(`
-						<div class="row">
-							<div class="col-sm-7 pt-1">
-								<h5 class="font-weight-normal">No Candidate</h5>
-							</div>
-							<div class="col-sm-3"></div>
-							<div class="col-sm-2"></div>
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">No Candidate</h5>
 						</div>
+						<div class="col-sm-3"></div>
+						<div class="col-sm-2"></div>
 					`);
 				}
 			}
@@ -728,29 +724,25 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				var councilors = data.councilor;
 				$.each(councilors, function(index, value) {
 					jQuery('#huc-councilors').append(`
-						<div class="row mb-2">
-							<div class="col-sm-7 pt-1">
-								<h5 class="font-weight-normal">` + value.name + `</h5>
-							</div>
-							<div class="col-sm-3 pt-1">
-								` + candidateStatus(value.status) + `
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
-							</div>
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
 						</div>
 					`);
 				});
 			} else {
 				jQuery('#huc-councilors').html('');
 				jQuery('#huc-councilors').append(`
-					<div class="row mb-2">
-						<div class="col-sm-7 pt-1">
-							<h5 class="font-weight-normal">No Candidate</h5>
-						</div>
-						<div class="col-sm-3"></div>
-						<div class="col-sm-2"></div>
+					<div class="col-sm-7 pt-1">
+						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
 				`);
 			}
 			// Board Members
@@ -759,29 +751,25 @@ function getDistrictCandidate(provinceCode, type, district, part) {
 				var bmembers = data.bmember;
 				$.each(bmembers, function(index, value) {
 					jQuery('#bmembers').append(`
-						<div class="row mb-2">
-							<div class="col-sm-7 pt-1">
-								<h5 class="font-weight-normal">` + value.name + `</h5>
-							</div>
-							<div class="col-sm-3 pt-1">
-								` + candidateStatus(value.status) + `
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
-							</div>
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
 						</div>
 					`);
 				});
 			} else {
 				jQuery('#bmembers').html('');
 				jQuery('#bmembers').append(`
-					<div class="row mb-2">
-						<div class="col-sm-7 pt-1">
-							<h5 class="font-weight-normal">No Candidate</h5>
-						</div>
-						<div class="col-sm-3"></div>
-						<div class="col-sm-2"></div>
+					<div class="col-sm-7 pt-1">
+						<h5 class="font-weight-normal">No Candidate</h5>
 					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-2"></div>
 				`);
 			}
 			// Provincial Congressman
