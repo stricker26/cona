@@ -124,7 +124,7 @@ class ScreeningController extends Controller
                 $lec_city = '';
             }
 
-            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
+            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
                     ->where('city_id', '=', $city)
