@@ -75,7 +75,7 @@
 				      	 	</table>
 				      	@else
 					      	<div class="card-text">
-					      		<span>No data..</span>
+					      		<span>No Approved Candidates</span>
 					      	</div>
 				      	@endif
 			      	</div>
