@@ -30,6 +30,19 @@ $(document).ready( function () {
     		$('.gov-districts').hide(500);
     		getProvinceCandidate(urlCode, urlType, part);
     	}
+    	else if (urlType == 'ICC') {
+    		ajaxGet(urlCode, urlName, urlType, urlRegion);
+    		getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
+			$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('#cc-councilor-wrapper').show(500);
+    		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
+    		$('.huc-districts').hide(500);
+    		$('.prov-districts').hide(500);
+    	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
 		    getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
@@ -104,6 +117,25 @@ $(document).ready( function () {
 	    		console.log(region);
     		break;
     		case 'CC':
+    			//$('tbody').html('');
+    			//ajaxGet(e, name, type, region, part);
+    			getCityCandidate(e, type, part, name, region);
+    			$('#locationModal').html(name);
+	    		$('.screenLocation').html(name);
+	    		$('.list-candidates').show();
+	    		$('.gov-mayor').show(500);
+	    		$('#cc-councilor-wrapper').show(500);
+	    		$('.gov-governor').hide(500);
+	    		$('.gov-districts').hide(500);
+	    		$('.huc-districts').hide(500);
+	    		$('.prov-districts').hide(500);
+	    		console.log(e);
+	    		console.log(type);
+	    		console.log(part);
+	    		console.log(name);
+	    		console.log(region);
+    		break;
+    		case 'ICC':
     			//$('tbody').html('');
     			//ajaxGet(e, name, type, region, part);
     			getCityCandidate(e, type, part, name, region);
@@ -237,7 +269,7 @@ $(document).ready( function () {
 				success:function(data)  
 		    	{
 		    		if (data == '') {
-		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR')) {
+		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
     						if (region != undefined) {
     							$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
     						}
@@ -553,7 +585,7 @@ function getProvinceCandidate(provinceCode, type, part) {
 
 // Display City Candidate
 function getCityCandidate(provinceCode, type, part, name, region) {
-	if ((type == 'HUC' && region != 'NCR') || type == 'HUCs') {
+	if ((type == 'HUC' && region != 'NCR') || type == 'HUCs' || type == 'ICC') {
 		var u = provinceCode.split('-');
 		provinceCode = u[0];
 	}

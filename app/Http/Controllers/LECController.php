@@ -217,7 +217,7 @@ class LECController extends Controller
                 $lec_city = '';
             }
 
-            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL') {
+            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
                     ->where('city_id', '=', $lec_city)
@@ -253,7 +253,7 @@ class LECController extends Controller
                                 );
                             }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            if($row->signed_by_lp != 2) {
+                            if($row->signed_by_lp == 1) {
                                 $councilor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
