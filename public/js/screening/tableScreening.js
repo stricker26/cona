@@ -97,11 +97,6 @@ $(document).ready( function () {
 	    		$('.huc-districts').show(500);
 	    		$('#cc-councilor-wrapper').hide(500);
 	    		$('.prov-districts').hide(500); 
-	    		console.log(e);
-	    		console.log(type);
-	    		console.log(part);
-	    		console.log(name);
-	    		console.log(region);
     		break;
     		case 'CC':
     			//$('tbody').html('');
@@ -116,11 +111,6 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
 	    		$('.prov-districts').hide(500);
-	    		console.log(e);
-	    		console.log(type);
-	    		console.log(part);
-	    		console.log(name);
-	    		console.log(region);
     		break;
     		default:
     			$('tbody').html('');
@@ -139,11 +129,6 @@ $(document).ready( function () {
 	    		} else {
 	    			$('#cc-councilor-wrapper').hide(500);
 	    		}
-	    		console.log(e);
-	    		console.log(type);
-	    		console.log(part);
-	    		console.log(name);
-	    		console.log(region);
     	}
 	});
 
