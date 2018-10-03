@@ -523,16 +523,14 @@ function getProvinceCandidate(provinceCode, type, part) {
 				var governors = data.governor;
 				$.each(governors, function(index, value) {
 					jQuery('#prov-governor').append(`
-						<div class="row mb-2">
-							<div class="col-sm-7 pt-1">
-								<h5 class="font-weight-normal">` + value.name + `</h5>
-							</div>
-							<div class="col-sm-3 pt-1">
-								` + candidateStatus(value.status) + `
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
-							</div>
+						<div class="col-sm-7 pt-1">
+							<h5 class="font-weight-normal">` + value.name + `</h5>
+						</div>
+						<div class="col-sm-3 pt-1">
+							` + candidateStatus(value.status) + `
+						</div>
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-success" name="screening_btn" value="` + value.id + `">View Profile</button>
 						</div>
 					`);
 				});

@@ -431,10 +431,6 @@
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
 				</div>
-			@elseif ($candidate->signed_by_lp == 1)
-				<div class="d-inline pr-2">
-					<button type="button" class="btn btn-warning" id="download_btn">Download CONA</button>
-				</div>
 			@endif
 		</div>
 	</div>
