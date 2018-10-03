@@ -164,8 +164,11 @@ window.setInterval(function() {
 				}
 			} else if(groupType == 'HUC' && region != 'NCR') {
 				if(jQuery('#position').val() == 'HUC Congressman') {
+					var requestType = 'huc_district';
+					jQuery('.district-wrapper').fadeIn(500);
+					jQuery('#district').attr('required', 'required');
 					jQuery('.huc-city-wrapper').fadeOut(500);
-					jQuery('#huc-city').removeAttr('required');
+					var target = '#district';
 				} else {
 					var requestType = 'cc_huc';
 					var target = '#huc-city';
