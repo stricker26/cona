@@ -46,7 +46,10 @@ class statCandidatesController extends Controller
             $positions = array('governor','vice_governor','board_member','congressman','HUC_congressman','city_mayor','city_vice_mayor','city_councilor','municipal_mayor','municipal_vice_mayor','municipal_councilor');
             
 
-            $candidates = DB::table('candidates')->where('signed_by_lp',$status)->get();
+            $candidates = DB::table('candidates')
+                                ->where('signed_by_lp',$status)
+                                ->where('candidate_for','!=','Senator')
+                                ->get();
             foreach($candidates as $candidate) {
                 if($candidate->candidate_for === "Governor") {
                     $governors = 'not empty';
@@ -169,20 +172,24 @@ class statCandidatesController extends Controller
                     }
                 }
 
-                $candidate_provinceLGU = DB::table('province')
-                    ->where('province_code',$candidate->province_id)
-                    ->first();
-                if($candidate->city_id) {
-                    if($candidate->district_id) {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                            .ucwords(strtolower($candidate->city_id)).', '
-                            .$candidate->district_id;
-                    } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                            .ucwords(strtolower($candidate->city_id));
-                    }
+                if($candidate->candidate_for == 'Senator') {
+                    $candidate->location = "Philippines";
                 } else {
-                    $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                    $candidate_provinceLGU = DB::table('province')
+                        ->where('province_code',$candidate->province_id)
+                        ->first();
+                    if($candidate->city_id) {
+                        if($candidate->district_id) {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                .ucwords(strtolower($candidate->city_id)).', '
+                                .$candidate->district_id;
+                        } else {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                .ucwords(strtolower($candidate->city_id));
+                        }
+                    } else {
+                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                    }
                 }
             }
 
@@ -405,20 +412,24 @@ class statCandidatesController extends Controller
                     }
                 }
 
-                $candidate_provinceLGU = DB::table('province')
-                    ->where('province_code',$candidate->province_id)
-                    ->first();
-                if($candidate->city_id) {
-                    if($candidate->district_id) {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                            .ucwords(strtolower($candidate->city_id)).', '
-                            .$candidate->district_id;
-                    } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                            .ucwords(strtolower($candidate->city_id));
-                    }
+                if($candidate->candidate_for == 'Senator') {
+                    $candidate->location = "Philippines";
                 } else {
-                    $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                    $candidate_provinceLGU = DB::table('province')
+                        ->where('province_code',$candidate->province_id)
+                        ->first();
+                    if($candidate->city_id) {
+                        if($candidate->district_id) {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                .ucwords(strtolower($candidate->city_id)).', '
+                                .$candidate->district_id;
+                        } else {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                .ucwords(strtolower($candidate->city_id));
+                        }
+                    } else {
+                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                    }
                 }
             }
 
@@ -611,20 +622,24 @@ class statCandidatesController extends Controller
                         }
                     }
 
-                    $candidate_provinceLGU = DB::table('province')
-                        ->where('province_code',$candidate->province_id)
-                        ->first();
-                    if($candidate->city_id) {
-                        if($candidate->district_id) {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                                .ucwords(strtolower($candidate->city_id)).', '
-                                .$candidate->district_id;
-                        } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                                .ucwords(strtolower($candidate->city_id));
-                        }
+                    if($candidate->candidate_for == 'Senator') {
+                        $candidate->location = "Philippines";
                     } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        $candidate_provinceLGU = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                        if($candidate->city_id) {
+                            if($candidate->district_id) {
+                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                    .ucwords(strtolower($candidate->city_id)).', '
+                                    .$candidate->district_id;
+                            } else {
+                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                    .ucwords(strtolower($candidate->city_id));
+                            }
+                        } else {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        }
                     }
                 }
 
@@ -830,17 +845,24 @@ class statCandidatesController extends Controller
                         ->where('province_code',$candidate->province_id)
                         ->first();
 
-                    if($candidate->city_id) {
-                        if($candidate->district_id) {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                                .ucwords(strtolower($candidate->city_id)).', '
-                                .$candidate->district_id;
-                        } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
-                                .ucwords(strtolower($candidate->city_id));
-                        }
+                    if($candidate->candidate_for == 'Senator') {
+                        $candidate->location = "Philippines";
                     } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        $candidate_provinceLGU = DB::table('province')
+                            ->where('province_code',$candidate->province_id)
+                            ->first();
+                        if($candidate->city_id) {
+                            if($candidate->district_id) {
+                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                    .ucwords(strtolower($candidate->city_id)).', '
+                                    .$candidate->district_id;
+                            } else {
+                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                    .ucwords(strtolower($candidate->city_id));
+                            }
+                        } else {
+                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        }
                     }
                 }
 

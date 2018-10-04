@@ -32,9 +32,18 @@ class AppServiceProvider extends ServiceProvider
             sort($regions);
 
             //over all status
-            $pending_count_all = count(DB::table('candidates')->where('signed_by_lp',0)->get());
-            $approved_count_all = count(DB::table('candidates')->where('signed_by_lp',1)->get());
-            $rejected_count_all = count(DB::table('candidates')->where('signed_by_lp',2)->get());
+            $pending_count_all = count(DB::table('candidates')
+                ->where('signed_by_lp',0)
+                ->where('candidate_for','!=','Senator')
+                ->get());
+            $approved_count_all = count(DB::table('candidates')
+                ->where('signed_by_lp',1)
+                ->where('candidate_for','!=','Senator')
+                ->get());
+            $rejected_count_all = count(DB::table('candidates')
+                ->where('signed_by_lp',2)
+                ->where('candidate_for','!=','Senator')
+                ->get());
 
             //regional status
             $pending_count_region = (object)[];
