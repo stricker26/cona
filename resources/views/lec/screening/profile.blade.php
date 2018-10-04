@@ -96,7 +96,7 @@
 						</div>
 						<div class='text-center'>
 							<?php
-								if($province->type == 'HUC') {
+								/*if($province->type == 'HUC') {
 									if($district) {
 										$location = $province->lgu . ', ' . $district;
 									} else {
@@ -110,7 +110,11 @@
 									} else {
 										$location = $province->lgu . ', ' . $municipality;
 									}
-								}
+								}*/
+								$location = '';
+								$location .= $candidate->city_id ? $candidate->city_id.', ' : '';
+								$location .= $candidate->district_id ? $candidate->district_id.', ' : '';
+								$location .= $province->lgu;
 							?>
 							<h5><?php echo $location; ?></h5>
 						</div>
