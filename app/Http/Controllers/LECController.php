@@ -424,7 +424,7 @@ class LECController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'Governor') {
-                            if ($row->signed_by_lec == 1) {
+                            if ($row->signed_by_lp == 1) {
                                 $governor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -440,7 +440,7 @@ class LECController extends Controller
                             }
                             
                         } else if ($row->candidate_for == 'Vice Governor') {
-                            if ($row->signed_by_lec == 1) {
+                            if ($row->signed_by_lp == 1) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
