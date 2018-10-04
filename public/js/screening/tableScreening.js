@@ -52,6 +52,15 @@ $(document).ready( function () {
     		$('.huc-districts').hide(500);
     		$('.prov-districts').hide(500);
     	}
+    	else if (urlType == 'HUC') {
+			$('#locationModal').html(urlName);
+    		$('.screenLocation').html(urlName);
+    		ajaxGet(urlCode, '', urlType);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
+    	}
     	else {
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
 		    getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
@@ -241,6 +250,7 @@ $(document).ready( function () {
 	loadPagination();
 
 	function ajaxGet(e, name, type, region) {
+		var referrer = document.referrer;
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
@@ -405,18 +415,9 @@ function hucTable(e, data, region) {
 
 function districtTable(e, data) {
 	var keys = Object.keys(data);
-	var y = keys.length - 1;
-	var s = parseInt(keys[0]);
-	var d = parseInt(keys[y]);
-	for (var x=s; x <= d; x++) {
-		if (x != keys[0]) {
-			if (data[x].district != data[x-1].district) {
-				printRow(data, x, 'district', 'DISTRICT');
-			}
-		}
-		else {
-			printRow(data, x, 'district', 'DISTRICT');
-		}
+	var districts= $.unique(data.map(function (d) {return d.district;}));
+	for (var x=0; x < districts.length; x++) {
+		printRow(data, x, 'district', 'DISTRICT', districts);
 	}
 }
 
@@ -434,24 +435,39 @@ function cityTable(e, data, name) {
 	}
 }
 
-function printRow(data, x, name, type) {
+function printRow(data, x, name, type, districts) {
 	if(data[x].assigned_lec == null) {
 		var lec = 'NO ASSIGNED LEC';
 	} else {
 		var lec = data[x].assigned_lec;
 	}
-
-	$('tbody').append(`
-			<tr class='item'>
-				<td class="code">` + data[x].province_code + `</td>
-				<td class="description">` + data[x][name] + `</td>
-				<td>` + data[x].pending + `</td>
-				<td>` + data[x].approved + `</td>
-				<td>` + data[x].rejected + `</td>
-				<td>` + lec + `</td>
-				<td class="type">` + type + `</td>
-			</tr>
-	`);
+	if (districts == undefined) {
+		$('tbody').append(`
+				<tr class='item'>
+					<td class="code">` + data[x].province_code + `</td>
+					<td class="description">` + data[x][name] + `</td>
+					<td>` + data[x].pending + `</td>
+					<td>` + data[x].approved + `</td>
+					<td>` + data[x].rejected + `</td>
+					<td>` + lec + `</td>
+					<td class="type">` + type + `</td>
+				</tr>
+		`);
+	}
+	else {
+		$('tbody').append(`
+				<tr class='item'>
+					<td class="code">` + data[x].province_code + `</td>
+					<td class="description">` + districts[x] + `</td>
+					<td>` + data[x].pending + `</td>
+					<td>` + data[x].approved + `</td>
+					<td>` + data[x].rejected + `</td>
+					<td>` + lec + `</td>
+					<td class="type">` + type + `</td>
+				</tr>
+		`);
+	}
+	
 	loadPagination();
 }
 
