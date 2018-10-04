@@ -193,6 +193,14 @@ $(document).ready( function () {
     		$('.gov-mayor').hide(500);
     		$('.gov-districts').hide(500);
     		$('.gov-governor').show(500);
+		} else if(type == 'REGION') {
+			console.log(name);
+    		$('#locationModal').html(name);
+    		$('.screenLocation').html(name);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').hide(500);
+    		$('.gov-districts').hide(500);
+    		$('.gov-governor').hide(500);
 		} else {
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
@@ -299,8 +307,6 @@ $(document).ready( function () {
 		    			}
 		    			//loadTable(e, data);
 		    		}
-		    		$('#locationModal').html(name);
-		    		$('.screenLocation').html(name);
 		    	} 
 			});
 		}
