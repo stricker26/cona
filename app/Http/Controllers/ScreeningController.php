@@ -108,6 +108,7 @@ class ScreeningController extends Controller
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
             $city = $request->input('name');
+            $region = $request->input('region');
 
             $mayor = array();
             $vmayor = array();
@@ -119,27 +120,31 @@ class ScreeningController extends Controller
             } elseif($requesType == 'CC') {
                 $lec_type = 'component_city';
                 $lec_city = $city;
+            } elseif($requesType == 'HUC') {
+                $lec_type = 'huc';
+                $lec_city = $city;
             } else {
                 $lec_type = 'huc_district';
                 $lec_city = '';
             }
 
-            if($requesType == 'HUC' || $requesType == 'ICC') {
+            if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
+                if ($requesType == 'HUC' && $region == 'NCR') {
                 $query = DB::table('candidates')
                     ->where('province_id', '=', $provinceCode)
                     ->where('signed_by_lp', '<>', 3)
                     ->get();
                 
 
-            }  else {
+                }  else {
 
-                $query = DB::table('candidates')
-                    ->where('province_id', '=', $provinceCode)
-                    ->where('city_id', '=', $city)
-                    ->where('signed_by_lp', '<>', 3)
-                    ->get();
+                    $query = DB::table('candidates')
+                        ->where('province_id', '=', $provinceCode)
+                        ->where('city_id', '=', $lec_city)
+                        ->where('signed_by_lp', '<>', 3)
+                        ->get();
 
-            }
+                }
 
             if(count($query) > 0) {
                 foreach ($query as $rows => $row) {
@@ -180,6 +185,7 @@ class ScreeningController extends Controller
             return response()->json(['warning' => 'Invalid request.']);
 
         }
+    }
 
     }
 
