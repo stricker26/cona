@@ -165,8 +165,8 @@ class dashboardPageController extends Controller
                 ->where('p.province_code', '=', $province)
                 ->get();
 
-            if($query[0]->lec == 'No assigned LEC') {
-                $lec = 'No assigned LEC';
+            if($query[0]->lec == 'NO ASSIGNED LEC') {
+                $lec = 'NO ASSIGNED LEC';
             } else {
                 $lec = $query[0]->name;
             }
@@ -183,7 +183,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
         } elseif($queryType->type == 'HUC' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
@@ -198,7 +198,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
         } elseif ($queryType->type == 'HUC' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
@@ -212,7 +212,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
         } elseif($queryType->type == 'PROVINCE' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
@@ -226,7 +226,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
         } elseif ($queryType->type == 'PROVINCE' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
@@ -240,7 +240,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
 
@@ -256,7 +256,7 @@ class dashboardPageController extends Controller
             if(count($query) > 0) {
                 $lec = $query[0]->name;
             } else {
-                $lec = 'No assigned LEC';
+                $lec = 'NO ASSIGNED LEC';
             }
 
         }

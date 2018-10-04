@@ -138,7 +138,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'district') {
@@ -154,7 +154,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'municipal') {
@@ -169,7 +169,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'component_city') {
@@ -184,7 +184,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
         } 
 
