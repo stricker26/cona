@@ -21,7 +21,6 @@ $(document).ready( function () {
     		ajaxGet(urlCode, urlName, urlType, urlRegion);
     		ajaxGet(urlCode, urlName, 'HUCs', urlRegion);
     		ajaxGet(urlCode, urlName, 'CITY', urlRegion);
-    		ajaxGet(urlCode, urlName, 'ICC', urlRegion);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -138,11 +137,6 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
 	    		$('.prov-districts').hide(500);
-	    		console.log(e);
-	    		console.log(type);
-	    		console.log(part);
-	    		console.log(name);
-	    		console.log(region);
     		break;
     		default:
     			$('tbody').html('');
@@ -194,7 +188,6 @@ $(document).ready( function () {
     		$('.gov-districts').hide(500);
     		$('.gov-governor').show(500);
 		} else if(type == 'REGION') {
-			console.log(name);
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
     		$('.list-candidates').show();
@@ -587,7 +580,6 @@ function getCityCandidate(provinceCode, type, part, name, region) {
 		cache: false,
 		success: function(data) {
 			//HUC Mayor
-			console.log(data);
 			if(data.mayor.length > 0) {
 				jQuery('#huc-mayor').html('');
 				var hucmayors = data.mayor;
