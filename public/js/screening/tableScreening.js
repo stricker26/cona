@@ -442,32 +442,17 @@ function printRow(data, x, name, type, districts) {
 		var lec = data[x].assigned_lec;
 	}
 	if (districts == undefined) {
-		if (type == 'MUNICIPAL') {
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].municipality_code + `</td>
-						<td class="description">` + data[x][name] + `</td>
-						<td>` + data[x].pending + `</td>
-						<td>` + data[x].approved + `</td>
-						<td>` + data[x].rejected + `</td>
-						<td>` + lec + `</td>
-						<td class="type">` + type + `</td>
-					</tr>
-			`);
-		}
-		else {
-			$('tbody').append(`
-					<tr class='item'>
-						<td class="code">` + data[x].province_code + `</td>
-						<td class="description">` + data[x][name] + `</td>
-						<td>` + data[x].pending + `</td>
-						<td>` + data[x].approved + `</td>
-						<td>` + data[x].rejected + `</td>
-						<td>` + lec + `</td>
-						<td class="type">` + type + `</td>
-					</tr>
-			`);
-		}
+		$('tbody').append(`
+				<tr class='item'>
+					<td class="code">` + data[x].province_code + `</td>
+					<td class="description">` + data[x][name] + `</td>
+					<td>` + data[x].pending + `</td>
+					<td>` + data[x].approved + `</td>
+					<td>` + data[x].rejected + `</td>
+					<td>` + lec + `</td>
+					<td class="type">` + type + `</td>
+				</tr>
+		`);
 	}
 	else {
 		$('tbody').append(`
