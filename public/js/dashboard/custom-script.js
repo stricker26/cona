@@ -97,6 +97,9 @@ jQuery(document).ready(function($){
 	    }
 	});
 
+	if (path == '/'+part+'/screening/profile') {
+	}
+
 	function ajaxGet(e, name, type, region, part) {
 		$.ajax({
 			method: 'GET',

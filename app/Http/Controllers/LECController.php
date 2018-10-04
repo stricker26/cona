@@ -115,7 +115,7 @@ class LECController extends Controller
         }
         else {
             $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
                 ->where('p.region', '=', $code)
                 ->where('lec', 'like', '%'.$lecId.'%')
                 ->where('type', '<>', 'HUC')
@@ -138,7 +138,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'district') {
@@ -154,7 +154,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'municipal') {
@@ -169,7 +169,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
 
         } elseif($type == 'component_city') {
@@ -184,7 +184,7 @@ class LECController extends Controller
             if(count($query) > 0) {
                 return $query[0]->name;
             } else {
-                return 'No assigned LEC';
+                return 'NO ASSIGNED LEC';
             }
         } 
 
@@ -424,7 +424,7 @@ class LECController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'Governor') {
-                            if ($row->signed_by_lec == 1) {
+                            if ($row->signed_by_lp == 1) {
                                 $governor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
@@ -440,7 +440,7 @@ class LECController extends Controller
                             }
                             
                         } else if ($row->candidate_for == 'Vice Governor') {
-                            if ($row->signed_by_lec == 1) {
+                            if ($row->signed_by_lp == 1) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
                                     'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,

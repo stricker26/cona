@@ -23,7 +23,7 @@ class profileController extends Controller
             $municipality = null;
         } else {
             $province = DB::table('province')
-                            ->select('lgu','type')
+                            ->select('lgu','type',  'province_code', 'region')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
@@ -75,7 +75,7 @@ class profileController extends Controller
             $municipality = null;
         } else {
             $province = DB::table('province')
-                            ->select('lgu','type')
+                            ->select('lgu','type', 'province_code', 'region')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
@@ -311,15 +311,28 @@ class profileController extends Controller
         $reject = DB::table('candidates')->where('id', $candidate_id)->update(['signed_by_lp' => '2', 'signed_by_lec' => '2']);
         if($reject) {
             $alert = 'Rejected';
-            DB::table('edit_logs')->insert([
-                'updated_candidate_id' => $candidate_id,
-                'isAdmin' => Auth::user()->isAdmin,
-                'action' => 'HQ Reject Candidate',
-                'updated_by_id' => Auth::user()->id,
-                'url' => \Request::fullUrl(),
-                'ip' => \Request::ip(),
-                'updated_at' => $date_now
-            ]);
+            if(Auth::user()->isAdmin == 1) {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate_id,
+                    'isAdmin' => Auth::user()->isAdmin,
+                    'action' => 'HQ Reject Candidate',
+                    'updated_by_id' => Auth::user()->id,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+            }
+            else {
+                DB::table('edit_logs')->insert([
+                    'updated_candidate_id' => $candidate_id,
+                    'isAdmin' => Auth::user()->isAdmin,
+                    'action' => 'LEC Reject Candidate',
+                    'updated_by_id' => Auth::user()->id,
+                    'url' => \Request::fullUrl(),
+                    'ip' => \Request::ip(),
+                    'updated_at' => $date_now
+                ]);
+            }
         }
         else {
             $alert = 'Fail';
