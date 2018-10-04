@@ -338,7 +338,7 @@ function loadTable(e, data) {
 				type = data[x].type;
 			}
 			if(data[x].assigned_lec == null) {
-				var lec = 'No assigned LEC';
+				var lec = 'NO ASSIGNED LEC';
 			} else {
 				var lec = data[x].assigned_lec;
 			}
@@ -437,7 +437,7 @@ function cityTable(e, data, name) {
 
 function printRow(data, x, name, type, districts) {
 	if(data[x].assigned_lec == null) {
-		var lec = 'No assigned LEC';
+		var lec = 'NO ASSIGNED LEC';
 	} else {
 		var lec = data[x].assigned_lec;
 	}
