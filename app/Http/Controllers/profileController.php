@@ -23,7 +23,7 @@ class profileController extends Controller
             $municipality = null;
         } else {
             $province = DB::table('province')
-                            ->select('lgu','type')
+                            ->select('lgu','type',  'province_code', 'region')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
@@ -75,7 +75,7 @@ class profileController extends Controller
             $municipality = null;
         } else {
             $province = DB::table('province')
-                            ->select('lgu','type')
+                            ->select('lgu','type', 'province_code', 'region')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
