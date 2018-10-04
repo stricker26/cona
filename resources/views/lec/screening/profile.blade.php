@@ -7,6 +7,15 @@
 
 @section('content')
 	<!-- APPROVE AND REJECT MODALS -->
+	<div class="sticky-top">
+		<div class="container">
+			<div class="bcrumbs row">
+				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
+				<p>/</p>
+				<a href="../screening?e={{$province->province_code}}&name={{$province->lgu}}&type={{$province->type}}&region={{$province->region}}">{{$province->lgu}}</a>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Approve Candidate" aria-hidden="true">
 	  	<div class="modal-dialog modal-dialog-centered" role="document">
 	    	<div class="modal-content">
@@ -87,7 +96,7 @@
 						</div>
 						<div class='text-center'>
 							<?php
-								if($province->type == 'HUC') {
+								/*if($province->type == 'HUC') {
 									if($district) {
 										$location = $province->lgu . ', ' . $district;
 									} else {
@@ -101,7 +110,11 @@
 									} else {
 										$location = $province->lgu . ', ' . $municipality;
 									}
-								}
+								}*/
+								$location = '';
+								$location .= $candidate->city_id ? $candidate->city_id.', ' : '';
+								$location .= $candidate->district_id ? $candidate->district_id.', ' : '';
+								$location .= $province->lgu;
 							?>
 							<h5><?php echo $location; ?></h5>
 						</div>

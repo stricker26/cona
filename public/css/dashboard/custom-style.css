@@ -261,3 +261,20 @@ i.fa-caret-down {
   cursor: pointer;
   background-color: #dadada;
 }
+.sticky-top {
+  background: rgba(241, 242, 247, 0.9);
+  padding: 10px 0px;
+  border-bottom: 1px solid #c1c1c1;
+}
+.sticky-top a {
+  color: #2d2a1c;
+  font-weight: bold;
+}
+.sticky-top a:hover {
+  text-decoration: underline;
+}
+.sticky-top p {
+  color: #f7d116;
+  font-weight: bold;
+  margin: 0px 5px;
+}
