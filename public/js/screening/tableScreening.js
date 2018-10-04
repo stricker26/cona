@@ -415,9 +415,13 @@ function hucTable(e, data, region) {
 
 function districtTable(e, data) {
 	var keys = Object.keys(data);
-	var districts= $.unique(data.map(function (d) {return d.district;}));
+	var y = keys.length - 1;
+	var s = parseInt(keys[0]);
+	var d = parseInt(keys[y]);
+	console.log(data)
+	var districts= $.unique(data.map(function (d) { return d.district;}));
 	for (var x=0; x < districts.length; x++) {
-		printRow(data, x, 'district', 'DISTRICT', districts);
+		printRow(data, x, 'district', 'DISTRICT');
 	}
 }
 
@@ -436,37 +440,23 @@ function cityTable(e, data, name) {
 }
 
 function printRow(data, x, name, type, districts) {
+	console.log(data);
 	if(data[x].assigned_lec == null) {
 		var lec = 'NO ASSIGNED LEC';
 	} else {
 		var lec = data[x].assigned_lec;
 	}
-	if (districts == undefined) {
-		$('tbody').append(`
-				<tr class='item'>
-					<td class="code">` + data[x].province_code + `</td>
-					<td class="description">` + data[x][name] + `</td>
-					<td>` + data[x].pending + `</td>
-					<td>` + data[x].approved + `</td>
-					<td>` + data[x].rejected + `</td>
-					<td>` + lec + `</td>
-					<td class="type">` + type + `</td>
-				</tr>
-		`);
-	}
-	else {
-		$('tbody').append(`
-				<tr class='item'>
-					<td class="code">` + data[x].province_code + `</td>
-					<td class="description">` + districts[x] + `</td>
-					<td>` + data[x].pending + `</td>
-					<td>` + data[x].approved + `</td>
-					<td>` + data[x].rejected + `</td>
-					<td>` + lec + `</td>
-					<td class="type">` + type + `</td>
-				</tr>
-		`);
-	}
+	$('tbody').append(`
+			<tr class='item'>
+				<td class="code">` + data[x].province_code + `</td>
+				<td class="description">` + data[x][name] + `</td>
+				<td>` + data[x].pending + `</td>
+				<td>` + data[x].approved + `</td>
+				<td>` + data[x].rejected + `</td>
+				<td>` + lec + `</td>
+				<td class="type">` + type + `</td>
+			</tr>
+	`);
 	
 	loadPagination();
 }
