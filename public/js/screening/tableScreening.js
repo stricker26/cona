@@ -55,12 +55,14 @@ $(document).ready( function () {
     	else if (urlType == 'MUNICIPALITY') {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
-    		getDistrictCandidate(urlCode, urlType, urlName, part);
+    		getDistrictCandidate(urlCode, 'DISTRICT', urlName, part);
     		ajaxGet(urlCode, urlName, urlType, urlRegion, 1);
     		$('.list-candidates').show();
-    		$('.gov-mayor').show(500);
+    		$('.gov-mayor').hide(500);
     		$('.gov-governor').hide(500);
-    		$('.gov-districts').hide(500);
+    		$('.huc-districts').hide(500);
+    		$('.gov-districts').show(500);
+    		$('.prov-districts').show(500);
     	}
     	else if (urlType == 'HUC') {
 			$('#locationModal').html(urlName);
