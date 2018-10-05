@@ -56,9 +56,8 @@ $(document).ready( function () {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
     		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
-    		if (urlRegion == 'NCR') {
-    			$('#huc-councilors').parent().parent().hide(500);
-    		}
+    		getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
+    		//$('#huc-councilors').parent().parent().hide(500);
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
@@ -129,7 +128,9 @@ $(document).ready( function () {
 	    		$('.gov-mayor').hide(500);
 	    		$('.gov-districts').show(500);
 	    		$('.huc-districts').show(500);
-	    		$('#cc-councilor-wrapper').hide(500);
+	    		if (region != 'NCR') {
+	    			$('#cc-councilor-wrapper').hide(500);
+	    		}
 	    		$('.prov-districts').hide(500); 
     		break;
     		case 'CC':
