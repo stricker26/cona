@@ -65,6 +65,7 @@ class ScreeningController extends Controller
         if ($code == 'NCR') {
             $data = DB::table('province as p')
                 ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lp = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                ->where('p.province_code', '!=', '1374')
                 ->where('p.region', '=', $code)
                 ->get();
             //$data = DB::table('province')->get()->where('region', '=', $code);
