@@ -47,6 +47,7 @@ class ScreeningController extends Controller
     public function district($code) {
         $data = DB::table('municipality as m')
             ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lp = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
+            ->groupBy('m.district')
             ->where('m.province_code', '=', $code)
             ->get();
         return $data;
