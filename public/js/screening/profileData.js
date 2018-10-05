@@ -119,7 +119,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			method: 'POST',
-			url: '/hq/screening/profile/sent',
+			url: '/'+part+'/screening/profile/sent',
 			data: objectData,
 			success:function(alert){
 	    		if(alert == 'cos failed') {
