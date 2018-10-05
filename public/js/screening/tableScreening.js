@@ -56,6 +56,9 @@ $(document).ready( function () {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
     		ajaxGet(urlCode, '', urlType);
+    		if (urlRegion == 'NCR') {
+    			$('#huc-councilors').parent().parent().hide(500);
+    		}
     		$('.list-candidates').show();
     		$('.gov-mayor').show(500);
     		$('.gov-governor').hide(500);
@@ -169,7 +172,7 @@ $(document).ready( function () {
 	    		$('.gov-districts').hide(500);
 	    		$('.huc-districts').hide(500);
 	    		$('.prov-districts').hide(500);
-	    		if(type != 'HUC DISTRICT') {
+	    		if(type != 'HUC DISTRICT' && region != 'NCR') {
 	    			$('#cc-councilor-wrapper').show(500);
 	    		} else {
 	    			$('#cc-councilor-wrapper').hide(500);
@@ -181,8 +184,14 @@ $(document).ready( function () {
 		e.preventDefault();
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
+		var name = $(this).html();
 		$(this).nextAll().remove();
-		ajaxGet(code, '', type);
+		if (type == 'HUC') {
+			var region = $(this).prev().prev().attr('id');
+			ajaxGet(code, name, type, region);
+		} else {
+			ajaxGet(code, '', type);
+		}
 		$('tbody').html('');
 		if (type == 'MUNICIPALITY') {
 			ajaxGet(code, name, type, undefined);
@@ -191,7 +200,6 @@ $(document).ready( function () {
 			ajaxGet(code, '', 'CITY');
 			ajaxGet(code, '', 'HUCs');
 		}
-		var name = $(this).html();
 		if(type == 'DISTRICT' || type == 'MUNICIPALITY') {
     		$('#locationModal').html(name);
     		$('.screenLocation').html(name);
