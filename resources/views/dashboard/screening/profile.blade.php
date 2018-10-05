@@ -247,7 +247,7 @@
 					<div class="col-sm-6 row-content">
 						<div class="instagram">
 							@if($json['instagram'])
-								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourinstagram.." value="{{ $json['instagram'] }}">
 							@else
 								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter..">
 							@endif
