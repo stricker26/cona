@@ -427,7 +427,6 @@ function districtTable(e, data) {
 	var y = keys.length - 1;
 	var s = parseInt(keys[0]);
 	var d = parseInt(keys[y]);
-	console.log(data)
 	var districts= $.unique(data.map(function (d) { return d.district;}));
 	for (var x=0; x < districts.length; x++) {
 		printRow(data, x, 'district', 'DISTRICT');
@@ -449,7 +448,6 @@ function cityTable(e, data, name) {
 }
 
 function printRow(data, x, name, type, districts) {
-	console.log(data);
 	if(data[x].assigned_lec == null) {
 		var lec = 'NO ASSIGNED LEC';
 	} else {

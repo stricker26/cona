@@ -86,7 +86,6 @@ $(document).ready(function(){
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			var nameToPass = idForAjax.replace("prof_","");
-			console.log(nameToPass);
 			objectData[nameToPass] = spanData;
 
 			// if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -101,7 +100,6 @@ $(document).ready(function(){
 			
 			var idForAjax = $(this).find(".row-content input").attr("id");
 			var nameToPass = idForAjax.replace("prof_","");
-			console.log(nameToPass);
 			objectData[nameToPass] = spanData;
 
 			// if($.inArray(idForAjax, a_href_id) !== -1) {
@@ -115,7 +113,6 @@ $(document).ready(function(){
 		$('#close_btn').hide();
 		$('#edit_btn').show();
 		$(this).hide();
-		console.log(objectData);
 
 		$.ajax({
 			method: 'POST',
