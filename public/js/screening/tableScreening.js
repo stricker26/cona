@@ -7,9 +7,6 @@ var urlRegion = url.searchParams.get('region');
 window.history.replaceState(null, null, window.location.pathname);
 
 $(document).ready( function () {
-	console.log('urlCode: ' + urlCode);
-	console.log('urlName: ' + urlName);
-	console.log('urlType: ' + urlType);
 	if (urlCode != null || urlCode != undefined || urlCode != '') {
 		if (urlType == 'DISTRICT') {
     		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
@@ -199,9 +196,6 @@ $(document).ready( function () {
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
 		var name = $(this).html();
-		console.log('code: ' + code);
-		console.log('type: ' + type);
-		console.log('name: ' + name);
 		$(this).nextAll().remove();
 		if (type == 'HUC') {
 			var region = $(this).prev().prev().attr('id');
@@ -299,7 +293,6 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
-		    		console.log(data);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
     						if (region != undefined) {
