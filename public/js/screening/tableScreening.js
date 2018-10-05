@@ -55,7 +55,7 @@ $(document).ready( function () {
     	else if (urlType == 'HUC') {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
-    		ajaxGet(urlCode, '', urlType);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
     		if (urlRegion == 'NCR') {
     			$('#huc-councilors').parent().parent().hide(500);
     		}
