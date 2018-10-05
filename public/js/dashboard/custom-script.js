@@ -84,6 +84,11 @@ jQuery(document).ready(function($){
 	    		$('.gov-mayor').show(500);
 	    		$('.gov-governor').hide(500);
     			$('.gov-districts').hide(500);
+    			if(type != 'HUC DISTRICT' && region != 'NCR') {
+	    			$('#cc-councilor-wrapper').show(500);
+	    		} else {
+	    			$('#cc-councilor-wrapper').hide(500);
+	    		}
 	    	}
 	    	$('html, body').animate({
 		        scrollTop: $("#tableGeo").offset().top
