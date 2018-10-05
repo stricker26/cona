@@ -13,6 +13,10 @@
 				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
 				<p>/</p>
 				<a href="../screening?e={{$province->province_code}}&name={{$province->lgu}}&type={{$province->type}}&region={{$province->region}}">{{$province->lgu}}</a>
+				@if ($candidate->candidate_for == 'Board Member' || $candidate->candidate_for == 'Congressman' || $candidate->candidate_for == 'Municipal Mayor' || $candidate->candidate_for == 'Municipal Vice Mayor' || $candidate->candidate_for == 'Municipal Councilor')
+					<p>/</p>
+					<a href="../screening?e={{$province->province_code}}&name={{strtoupper($candidate->district_id)}}&type=MUNICIPALITY&region={{$province->region}}">{{strtoupper($candidate->district_id)}}</a>
+				@endif
 			</div>
 		</div>
 	</div>

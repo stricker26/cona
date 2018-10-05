@@ -7,6 +7,9 @@ var urlRegion = url.searchParams.get('region');
 window.history.replaceState(null, null, window.location.pathname);
 
 $(document).ready( function () {
+	console.log('urlCode: ' + urlCode);
+	console.log('urlName: ' + urlName);
+	console.log('urlType: ' + urlType);
 	if (urlCode != null || urlCode != undefined || urlCode != '') {
 		if (urlType == 'DISTRICT') {
     		ajaxGet(urlCode, urlName, 'MUNICIPALITY');
@@ -51,6 +54,16 @@ $(document).ready( function () {
     		$('.gov-districts').hide(500);
     		$('.huc-districts').hide(500);
     		$('.prov-districts').hide(500);
+    	}
+    	else if (urlType == 'MUNICIPALITY') {
+			$('#locationModal').html(urlName);
+    		$('.screenLocation').html(urlName);
+    		getDistrictCandidate(urlCode, urlType, urlName, part);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, 1);
+    		$('.list-candidates').show();
+    		$('.gov-mayor').show(500);
+    		$('.gov-governor').hide(500);
+    		$('.gov-districts').hide(500);
     	}
     	else if (urlType == 'HUC') {
 			$('#locationModal').html(urlName);
@@ -186,6 +199,9 @@ $(document).ready( function () {
 		var code = $(this).attr('id');
 		var type = $(this).attr('class');
 		var name = $(this).html();
+		console.log('code: ' + code);
+		console.log('type: ' + type);
+		console.log('name: ' + name);
 		$(this).nextAll().remove();
 		if (type == 'HUC') {
 			var region = $(this).prev().prev().attr('id');
@@ -198,6 +214,7 @@ $(document).ready( function () {
 			ajaxGet(code, name, type, undefined);
 		}
 		if (type == 'PROVINCE') {
+			getProvinceCandidate(code, type, part);
 			ajaxGet(code, '', 'CITY');
 			ajaxGet(code, '', 'HUCs');
 		}
@@ -258,8 +275,7 @@ $(document).ready( function () {
 
 	loadPagination();
 
-	function ajaxGet(e, name, type, region) {
-		var referrer = document.referrer;
+	function ajaxGet(e, name, type, region, p) {
 		if (type == null || type == undefined || type == '') {
 			$.ajax({
 				method: 'GET',
@@ -283,6 +299,7 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
+		    		console.log(data);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
     						if (region != undefined) {
@@ -298,6 +315,9 @@ $(document).ready( function () {
 		    					}
 		    					else {
 		    						if ($('#' + e).length != 1 || type == 'MUNICIPALITY') {
+		    							if (p == 1) {
+		    								$('.bcrumbs').html('<a href="" id="' + region + '" class="REGION">REGION ' + region + '</a> <p>/</p> <a href="" id="' + e + '" class="PROVINCE">' + data[0].province + '</a>');
+		    							}
 		    							if ($('.MUNICIPALITY').length != 1) {
 		    								$('.bcrumbs').append('<p>/</p> <a href="" id="' + e + '" class="' + type + '">' + name + '</a>');
 		    							}
