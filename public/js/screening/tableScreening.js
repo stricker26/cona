@@ -67,7 +67,7 @@ $(document).ready( function () {
     	else if (urlType == 'HUC') {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
-    		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, 1);
     		getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
     		//$('#huc-councilors').parent().parent().hide(500);
     		$('.list-candidates').show();
@@ -295,6 +295,7 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
+		    		console.log(data);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
     						if (region != undefined) {

@@ -27,6 +27,19 @@ class profileController extends Controller
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
+            if ($province->region != 'NCR' && $candidate->candidate_for == 'HUC Congressman') {
+                $province_id_explode = explode('-',$province->province_code)[0];
+                $province = DB::table('province')
+                                ->select('lgu','type', 'province_code', 'region')
+                                ->where('province_code','=',$province_id_explode)
+                                ->first();
+                $parent_province = DB::table('province')
+                                ->select('lgu','type', 'province_code', 'region')
+                                ->where('province_code','=',$candidate->province_id)
+                                ->first();
+
+            }
+
             $district = $candidate->district_id;
             $city = $candidate->city_id;
 
@@ -54,6 +67,7 @@ class profileController extends Controller
         return view('dashboard.screening.profile', compact(
             'candidate',
             'province',
+            'parent_province',
             'district',
             'city',
             'cos',
@@ -78,6 +92,19 @@ class profileController extends Controller
                             ->select('lgu','type', 'province_code', 'region')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
+
+            if ($province->region != 'NCR' && $candidate->candidate_for == 'HUC Congressman') {
+                $province_id_explode = explode('-',$province->province_code)[0];
+                $province = DB::table('province')
+                                ->select('lgu','type', 'province_code', 'region')
+                                ->where('province_code','=',$province_id_explode)
+                                ->first();
+                $parent_province = DB::table('province')
+                                ->select('lgu','type', 'province_code', 'region')
+                                ->where('province_code','=',$candidate->province_id)
+                                ->first();
+
+            }
 
             $district = $candidate->district_id;
             $city = $candidate->city_id;
@@ -105,6 +132,7 @@ class profileController extends Controller
         return view('lec.screening.profile', compact(
             'candidate',
             'province',
+            'parent_province',
             'district',
             'city',
             'cos',
