@@ -217,7 +217,18 @@ $(document).ready(function(){
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
-	    		location.reload();
+	    		if(data == 'LEC Failed Approved') {
+	    			$('#modalApprove .close-modal').click();
+		    		$('#alert-handler').show().delay(4000).fadeOut();
+		    		$('#alert-handler .failed-alert').show().delay(4000).fadeOut();
+		    		$('#alert-handler .failed-alert .alert-danger .message-text').html("  Maximum number for this position is reached.");
+			    	
+			    	$('html, body').delay(500).animate({
+				        scrollTop: $(".right-panel .header-left").offset().top
+				    }, 400);
+	    		} else {
+		    		location.reload();	
+	    		}
 	    	}
 		});
 	});
@@ -230,7 +241,18 @@ $(document).ready(function(){
 			data: { "id": id_candidate},
 			success:function(data)  
 	    	{
-	    		location.reload();
+	    		if(data == 'LEC Failed Approved') {
+	    			$('#modalApprove .close-modal').click();
+		    		$('#alert-handler').show().delay(4000).fadeOut();
+		    		$('#alert-handler .failed-alert').show().delay(4000).fadeOut();
+		    		$('#alert-handler .failed-alert .alert-danger .message-text').html("  Maximum number for this position is reached.");
+			    	
+			    	$('html, body').delay(500).animate({
+				        scrollTop: $(".right-panel .header-left").offset().top
+				    }, 400);
+	    		} else {
+		    		location.reload();	
+	    		}
 	    	}
 		});
 	});
@@ -244,12 +266,8 @@ $(document).ready(function(){
 			success:function(data)  
 	    	{
 	    		location.reload();
-	    		
 	    	} 
 		});
-	});
-
-	$('#download_btn').on('click', function() {
 	});
 });
 

@@ -28,7 +28,7 @@
 		      	</div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-success" id="lec_approve_btn">Approve</button>
-		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        	<button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
 	  	</div>
@@ -41,7 +41,7 @@
 		      	</div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-danger" id="reject_btn">Reject</button>
-		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        	<button type="button" class="btn btn-secondary close-modal" data-dismiss="modal">Cancel</button>
 		      	</div>
 	    	</div>
 	  	</div>
@@ -63,7 +63,7 @@
 	        <div class="content pl-3 pr-3 failed-alert" style="display: none;">
 	            <div class="col-sm-12">
 	                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-	                  <span class="badge badge-pill badge-danger message-alert">Failed</span> Data not saved
+	                  <span class="badge badge-pill badge-danger message-alert">Failed</span><span class="message-text">Data not saved</span>
 	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                        <span aria-hidden="true">&times;</span>
 	                    </button>
