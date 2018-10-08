@@ -6,20 +6,61 @@ use Illuminate\Http\Request;
 use \stdClass;
 use PDF;
 use DB;
+use Illuminate\Support\Facades\File;
+use ZipArchive;
 
 class CertificateController extends Controller
 {
-    public static function create($ids){
+    public static function create($ids) {
 
         if(is_array($ids)) {
-             $can = DB::table('candidates')->whereIn('id',$ids)->get();
+            $can = DB::table('candidates')->whereIn('id',$ids)->get();
         } else {
-             $can = DB::table('candidates')->where('id',$ids)->get();
+            $can = DB::table('candidates')->where('id',$ids)->get();
         }
 
-    	$candidate = [];
+        //Remove folder
+        $dir = public_path('certificate');
+        Self::removeDirectory($dir);
+
+        foreach ($can as $candidates => $candidate) {
+            
+            $name = $candidate->firstname . ' ' . $candidate->lastname;
+
+            $dir = Self::create_directory($name, $candidate->candidate_for, $candidate->province_id, $candidate->district_id, $candidate->city_id);
+
+            if($dir) {
+                Self::create_view($candidate->id, $dir, 'bulk');
+            }
+
+        }
+        
+        ini_set('max_execution_time', 600);
+        ini_set('memory_limit','1024M');
+        $zipname = strftime(time());
+        $savepath = public_path('certificate');
+
+        Self::zipData($savepath, $savepath. "/$zipname.zip");
+
+        $archive_file_name = $savepath. "/$zipname.zip";
+
+        header("Content-type: application/zip"); 
+        header("Content-Disposition: attachment; filename=$archive_file_name");
+        header("Content-length: " . filesize($archive_file_name));
+        header("Pragma: no-cache"); 
+        header("Expires: 0"); 
+        readfile("$archive_file_name");
+
+    }
+
+    static function create_view($id, $location, $request) {
+
+        $can = DB::table('candidates')->where('id',$id)->get();
+
+        $candidate = [];
 
         foreach($can as $cand){
+
             $prov = DB::table('province')->where('province_code','=',$cand->province_id)->get();
 
             $province = $prov[0]->lgu;
@@ -36,11 +77,11 @@ class CertificateController extends Controller
             // $c->lec_name = 'KIKO PANGILINAN';
             // $c->lec_position = 'PRESIDENT';
 
-        		// create object list of candidates to generate certificate
-        	$c->name = $cand->firstname . ' ' . substr($cand->middlename,0,1) . '. ' . $cand->lastname;
+                // create object list of candidates to generate certificate
+            $c->name = $cand->firstname . ' ' . substr($cand->middlename,0,1) . '. ' . $cand->lastname;
             $cand->city_id = $cand->city_id == '' ? $province : $cand->city_id;
             
-        		// full name of the candidate with middle initial, FirstName M. Lastname
+                // full name of the candidate with middle initial, FirstName M. Lastname
             $c->position = $cand->candidate_for;
             $provinces = ($province == 'MANILA' ? 'METRO MANILA' : $province);
             $c->province = $provinces;
@@ -94,7 +135,7 @@ class CertificateController extends Controller
                 if($cand->candidate_for == 'City Vice Mayor' || 
                     $cand->candidate_for == 'Municipal Vice Mayor'){
 
-                	$c->position = 'VICE MAYOR';
+                    $c->position = 'VICE MAYOR';
                 }
 
                 if($cand->candidate_for == 'City Coucilor' || 
@@ -114,19 +155,118 @@ class CertificateController extends Controller
                 $filename .= strtoupper($c->position) . '_';
                 $filename .= $cand->firstname . '_' . $cand->middlename . '_' . $cand->lastname . '.pdf';
 
-        	array_push($candidate, $c);
-        		// Repeat for multiple certificates   
+            array_push($candidate, $c);
+                // Repeat for multiple certificates   
         }
 
         $pdf = PDF::loadView('certificate.main',compact('candidate'));
         $pdf->setPaper('legal', 'portrait');
 
+        if($request == 'single') {
+            return $pdf->stream();
+        } else {
 
+            //Create Directory if bulk request
+            $name = $cand->firstname . ' ' . $cand->lastname;
+            file_put_contents($location . '/' . $name . '.pdf', $pdf->stream());
+
+        }
+
+    }
+
+    static function create_directory($name, $position, $province, $district, $city) {
+
+        $query = DB::table('province')
+            ->select('region', 'lgu', 'type')
+            ->where('province_code', '=', $province)
+            ->first();
+
+        if($position == 'Governor' || $position == 'Vice Governor') {
+            $mkdir = Self::rmkdir($query->region . '/' . $query->lgu . '/' . $position . '/' . $name);
+        } elseif($position == 'Board Member' || $position == 'Congressman') {
+            $mkdir = Self::rmkdir($query->region . '/' . $query->lgu . '/' . $district . '/' . $position . '/' . $name);
+        } elseif($position == 'HUC Congressman' || $position == 'City Councilor') {
+            $mkdir = Self::rmkdir($query->region . '/' . $query->lgu . '/' . $district . '/' . $position . '/' . $name);
+        } elseif($position == 'City Mayor' || $position == 'City Vice Mayor') {
+            $mkdir = Self::rmkdir($query->region . '/' . $query->lgu . '/' . $position . '/' . $name);
+        } else {
+            $mkdir = Self::rmkdir($query->region . '/' . $query->lgu . '/' . $city . '/' . $position . '/' . $name);
+        }
+
+        return $mkdir;
+
+    }
+
+    //Create Folder
+    static function rmkdir($path) {
+
+        $savepath = public_path('certificate');
         
-        // return $pdf->download($filename);
-        return $pdf->stream();
-    	// return view('certificate.main', compact('candidate'));
+        $path = str_replace("\\", "/", $savepath . '/' . $path);
+        $path = explode("/", $path);
+        $permit = 0777;
 
+        $rebuild = '';
+        foreach($path AS $p) {
+
+            if(strstr($p, ":") != false) { 
+                //echo "\nExists : in $p\n";
+                $rebuild = $p;
+                continue;
+            }
+            $rebuild .= "/$p";
+            //echo "Checking: $rebuild\n";
+            if(!is_dir($rebuild)) mkdir($rebuild);
+            @chmod($rebuild, $permit);
+        }
+        return $rebuild;
+    }
+
+    //Remove folder first before creating new one
+    static function removeDirectory($dir) {
+        
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir."/".$object) == "dir") 
+                        Self::removeDirectory($dir."/".$object); 
+                    else unlink   ($dir."/".$object);
+                }
+            }
+            reset($objects);
+            @rmdir($dir);
+        }
+    }
+
+    // Zip function
+    static function zipData($source, $destination) {
+        if (extension_loaded('zip')) {
+            if (file_exists($source)) {
+                $zip = new ZipArchive();
+                if ($zip->open($destination, ZIPARCHIVE::CREATE)) {
+                    $source = realpath($source);
+                    if (is_dir($source)) {
+                        $iterator = new \RecursiveDirectoryIterator($source);
+                        // skip dot files while iterating 
+                        $iterator->setFlags(\RecursiveDirectoryIterator::SKIP_DOTS);
+                        $files = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
+                        foreach ($files as $file) {
+                            $file = realpath($file);
+                            if (is_dir($file)) {
+                                $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+                            } else if (is_file($file)) {
+                                $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+                            }
+                        }
+                    } else if (is_file($source)) {
+                        $zip->addFromString(basename($source), file_get_contents($source));
+                    }
+                }
+                return $zip->close();
+            }
+        }
+        return false;
     }
 
     public static function getRd($num){
