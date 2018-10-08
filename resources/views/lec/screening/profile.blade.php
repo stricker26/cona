@@ -13,6 +13,16 @@
 				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
 				<p>/</p>
 				<a href="../screening?e={{$province->province_code}}&name={{$province->lgu}}&type={{$province->type}}&region={{$province->region}}">{{$province->lgu}}</a>
+				@if ($candidate->candidate_for == 'Board Member' || $candidate->candidate_for == 'Congressman' || $candidate->candidate_for == 'Municipal Mayor' || $candidate->candidate_for == 'Municipal Vice Mayor' || $candidate->candidate_for == 'Municipal Councilor')
+					<p>/</p>
+					<a href="../screening?e={{$province->province_code}}&name={{strtoupper($candidate->district_id)}}&type=MUNICIPALITY&region={{$province->region}}">{{strtoupper($candidate->district_id)}}</a>
+				@elseif ($province->region != 'NCR' && $candidate->city_id != NULL && $candidate->district_id == NULL)
+					<p>/</p>
+					<a href="../screening?e={{$province->province_code}}&name={{$candidate->city_id}}&type=HUC&region={{$province->region}}">{{$candidate->city_id}}</a>
+				@elseif ($province->region != 'NCR' && $candidate->city_id == NULL && $candidate->district_id != NULL && $candidate->candidate_for == 'HUC Congressman')
+					<p>/</p>
+					<a href="../screening?e={{$parent_province->province_code}}&name={{$parent_province->lgu}}&type=HUC&region={{$province->region}}">{{$parent_province->lgu}}</a>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -230,7 +240,7 @@
 							@if($json['facebook'])
 								<a style="color:#212529;" href="https://{{ $json['facebook'] }}"><i><span class="wrap">{{ $json['facebook'] }}</span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="{{ $json['facebook'] }}">
 							@else
-								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="">
+								<a style="color:#212529;" href="#facebook"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_fb" style="display:none;" value="" placeholder="facebook.com/yourfacebook..">
 							@endif
 						</div>
 					</div>
@@ -247,7 +257,7 @@
 							@if($json['twitter'])
 								<a style="color:#212529;" href="https://{{ $json['twitter'] }}"><i><span class="wrap">{{ $json['twitter'] }}</span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="{{ $json['twitter'] }}">
 							@else
-								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="">
+								<a style="color:#212529;" href="#twitter"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_twitter" style="display:none;" value="" placeholder="twitter.com/yourtwitter..">
 							@endif
 						</div>
 					</div>
@@ -264,7 +274,7 @@
 							@if($json['instagram'])
 								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="{{ $json['instagram'] }}">
 							@else
-								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="">
+								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" value="" placeholder="instagram.com/yourinstagram..">
 							@endif
 						</div>
 					</div>
@@ -281,7 +291,7 @@
 							@if($json['website'])
 								<a style="color:#212529;" href="https://{{ $json['website'] }}"><i><span class="wrap">{{ $json['website'] }}</span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="{{ $json['website'] }}">
 							@else
-								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="">
+								<a style="color:#212529;" href="#website"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_website" style="display:none;" value="" placeholder="yourwebsite.com">
 							@endif
 						</div>
 					</div>

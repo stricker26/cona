@@ -13,6 +13,16 @@
 				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
 				<p>/</p>
 				<a href="../screening?e={{$province->province_code}}&name={{$province->lgu}}&type={{$province->type}}&region={{$province->region}}">{{$province->lgu}}</a>
+				@if ($candidate->candidate_for == 'Board Member' || $candidate->candidate_for == 'Congressman' || $candidate->candidate_for == 'Municipal Mayor' || $candidate->candidate_for == 'Municipal Vice Mayor' || $candidate->candidate_for == 'Municipal Councilor')
+					<p>/</p>
+					<a href="../screening?e={{$province->province_code}}&name={{strtoupper($candidate->district_id)}}&type=MUNICIPALITY&region={{$province->region}}">{{strtoupper($candidate->district_id)}}</a>
+				@elseif ($province->region != 'NCR' && $candidate->city_id != NULL && $candidate->district_id == NULL)
+					<p>/</p>
+					<a href="../screening?e={{$province->province_code}}&name={{$candidate->city_id}}&type=HUC&region={{$province->region}}">{{$candidate->city_id}}</a>
+				@elseif ($province->region != 'NCR' && $candidate->city_id == NULL && $candidate->district_id != NULL && $candidate->candidate_for == 'HUC Congressman')
+					<p>/</p>
+					<a href="../screening?e={{$parent_province->province_code}}&name={{$parent_province->lgu}}&type=HUC&region={{$province->region}}">{{$parent_province->lgu}}</a>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -247,7 +257,7 @@
 					<div class="col-sm-6 row-content">
 						<div class="instagram">
 							@if($json['instagram'])
-								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter.." value="{{ $json['instagram'] }}">
+								<a style="color:#212529;" href="https://{{ $json['instagram'] }}"><i><span class="wrap">{{ $json['instagram'] }}</span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourinstagram.." value="{{ $json['instagram'] }}">
 							@else
 								<a style="color:#212529;" href="#instagram"><i><span class="wrap"><i>--None--</i></span></i></a><input type="text" class="form-control" id="prof_ig" style="display:none;" placeholder="instagram.com/yourtwitter..">
 							@endif
