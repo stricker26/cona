@@ -91,6 +91,10 @@ $(document).ready( function () {
     	var name = $(this).find(".description").html();
     	var type = $(this).find(".type").html();
     	var region = $(this).find(".region").html();
+    	console.log('e: ' + e);
+    	console.log('name: ' + name);
+    	console.log('type: ' + type);
+    	console.log('region: ' + region);
     	switch (type) {
     		case 'DISTRICT':
     			$('tbody').html('');
@@ -290,6 +294,7 @@ $(document).ready( function () {
 			});
 		}
 		else {
+			console.log('./screening/' + type + '/' + e);
 			$.ajax({
 				method: 'GET',
 				url: './screening/' + type + '/' + e,

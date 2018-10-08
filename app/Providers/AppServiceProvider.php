@@ -201,7 +201,13 @@ class AppServiceProvider extends ServiceProvider
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
             $lec_name = $lec->name;
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+
+            if ($lecId == '2018000') {
+                $provinces = DB::table('province')->get();
+            }
+            else {
+                $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+            }
             $regions = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {
@@ -417,7 +423,14 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->where('province_code', '!=', '1374')->get();
+
+            if ($lecId == '2018000') {
+                $provinces = DB::table('province')->where('province_code', '!=', '1374')->get();
+            }
+            else {
+                $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->where('province_code', '!=', '1374')->get();
+            }
+            
             $regions = array();
             $municipalities = array();
             $cities = array();
@@ -450,7 +463,14 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->get()->first();
             $lecId = $lec->id;
-            $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+            
+            if ($lecId == '2018000') {
+                $provinces = DB::table('province')->get();
+            }
+            else {
+                $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+            }
+
             $regions = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {
