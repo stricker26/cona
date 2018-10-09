@@ -1461,7 +1461,7 @@ class LECController extends Controller
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lec_name = $lec->name;
-        if($lec_name === 'Francis M. Pangilinan') {
+        if($lec_name === 'Francis N. Pangilinan') {
             $senators = DB::table('candidates')
                 ->where('candidate_for','Senator')
                 ->where('signed_by_lec','!=',2)

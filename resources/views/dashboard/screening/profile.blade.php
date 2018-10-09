@@ -9,6 +9,7 @@
 	<!-- APPROVE AND REJECT MODALS -->
 	<div class="sticky-top">
 		<div class="container">
+			@if ($candidate->candidate_for != 'Senator')
 			<div class="bcrumbs row">
 				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
 				<p>/</p>
@@ -24,6 +25,7 @@
 					<a href="../screening?e={{$parent_province->province_code}}&name={{$parent_province->lgu}}&type=HUC&region={{$province->region}}">{{$parent_province->lgu}}</a>
 				@endif
 			</div>
+			@endif
 		</div>
 	</div>
 	<div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Approve Candidate" aria-hidden="true">
