@@ -58,7 +58,7 @@ class ExportController extends Controller
 
     	$query = DB::table('candidates')->where('id', '=', $id)->get();
 
-    	return CertificateController::create($query[0]->id);
+    	return CertificateController::create_view($query[0]->id, 'none', 'single');
 
     }
 }

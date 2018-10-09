@@ -465,15 +465,19 @@
 				</form>
 			</div>
 			<div class="d-inline pr-2">
+				@if ((($candidate->candidate_for == 'City Mayor' || $candidate->candidate_for == 'Congressman' || $candidate->candidate_for == 'HUC Congressman' || $candidate->candidate_for == 'Governor') && $lec->id == '2018000' && strpos($province->lec, '2018000') === false ) || ($lec->id == '2018000' && strpos($province->lec, '2018000') !== false) || ($lec->id != '2018000' && ($candidate->candidate_for != 'City Mayor' && $candidate->candidate_for != 'Congressman' && $candidate->candidate_for != 'HUC Congressman' && $candidate->candidate_for != 'Governor') && strpos($province->lec, '2018000') === false))
 				<button type="button" class="btn btn-secondary" id="edit_btn">Edit</button>
+				@endif
 			</div>
 			@if ($candidate->signed_by_lec == 0)
-				<div class="d-inline pr-2">
-					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove" id="approve_btn_1">Approve</button>
-				</div>
-				<div class="d-inline pr-2">
-					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
-				</div>
+				@if ((($candidate->candidate_for == 'City Mayor' || $candidate->candidate_for == 'Congressman' || $candidate->candidate_for == 'HUC Congressman' || $candidate->candidate_for == 'Governor') && $lec->id == '2018000' && strpos($province->lec, '2018000') === false ) || ($lec->id == '2018000' && strpos($province->lec, '2018000') !== false) || ($lec->id != '2018000' && ($candidate->candidate_for != 'City Mayor' && $candidate->candidate_for != 'Congressman' && $candidate->candidate_for != 'HUC Congressman' && $candidate->candidate_for != 'Governor') && strpos($province->lec, '2018000') === false))
+					<div class="d-inline pr-2">
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalApprove" id="approve_btn_1">Approve</button>
+					</div>
+					<div class="d-inline pr-2">
+						<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
+					</div>
+				@endif
 			@endif
 		</div>
 	</div>

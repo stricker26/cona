@@ -208,6 +208,10 @@ class AppServiceProvider extends ServiceProvider
             else {
                 $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> staging
             $regions = array();
             foreach($provinces as $prov_region) {
                 if(!in_array($prov_region->region, $regions)) {
@@ -220,25 +224,70 @@ class AppServiceProvider extends ServiceProvider
             $pending_count_all = 0;
             $approved_count_all = 0;
             $rejected_count_all = 0;
-            foreach($provinces as $province_id) {
-                $pending_a = count(DB::table('candidates')
-                                    ->where('signed_by_lec',0)
-                                    ->where('province_id',$province_id->province_code)
-                                    ->get());
-                $pending_count_all = $pending_count_all + $pending_a;
 
-                $approved_a = count(DB::table('candidates')
-                                    ->where('signed_by_lec',1)
-                                    ->where('province_id',$province_id->province_code)
-                                    ->get());
-                $approved_count_all = $approved_count_all + $approved_a;
+                foreach($provinces as $province_id) {
+                    $pending_a = count(DB::table('candidates')
+                                        ->where('signed_by_lec',0)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->get());
+                    $pending_a_HQ = 0;
+                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                        $pending_a_HQ = count(DB::table('candidates')
+                                        ->where('signed_by_lec',0)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->where(function($query) {
+                                            $query->where('candidate_for', 'City Mayor')
+                                                ->orWhere('candidate_for', 'Congressman')
+                                                ->orWhere('candidate_for', 'HUC Congressman')
+                                                ->orWhere('candidate_for', 'Governor');
+                                        })
+                                        ->get());
+                    }
 
-                $rejected_a = count(DB::table('candidates')
-                                    ->where('signed_by_lec',2)
-                                    ->where('province_id',$province_id->province_code)
-                                    ->get());
-                $rejected_count_all = $rejected_count_all + $rejected_a;
-            }
+                    $pending_count_all = $pending_count_all + $pending_a + $pending_a_HQ;
+
+                    $approved_a = count(DB::table('candidates')
+                                        ->where('signed_by_lec',1)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->get());
+
+                    $approved_a_HQ = 0;
+                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                        $approved_a_HQ = count(DB::table('candidates')
+                                        ->where('signed_by_lec',1)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->where(function($query) {
+                                            $query->where('candidate_for', 'City Mayor')
+                                                ->orWhere('candidate_for', 'Congressman')
+                                                ->orWhere('candidate_for', 'HUC Congressman')
+                                                ->orWhere('candidate_for', 'Governor');
+                                        })
+                                        ->get());
+                    }
+
+                    $approved_count_all = $approved_count_all + $approved_a + $approved_a_HQ;
+
+                    $rejected_a = count(DB::table('candidates')
+                                        ->where('signed_by_lec',2)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->get());
+
+                    $rejected_a_HQ = 0;
+                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                        $rejected_a_HQ = count(DB::table('candidates')
+                                        ->where('signed_by_lec',2)
+                                        ->where('province_id',$province_id->province_code)
+                                        ->where(function($query) {
+                                            $query->where('candidate_for', 'City Mayor')
+                                                ->orWhere('candidate_for', 'Congressman')
+                                                ->orWhere('candidate_for', 'HUC Congressman')
+                                                ->orWhere('candidate_for', 'Governor');
+                                        })
+                                        ->get());
+                    }
+
+                    $rejected_count_all = $rejected_count_all + $rejected_a + $rejected_a_HQ;
+                }
 
             //regional status
             $pending_count_region = (object)[];
@@ -252,10 +301,24 @@ class AppServiceProvider extends ServiceProvider
                                     ->where('signed_by_lec',0)
                                     ->get());
 
+                        $count_p_HQ = 0;
+                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            $count_p_HQ = count(DB::table('candidates')
+                                            ->where('signed_by_lec',0)
+                                            ->where('province_id',$province->province_code)
+                                            ->where(function($query) {
+                                                $query->where('candidate_for', 'City Mayor')
+                                                    ->orWhere('candidate_for', 'Congressman')
+                                                    ->orWhere('candidate_for', 'HUC Congressman')
+                                                    ->orWhere('candidate_for', 'Governor');
+                                            })
+                                            ->get());
+                        }
+
                         if(!isset($pending_count_region->$region)) {
-                            $pending_count_region->$region = $count_p;
+                            $pending_count_region->$region = $count_p + $count_p_HQ;
                         } else {
-                            $pending_count_region->$region += $count_p;
+                            $pending_count_region->$region += $count_p + $count_p_HQ;
                         }
 
                         $count_a = count(DB::table('candidates')
@@ -263,10 +326,24 @@ class AppServiceProvider extends ServiceProvider
                                     ->where('signed_by_lec',1)
                                     ->get());
 
+                        $count_a_HQ = 0;
+                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            $count_a_HQ = count(DB::table('candidates')
+                                            ->where('signed_by_lec',1)
+                                            ->where('province_id',$province->province_code)
+                                            ->where(function($query) {
+                                                $query->where('candidate_for', 'City Mayor')
+                                                    ->orWhere('candidate_for', 'Congressman')
+                                                    ->orWhere('candidate_for', 'HUC Congressman')
+                                                    ->orWhere('candidate_for', 'Governor');
+                                            })
+                                            ->get());
+                        }
+
                         if(!isset($approved_count_region->$region)) {
-                            $approved_count_region->$region = $count_a;
+                            $approved_count_region->$region = $count_a + $count_a_HQ;
                         } else {
-                            $approved_count_region->$region += $count_a;
+                            $approved_count_region->$region += $count_a + $count_a_HQ;
                         }
 
                         $count_r = count(DB::table('candidates')
@@ -274,10 +351,24 @@ class AppServiceProvider extends ServiceProvider
                                     ->where('signed_by_lec',2)
                                     ->get());
 
+                        $count_r_HQ = 0;
+                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            $count_r_HQ = count(DB::table('candidates')
+                                            ->where('signed_by_lec',2)
+                                            ->where('province_id',$province->province_code)
+                                            ->where(function($query) {
+                                                $query->where('candidate_for', 'City Mayor')
+                                                    ->orWhere('candidate_for', 'Congressman')
+                                                    ->orWhere('candidate_for', 'HUC Congressman')
+                                                    ->orWhere('candidate_for', 'Governor');
+                                            })
+                                            ->get());
+                        }
+
                         if(!isset($rejected_count_region->$region)) {
-                            $rejected_count_region->$region = $count_r;
+                            $rejected_count_region->$region = $count_r + $count_r_HQ;
                         } else {
-                            $rejected_count_region->$region += $count_r;
+                            $rejected_count_region->$region += $count_r + $count_r_HQ;
                         }
                     }
                 }
@@ -308,6 +399,31 @@ class AppServiceProvider extends ServiceProvider
 
                             }
 
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('signed_by_lec',0)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                        ->where('province_code',$candidate_HUC_array[0])
+                                        ->first()->lgu;
+                                    if(!isset($pending_count_province->$province_key)) {
+                                        $pending_count_province->$province_key = 1;
+                                    } else {
+                                        $pending_count_province->$province_key += 1;
+                                    }
+
+                                }
+                            }
+
                             $candidates_HUC = DB::table('candidates')
                                 ->where('province_id',$province->province_code)
                                 ->where('signed_by_lec',1)
@@ -321,6 +437,31 @@ class AppServiceProvider extends ServiceProvider
                                     $approved_count_province->$province_key = 1;
                                 } else {
                                     $approved_count_province->$province_key += 1;
+                                }
+                            }
+
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('signed_by_lec',1)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                        ->where('province_code',$candidate_HUC_array[0])
+                                        ->first()->lgu;
+                                    if(!isset($pending_count_province->$province_key)) {
+                                        $approved_count_province->$province_key = 1;
+                                    } else {
+                                        $approved_count_province->$province_key += 1;
+                                    }
+
                                 }
                             }
 
@@ -339,16 +480,55 @@ class AppServiceProvider extends ServiceProvider
                                     $rejected_count_province->$province_key += 1;
                                 }
                             }
+
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('signed_by_lec',2)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                        ->where('province_code',$candidate_HUC_array[0])
+                                        ->first()->lgu;
+                                    if(!isset($pending_count_province->$province_key)) {
+                                        $rejected_count_province->$province_key = 1;
+                                    } else {
+                                        $rejected_count_province->$province_key += 1;
+                                    }
+
+                                }
+                            }
                         } else {
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
                                 ->where('signed_by_lec',0)
                                 ->get());
                             $province_key = $province->lgu;
+
+                            $count_HQ = 0;
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $count_HQ = count(DB::table('candidates')
+                                                ->where('signed_by_lec',0)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get());
+                            }
                             if(!isset($pending_count_province->$province_key)) {
-                                $pending_count_province->$province_key = $count;
+                                $pending_count_province->$province_key = $count + $count_HQ;
                             } else {
-                                $pending_count_province->$province_key += $count;
+                                $pending_count_province->$province_key += $count + $count_HQ;
                             }
 
                             $count = count(DB::table('candidates')
@@ -356,10 +536,24 @@ class AppServiceProvider extends ServiceProvider
                                 ->where('signed_by_lec',1)
                                 ->get());
                             $province_key = $province->lgu;
+
+                            $count_HQ = 0;
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $count_HQ = count(DB::table('candidates')
+                                                ->where('signed_by_lec',1)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get());
+                            }
                             if(!isset($approved_count_province->$province_key)) {
-                                $approved_count_province->$province_key = $count;
+                                $approved_count_province->$province_key = $count + $count_HQ;
                             } else {
-                                $approved_count_province->$province_key += $count;
+                                $approved_count_province->$province_key += $count + $count_HQ;
                             }
 
 
@@ -368,10 +562,24 @@ class AppServiceProvider extends ServiceProvider
                                 ->where('signed_by_lec',2)
                                 ->get());
                             $province_key = $province->lgu;
+
+                            $count_HQ = 0;
+                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                                $count_HQ = count(DB::table('candidates')
+                                                ->where('signed_by_lec',2)
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query) {
+                                                    $query->where('candidate_for', 'City Mayor')
+                                                        ->orWhere('candidate_for', 'Congressman')
+                                                        ->orWhere('candidate_for', 'HUC Congressman')
+                                                        ->orWhere('candidate_for', 'Governor');
+                                                })
+                                                ->get());
+                            }
                             if(!isset($rejected_count_province->$province_key)) {
-                                $rejected_count_province->$province_key = $count;
+                                $rejected_count_province->$province_key = $count + $count_HQ;
                             } else {
-                                $rejected_count_province->$province_key += $count;
+                                $rejected_count_province->$province_key += $count + $count_HQ;
                             }
                         }
                     }
@@ -463,7 +671,11 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->get()->first();
             $lecId = $lec->id;
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> staging
             if ($lecId == '2018000') {
                 $provinces = DB::table('province')->get();
             }

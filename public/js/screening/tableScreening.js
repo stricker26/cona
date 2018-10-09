@@ -379,7 +379,6 @@ function loadTable(e, data) {
 						<td>` + data[x].pending + `</td>
 						<td>` + data[x].approved + `</td>
 						<td>` + data[x].rejected + `</td>
-						<td>` + lec + `</td>
 						<td class="type">` + type + `</td>
 						<td class="region" style="display:none;">` + data[x].region + `</td>
 					</tr>
@@ -481,7 +480,6 @@ function printRow(data, x, name, type, districts) {
 				<td>` + data[x].pending + `</td>
 				<td>` + data[x].approved + `</td>
 				<td>` + data[x].rejected + `</td>
-				<td>` + lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);

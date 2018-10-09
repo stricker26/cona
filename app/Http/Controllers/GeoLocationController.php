@@ -130,10 +130,15 @@ class GeoLocationController extends Controller
 
 				case 'district':
 
-					$query = DB::table('municipality')
+					$queryDistrict = DB::table('municipality')
+						->select('district', 'province_code')
+						->where('province_code', '=', $requestValue);
+
+					$query = DB::table('city')
 						->select('district', 'province_code')
 						->where('province_code', '=', $requestValue)
-						->distinct('district')
+						->where('district', '<>', NULL)
+						->union($queryDistrict)
 						->get();
 
 					$out .= '<option value="">Select District <span>*</span></option>';
