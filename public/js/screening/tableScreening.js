@@ -110,6 +110,7 @@ $(document).ready( function () {
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUCs', region);
 	    		ajaxGet(e, name, 'CITY', region);
+	    		getProvinceCandidate(e, type, part);
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
