@@ -67,7 +67,12 @@ class CertificateController extends Controller
             $lec_id = $prov[0]->lec;
             $region = $prov[0]->region;
 
-            $lec = DB::table('lec')->where('id','=',$lec_id)->get();
+            if($cand->candidate_for == 'Governor' || $cand->candidate_for == 'Congressman' || $cand->candidate_for == 'HUC Congressman' || $cand->candidate_for == 'City Mayor') {
+                $lec = DB::table('lec')->where('id','=','2018000')->get();
+            } else {
+                $lec = DB::table('lec')->where('id','=',$lec_id)->get();
+            }
+            
             $c = new stdClass();
 
 

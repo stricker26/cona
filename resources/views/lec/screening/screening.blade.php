@@ -25,7 +25,7 @@
 			<form action="screening/profile" method="post">
 				@csrf
 				<div class="gov-governor" style="display: none;">
-					<div class="row pb-2 pt-2">
+					<div class="row pb-2 pt-2" style="display: none;">
 						<div class="col-sm-3">
 							<h5 class="font-weight-bold pt-1">LEC:</h5>
 						</div>
@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<div class="gov-mayor" style="display: none;">
-					<div class="row pb-2 pt-2">
+					<div class="row pb-2 pt-2" style="display: none;">
 						<div class="col-sm-3">
 							<h5 class="font-weight-bold pt-1">LEC:</h5>
 						</div>
@@ -93,7 +93,7 @@
 				</div>
 				<div class="gov-districts" style="display: none;">
 					<div class="huc-districts" style="display: none;">
-						<div class="row pb-2 pt-2">
+						<div class="row pb-2 pt-2" style="display: none;">
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">LEC:</h5>
 							</div>
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 					<div class="prov-districts" style="display: none;">
-						<div class="row pb-2 pt-2">
+						<div class="row pb-2 pt-2" style="display: none;">
 							<div class="col-sm-3">
 								<h5 class="font-weight-bold pt-1">LEC:</h5>
 							</div>
@@ -163,7 +163,6 @@
 					<th class="colPending" onclick="w3.sortHTML('#tableGeo', '.item', 'td:nth-child(3)')" style="cursor:pointer">Pending<i class="sort fa fa-sort-amount-asc pull-right"></i></th>
 					<th class="colApproved" onclick="w3.sortHTML('#tableGeo', '.item', 'td:nth-child(4)')" style="cursor:pointer">Approved<i class="sort fa fa-sort-amount-asc pull-right"></i></th>
 					<th class="colRejected" onclick="w3.sortHTML('#tableGeo', '.item', 'td:nth-child(5)')" style="cursor:pointer">Rejected<i class="sort fa fa-sort-amount-asc pull-right"></i></th>
-					<th class="colLEC" onclick="w3.sortHTML('#tableGeo', '.item', 'td:nth-child(6)')" style="cursor:pointer">LEC<i class="sort fa fa-sort-amount-asc pull-right"></i></th>
 					<th>TYPE</th>
 				</tr>
 			</thead>
