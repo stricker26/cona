@@ -12,6 +12,10 @@ class profileController extends Controller
     public function profile(Request $request) {
         $profile = $request->screening_btn;
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
+
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
         
         if(!$candidate->province_id) {
             $province = (object)[];
@@ -71,13 +75,18 @@ class profileController extends Controller
             'district',
             'city',
             'cos',
-            'municipality'
+            'municipality',
+            'lec'
         ));
     }
 
     public function profile_lec (Request $request) {
         $profile = $request->screening_btn;
         $candidate = DB::table('candidates')->where('id', '=', $profile)->first();
+
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
 
         if(!$candidate->province_id) {
             $province = (object)[];
@@ -89,7 +98,7 @@ class profileController extends Controller
             $municipality = null;
         } else {
             $province = DB::table('province')
-                            ->select('lgu','type', 'province_code', 'region')
+                            ->select('lgu','type', 'province_code', 'region', 'lec')
                             ->where('province_code','=',$candidate->province_id)
                             ->first();
 
@@ -136,7 +145,8 @@ class profileController extends Controller
             'district',
             'city',
             'cos',
-            'municipality'
+            'municipality',
+            'lec'
         ));
     }
 
