@@ -9,6 +9,7 @@
 	<!-- APPROVE AND REJECT MODALS -->
 	<div class="sticky-top">
 		<div class="container">
+			@if ($candidate->candidate_for != 'Senator')
 			<div class="bcrumbs row">
 				<a href="../screening?e={{$province->region}}&name=REGION%20{{$province->region}}&type=REGION">REGION {{$province->region}}</a>
 				<p>/</p>
@@ -24,6 +25,7 @@
 					<a href="../screening?e={{$parent_province->province_code}}&name={{$parent_province->lgu}}&type=HUC&region={{$province->region}}">{{$parent_province->lgu}}</a>
 				@endif
 			</div>
+			@endif
 		</div>
 	</div>
 	<div class="modal fade" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="Approve Candidate" aria-hidden="true">
@@ -459,7 +461,7 @@
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
 				</div>
-			@elseif ($candidate->signed_by_lp == 1)
+			@elseif ($candidate->signed_by_lp == 1 && $candidate->candidate_for != 'Senator')
 				<div class="d-inline pr-2">
 					<a href="{{url('/hq/status/export')}}/{{ $candidate->id }}" type="button" class="btn btn-warning" id="download_btn"target="blank">Download CONA</a>
 				</div>

@@ -335,6 +335,8 @@ class LECController extends Controller
                 $lec_city = '';
             }
 
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
+
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
                 if ($requesType == 'HUC' && $region == 'NCR') {
                     if ($lecId == '2018000') {
@@ -368,46 +370,52 @@ class LECController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
-                            if ($row->signed_by_lp == 1) {
-                                $mayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved' 
-                                );
-                            } elseif ($row->signed_by_lp != 2) {
-                                $mayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($lecId == '2018000' || $row->candidate_for == 'Municipal Mayor') {
+                                if ($row->signed_by_lp == 1) {
+                                    $mayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved' 
+                                    );
+                                } elseif ($row->signed_by_lp != 2) {
+                                    $mayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
-                            if ($row->signed_by_lp == 1) {
-                                $vmayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved' 
-                                );
-                            } elseif($row->signed_by_lp != 2) {
-                                $vmayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($province->lec == $lecId || $lecId == '2018000') {
+                                if ($row->signed_by_lp == 1) {
+                                    $vmayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved' 
+                                    );
+                                } elseif($row->signed_by_lp != 2) {
+                                    $vmayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            if($row->signed_by_lp == 1) {
-                                $councilor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved'
-                                );
-                            } elseif($row->signed_by_lp != 2) {
-                                $councilor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($province->lec == $lecId || $lecId == '2018000') {
+                                if($row->signed_by_lp == 1) {
+                                    $councilor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved'
+                                    );
+                                } elseif($row->signed_by_lp != 2) {
+                                    $councilor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } 
                     }
@@ -455,6 +463,7 @@ class LECController extends Controller
             $bmember = array();
             $prvcongressman = array();
 
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
 
             if($type == 'HUC DISTRICT') {
                 $lec_type = 'huc_district';
@@ -472,7 +481,7 @@ class LECController extends Controller
 
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
-                    if($row->candidate_for == 'HUC Congressman') {
+                    if($row->candidate_for == 'HUC Congressman' && $lecId == '2018000') {
                         if($row->signed_by_lp == 1) {
                             $congressman[] = array(
                                 'id' => $row->id,
@@ -487,7 +496,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if($row->candidate_for == 'City Councilor') {
+                    } else if($row->candidate_for == 'City Councilor' && ($province->lec == $lecId || $lecId == '2018000')) {
                         if ($row->signed_by_lp == 1) {
                             $councilor[] = array(
                                 'id' => $row->id,
@@ -502,7 +511,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if ($row->candidate_for == 'Board Member') {
+                    } else if ($row->candidate_for == 'Board Member' && ($province->lec == $lecId || $lecId == '2018000')) {
                         if($row->signed_by_lp == 1) {
                             $bmember[] = array(
                                 'id' => $row->id,
@@ -517,7 +526,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if ($row->candidate_for == 'Congressman') {
+                    } else if ($row->candidate_for == 'Congressman' && $lecId == '2018000') {
                         if ($row->signed_by_lp == 1) {
                             $prvcongressman[] = array(
                                 'id' => $row->id,
@@ -552,12 +561,18 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
         $lec = new LECController;
 
         if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
+
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
 
             if($requesType == 'PROVINCE') {
 
@@ -578,7 +593,7 @@ class LECController extends Controller
 
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
-                        if($row->candidate_for == 'Governor') {
+                        if($row->candidate_for == 'Governor' && $lecId == '2018000') {
                             if ($row->signed_by_lp == 1) {
                                 $governor[] = array(
                                     'id' => $row->id,
@@ -594,7 +609,7 @@ class LECController extends Controller
                                 );
                             }
                             
-                        } else if ($row->candidate_for == 'Vice Governor') {
+                        } else if ($row->candidate_for == 'Vice Governor' && ($province->lec == $lecId || $lecId == '2018000')) {
                             if ($row->signed_by_lp == 1) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
@@ -1551,7 +1566,7 @@ class LECController extends Controller
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lec_name = $lec->name;
-        if($lec_name === 'Francis Pangilinan') {
+        if($lec_name === 'Francis N. Pangilinan') {
             $senators = DB::table('candidates')
                 ->where('candidate_for','Senator')
                 ->where('signed_by_lec','!=',2)

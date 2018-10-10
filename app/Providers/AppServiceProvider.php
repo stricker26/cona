@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         //URL::forceScheme('https');
 
         //hq sidebar
-        view()->composer('dashboard.layouts.sidebar', function($view){
+        view()->composer('dashboard.layouts.sidebar', function($view) {
             $provinces = DB::table('province')->where('province_code', '!=', '1374')->get();
             $regions = array();
             foreach($provinces as $prov_region) {
@@ -231,7 +231,7 @@ class AppServiceProvider extends ServiceProvider
                                         ->where('province_id',$province_id->province_code)
                                         ->get());
                     $pending_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
                         $pending_a_HQ = count(DB::table('candidates')
                                         ->where('signed_by_lec',0)
                                         ->where('province_id',$province_id->province_code)
@@ -252,7 +252,7 @@ class AppServiceProvider extends ServiceProvider
                                         ->get());
 
                     $approved_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
                         $approved_a_HQ = count(DB::table('candidates')
                                         ->where('signed_by_lec',1)
                                         ->where('province_id',$province_id->province_code)
@@ -273,7 +273,7 @@ class AppServiceProvider extends ServiceProvider
                                         ->get());
 
                     $rejected_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') == false && $lecId == '2018000') {
+                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
                         $rejected_a_HQ = count(DB::table('candidates')
                                         ->where('signed_by_lec',2)
                                         ->where('province_id',$province_id->province_code)
@@ -302,7 +302,7 @@ class AppServiceProvider extends ServiceProvider
                                     ->get());
 
                         $count_p_HQ = 0;
-                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                             $count_p_HQ = count(DB::table('candidates')
                                             ->where('signed_by_lec',0)
                                             ->where('province_id',$province->province_code)
@@ -327,7 +327,7 @@ class AppServiceProvider extends ServiceProvider
                                     ->get());
 
                         $count_a_HQ = 0;
-                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                             $count_a_HQ = count(DB::table('candidates')
                                             ->where('signed_by_lec',1)
                                             ->where('province_id',$province->province_code)
@@ -352,7 +352,7 @@ class AppServiceProvider extends ServiceProvider
                                     ->get());
 
                         $count_r_HQ = 0;
-                        if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                             $count_r_HQ = count(DB::table('candidates')
                                             ->where('signed_by_lec',2)
                                             ->where('province_id',$province->province_code)
@@ -399,7 +399,7 @@ class AppServiceProvider extends ServiceProvider
 
                             }
 
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',0)
                                                 ->where('province_id',$province->province_code)
@@ -440,7 +440,7 @@ class AppServiceProvider extends ServiceProvider
                                 }
                             }
 
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',1)
                                                 ->where('province_id',$province->province_code)
@@ -481,7 +481,7 @@ class AppServiceProvider extends ServiceProvider
                                 }
                             }
 
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',2)
                                                 ->where('province_id',$province->province_code)
@@ -513,7 +513,7 @@ class AppServiceProvider extends ServiceProvider
                             $province_key = $province->lgu;
 
                             $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $count_HQ = count(DB::table('candidates')
                                                 ->where('signed_by_lec',0)
                                                 ->where('province_id',$province->province_code)
@@ -538,7 +538,7 @@ class AppServiceProvider extends ServiceProvider
                             $province_key = $province->lgu;
 
                             $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $count_HQ = count(DB::table('candidates')
                                                 ->where('signed_by_lec',1)
                                                 ->where('province_id',$province->province_code)
@@ -564,7 +564,7 @@ class AppServiceProvider extends ServiceProvider
                             $province_key = $province->lgu;
 
                             $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') == false && $lecId == '2018000') {
+                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $count_HQ = count(DB::table('candidates')
                                                 ->where('signed_by_lec',2)
                                                 ->where('province_id',$province->province_code)
@@ -605,26 +605,32 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('lec.lec', function($view){
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
-            $lecId = $lec->id;
-            $lec_name = $lec->name;
-            $lec_des = $lec->designation_gov;
-            $lec_user1 = DB::table('users')->where('id',$lec->user)->first();
-            $lec_user2 = DB::table('users')->where('id',$lec->user_2)->first();
-            // $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
-            // $regions = array();
-            // foreach($provinces as $prov_region) {
-            //     if(!in_array($prov_region->region, $regions)) {
-            //         array_push($regions, $prov_region->region);
-            //     }
-            // }
-            // sort($regions);
+            if(count($lec) > 0) {
+                $lecId = $lec->id;
+                $lec_name = $lec->name;
+                $lec_des = $lec->designation_gov;
+                $lec_user1 = DB::table('users')->where('id',$lec->user)->first();
+                $lec_user2 = DB::table('users')->where('id',$lec->user_2)->first();
+                // $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+                // $regions = array();
+                // foreach($provinces as $prov_region) {
+                //     if(!in_array($prov_region->region, $regions)) {
+                //         array_push($regions, $prov_region->region);
+                //     }
+                // }
+                // sort($regions);
 
-            $view->with(compact(
-                'lec_name',
-                'lec_user1',
-                'lec_user2',
-                'lec_des'
-            ));
+                $view->with(compact(
+                    'lec_name',
+                    'lec_user1',
+                    'lec_user2',
+                    'lec_des'
+                ));
+            } else {
+
+                redirect()->route('access-denied')->send();
+            
+            }
         });
 
         view()->composer('lec.screening.screening', function($view){
