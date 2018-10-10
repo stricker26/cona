@@ -136,6 +136,13 @@ class GeoLocationController extends Controller
 						->distinct('district')
 						->get();
 
+					// $query = DB::table('city')
+					// 	->select('district', 'province_code')
+					// 	->where('province_code', '=', $requestValue)
+					// 	->where('district', '<>', NULL)
+					// 	->union($queryDistrict)
+					// 	->get();
+
 					$out .= '<option value="">Select District <span>*</span></option>';
 
 					foreach ($query as $rows => $row) {

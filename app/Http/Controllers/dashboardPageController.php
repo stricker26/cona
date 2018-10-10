@@ -146,8 +146,6 @@ class dashboardPageController extends Controller
     //Get Assign LEC
     static function get_assigned_lec($position, $province, $district, $city) {
 
-        $lec = '--';
-
         $queryType = DB::table('province')
             ->select('region', 'lgu', 'type')
             ->where('province_code', '=', $province)
@@ -155,7 +153,20 @@ class dashboardPageController extends Controller
             
         if($position == 'Senator') {
             $lec = 'HQ';
-        } elseif($position == 'Governor' || $position == 'Vice Governor') {
+        } elseif ($position == 'Governor' || $position == 'Congressman' || $position == 'HUC Congressman' || $position == 'City Mayor') {
+            
+            $query = DB::table('lec')
+                ->select('name')
+                ->where('id', '=', '2018000')
+                ->get();
+
+            if(count($query) > 0) {
+                $lec = $query[0]->name;
+            } else {
+                $lec = 'NO ASSIGNED LEC';
+            }
+
+        } elseif($position == 'Vice Governor') {
 
             $query = DB::table('province AS p')
                 ->join('lec AS l', 'p.lec', '=', 'l.id')
@@ -169,7 +180,7 @@ class dashboardPageController extends Controller
                 $lec = $query[0]->name;
             }
 
-        } elseif($position == 'Board Member' || $position == 'Congressman') {
+        } elseif($position == 'Board Member') {
 
             $query = DB::table('municipality AS m')
                 ->join('lec AS l', 'm.lec', '=', 'l.id')
@@ -184,7 +195,7 @@ class dashboardPageController extends Controller
                 $lec = 'NO ASSIGNED LEC';
             }
 
-        } elseif($queryType->type == 'HUC' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
+        } elseif($queryType->type == 'HUC' && ($position == 'City Councilor')) {
 
            $query = DB::table('huc AS h')
                 ->join('lec AS l', 'h.lec', '=', 'l.id')
@@ -199,7 +210,7 @@ class dashboardPageController extends Controller
                 $lec = 'NO ASSIGNED LEC';
             }
 
-        } elseif ($queryType->type == 'HUC' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
+        } elseif ($queryType->type == 'HUC' && ($position == 'City Vice Mayor')) {
             
            $query = DB::table('huc AS h')
                 ->join('lec AS l', 'h.lec', '=', 'l.id')
@@ -213,7 +224,7 @@ class dashboardPageController extends Controller
                 $lec = 'NO ASSIGNED LEC';
             }
 
-        } elseif($queryType->type == 'PROVINCE' && ($position == 'HUC Congressman' || $position == 'City Councilor')) {
+        } elseif($queryType->type == 'PROVINCE' && ($position == 'City Councilor')) {
 
            $query = DB::table('province AS p')
                 ->join('lec AS l', 'p.lec', '=', 'l.id')
@@ -227,7 +238,7 @@ class dashboardPageController extends Controller
                 $lec = 'NO ASSIGNED LEC';
             }
 
-        } elseif ($queryType->type == 'PROVINCE' && ($position == 'City Mayor' || $position == 'City Vice Mayor')) {
+        } elseif ($queryType->type == 'PROVINCE' && ($position == 'City Vice Mayor')) {
             
             $query = DB::table('huc AS h')
                 ->join('lec AS l', 'h.lec', '=', 'l.id')

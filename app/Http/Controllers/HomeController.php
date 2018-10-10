@@ -408,4 +408,10 @@ class HomeController extends Controller
         }
 
     }
+
+    public function denied() {
+
+        return view('access');
+
+    }
 }

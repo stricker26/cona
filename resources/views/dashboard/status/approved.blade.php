@@ -11,6 +11,18 @@
 	<div class="col-sm-12 text-center">
 		<h5>Approved Candidates&nbsp;&nbsp;<i class="fas fa-check"></i></h5>
 		<span class="pt-1">({{ $location }})</span>
+		<div>
+		 	@php($getregion = explode(" ", $location))
+		 	@if(ucwords($getregion[0]) == 'Region')
+				<a href="{{ url()->current() . '/export/0/region/' . $getregion[1] }}" class="btn btn-primary mb-3" target="_blank">Download CONA By Region
+				</a>
+			@elseif(ucwords($getregion[0]) == 'All')
+				<a href="{{ url()->current() . '/export/0/0/all' }}" class="btn btn-primary mb-3" target="_blank">Download All CONA</a>
+			@else
+		 		<a href="{{ url()->current() . '/export/0/province/' . $candidates[0]->province_id }}" class="btn btn-primary mb-3" target="_blank">Download CONA By Province</a>
+		 	@endif
+
+		</div>
 	</div>
 </div>
 <hr class="mb-4">

@@ -27,15 +27,25 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
-        $data = DB::table('huc')
+        if ($lecId == '2018000') {
+            $data = DB::table('huc')
+                ->join('province as p', 'huc.province_code', '=', 'p.province_code')
+                ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec, (SELECT lgu FROM province WHERE province_code = "'. $code .'") AS province'))
+                ->where('huc.province_code', '=', $code)
+                ->orWhere('huc.parent_province_code', '=', $code)
+                ->distinct('huc.id')
+                ->get();
+        }
+        else {
+            $data = DB::table('huc')
             ->join('province as p', 'huc.province_code', '=', 'p.province_code')
-            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
+            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 0 AND province_id = huc.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 1 AND province_id = huc.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = huc.district AND signed_by_lec = 2 AND province_id = huc.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec, (SELECT lgu FROM province WHERE province_code = "'. $code .'") AS province'))
             ->where('huc.province_code', '=', $code)
             ->where('huc.lec', '=', $lecId)
             ->orWhere('huc.parent_province_code', '=', $code)
             ->distinct('huc.id')
             ->get();
-        //$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
+        }
         return $data;
     }
 
@@ -44,13 +54,23 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
-        $data = DB::table('huc')
-            ->join('province as p', 'huc.province_code', '=', 'p.province_code')
-            ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
-            ->where('huc.parent_province_code', '=', $code)
-            ->where('huc.lec', '=', $lecId)
-            ->distinct('huc.id')
-            ->get();
+        if ($lecId == '2018000') {
+            $data = DB::table('huc')
+                ->join('province as p', 'huc.province_code', '=', 'p.province_code')
+                ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
+                ->where('huc.parent_province_code', '=', $code)
+                ->distinct('huc.id')
+                ->get();
+        }
+        else {
+            $data = DB::table('huc')
+                ->join('province as p', 'huc.province_code', '=', 'p.province_code')
+                ->select('huc.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ((province_id = huc.parent_province_code AND city_id = huc.city) OR province_id = huc.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec AND p.province_code = huc.province_code) AS assigned_lec'))
+                ->where('huc.parent_province_code', '=', $code)
+                ->where('huc.lec', '=', $lecId)
+                ->distinct('huc.id')
+                ->get();
+        }
         //$data = DB::table('huc')->where('province_code', '=', $code)->orWhere('parent_province_code', '=', $code)->get();
         return $data;
     }
@@ -60,11 +80,19 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
-        $data = DB::table('municipality as m')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec, (SELECT lgu FROM province WHERE province_code = "'. $code .'") AS province'))
-            ->where('lec', '=', $lecId)
-            ->where('m.province_code', '=', $code)
-            ->get();
+        if ($lecId == '2018000') {
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec, (SELECT lgu FROM province WHERE province_code = "'. $code .'") AS province'))
+                ->where('m.province_code', '=', $code)
+                ->get();
+        }
+        else {
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = m.municipality AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec, (SELECT lgu FROM province WHERE province_code = "'. $code .'") AS province'))
+                ->where('lec', '=', $lecId)
+                ->where('m.province_code', '=', $code)
+                ->get();
+        }
         //$data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         return $data;
     }
@@ -73,12 +101,22 @@ class LECController extends Controller
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
-        $data = DB::table('municipality as m')
-            ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = m.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = m.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = m.province_code) AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
-            ->groupBy('m.district')
-            ->where('lec', '=', $lecId)
-            ->where('m.province_code', '=', $code)
-            ->get();
+
+        if ($lecId == '2018000') {
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = m.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = m.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = m.province_code) AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
+                ->groupBy('m.district')
+                ->where('m.province_code', '=', $code)
+                ->get();
+        }
+        else {
+            $data = DB::table('municipality as m')
+                ->select('m.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 0 AND province_id = m.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 1 AND province_id = m.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE district_id = m.district AND signed_by_lec = 2 AND province_id = m.province_code) AS rejected, (SELECT name FROM lec WHERE id = m.lec) AS assigned_lec'))
+                ->groupBy('m.district')
+                ->where('lec', '=', $lecId)
+                ->where('m.province_code', '=', $code)
+                ->get();
+        }
         //$data = DB::table('municipality')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         return $data;
     }
@@ -92,11 +130,19 @@ class LECController extends Controller
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
 
-        $data = DB::table('city')
-            ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
-            ->where('lec', '=', $lecId)
-            ->where('city.province_code', '=', $code)
-            ->get();
+        if ($lecId == '2018000') {
+            $data = DB::table('city')
+                ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
+                ->where('city.province_code', '=', $code)
+                ->get();
+        }
+        else {
+            $data = DB::table('city')
+                ->select('city.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 0 AND province_id = '. $code .') AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 1 AND province_id = '. $code .') AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE city_id = city.city AND signed_by_lec = 2 AND province_id = '. $code .') AS rejected, (SELECT name FROM lec WHERE id = city.lec) AS assigned_lec'))
+                ->where('lec', '=', $lecId)
+                ->where('city.province_code', '=', $code)
+                ->get();
+        }
         //$data = DB::table('city')->get()->where('province_code', '=', $code)->where('lec', '=', $lecId);
         return $data;
     }
@@ -107,22 +153,39 @@ class LECController extends Controller
         $lecId = $lec->id;
 
         if ($code == 'NCR') {
-            $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
-                ->where('p.province_code', '!=', '1374')
-                ->where('p.region', '=', $code)
-                ->where('lec', '=', $lecId)
-                ->get();
+            if ($lecId == '2018000') {
+                $data = DB::table('province as p')
+                    ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                    ->where('p.province_code', '!=', '1374')
+                    ->where('p.region', '=', $code)
+                    ->get();
+            }
+            else {
+                $data = DB::table('province as p')
+                    ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND province_id = p.province_code) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND province_id = p.province_code) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND province_id = p.province_code) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                    ->where('p.province_code', '!=', '1374')
+                    ->where('p.region', '=', $code)
+                    ->where('lec', '=', $lecId)
+                    ->get();
+            }
             //$data = DB::table('province')->get()->where('region', '=', $code)->where('lec', '=', $lecId);
         }
         else {
-            $data = DB::table('province as p')
-                ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
-                ->where('p.region', '=', $code)
-                ->where('lec', 'like', '%'.$lecId.'%')
-                ->where('type', '<>', 'HUC')
-                ->get();
-            //$data = DB::table('province')->get()->where('region', '=', $code)->where('type', '!=', 'HUC')->where('lec', '=', $lecId);
+            if ($lecId == '2018000') {
+                $data = DB::table('province as p')
+                    ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                    ->where('p.region', '=', $code)
+                    ->where('type', '<>', 'HUC')
+                    ->get();
+            }
+            else {
+                $data = DB::table('province as p')
+                    ->select('p.*', DB::raw('(SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 0 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS pending, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 1 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS approved, (SELECT count(signed_by_lp) FROM candidates WHERE signed_by_lec = 2 AND ("%"+province_id+"%" like p.province_code OR province_id = p.province_code)) AS rejected, (SELECT name FROM lec WHERE id = p.lec) AS assigned_lec'))
+                    ->where('p.region', '=', $code)
+                    ->where('lec', 'like', '%'.$lecId.'%')
+                    ->where('type', '<>', 'HUC')
+                    ->get();
+            }
         }
         return $data;
     }
@@ -195,6 +258,9 @@ class LECController extends Controller
 
     //Get City/Municipality Candidate
     public function candidate(Request $request) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
 
         $lec = new LECController;
 
@@ -223,6 +289,8 @@ class LECController extends Controller
                 $lec_city = '';
             }
 
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
+
             if($requesType == 'HUC' || $requesType == 'CC' || $requesType == 'MUNICIPAL' || $requesType == 'ICC') {
                 if ($requesType == 'HUC' && $region == 'NCR') {
                     $query = DB::table('candidates')
@@ -239,46 +307,52 @@ class LECController extends Controller
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
                         if($row->candidate_for == 'City Mayor' || $row->candidate_for == 'Municipal Mayor') {
-                            if ($row->signed_by_lp == 1) {
-                                $mayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved' 
-                                );
-                            } elseif ($row->signed_by_lp != 2) {
-                                $mayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($lecId == '2018000' || $row->candidate_for == 'Municipal Mayor') {
+                                if ($row->signed_by_lp == 1) {
+                                    $mayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved' 
+                                    );
+                                } elseif ($row->signed_by_lp != 2) {
+                                    $mayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } elseif ($row->candidate_for == 'City Vice Mayor' || $row->candidate_for == 'Municipal Vice Mayor') {
-                            if ($row->signed_by_lp == 1) {
-                                $vmayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved' 
-                                );
-                            } elseif($row->signed_by_lp != 2) {
-                                $vmayor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($province->lec == $lecId || $lecId == '2018000') {
+                                if ($row->signed_by_lp == 1) {
+                                    $vmayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved' 
+                                    );
+                                } elseif($row->signed_by_lp != 2) {
+                                    $vmayor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } else if($row->candidate_for == 'City Councilor' || $row->candidate_for == 'Municipal Councilor') {
-                            if($row->signed_by_lp == 1) {
-                                $councilor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
-                                    'status' => 'Approved'
-                                );
-                            } elseif($row->signed_by_lp != 2) {
-                                $councilor[] = array(
-                                    'id' => $row->id,
-                                    'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
-                                    'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
-                                );
+                            if ($province->lec == $lecId || $lecId == '2018000') {
+                                if($row->signed_by_lp == 1) {
+                                    $councilor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname,
+                                        'status' => 'Approved'
+                                    );
+                                } elseif($row->signed_by_lp != 2) {
+                                    $councilor[] = array(
+                                        'id' => $row->id,
+                                        'name' => $row->firstname . ' ' . $row->middlename . ' ' . $row->lastname, 
+                                        'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
+                                    );
+                                }
                             }
                         } 
                     }
@@ -294,6 +368,9 @@ class LECController extends Controller
     }
 
     public function districtCandidate(Request $request) {
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
 
         $lec = new LECController;
 
@@ -313,6 +390,7 @@ class LECController extends Controller
             $bmember = array();
             $prvcongressman = array();
 
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
 
             if($type == 'HUC DISTRICT') {
                 $lec_type = 'huc_district';
@@ -330,7 +408,7 @@ class LECController extends Controller
 
             if(count($query) > 0) {
                 foreach($query as $rows => $row) {
-                    if($row->candidate_for == 'HUC Congressman') {
+                    if($row->candidate_for == 'HUC Congressman' && $lecId == '2018000') {
                         if($row->signed_by_lp == 1) {
                             $congressman[] = array(
                                 'id' => $row->id,
@@ -345,7 +423,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if($row->candidate_for == 'City Councilor') {
+                    } else if($row->candidate_for == 'City Councilor' && ($province->lec == $lecId || $lecId == '2018000')) {
                         if ($row->signed_by_lp == 1) {
                             $councilor[] = array(
                                 'id' => $row->id,
@@ -360,7 +438,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if ($row->candidate_for == 'Board Member') {
+                    } else if ($row->candidate_for == 'Board Member' && ($province->lec == $lecId || $lecId == '2018000')) {
                         if($row->signed_by_lp == 1) {
                             $bmember[] = array(
                                 'id' => $row->id,
@@ -375,7 +453,7 @@ class LECController extends Controller
                                 'status' => $row->signed_by_lec == 0 ? 'Pending' : $row->signed_by_lec
                             );
                         }
-                    } else if ($row->candidate_for == 'Congressman') {
+                    } else if ($row->candidate_for == 'Congressman' && $lecId == '2018000') {
                         if ($row->signed_by_lp == 1) {
                             $prvcongressman[] = array(
                                 'id' => $row->id,
@@ -407,12 +485,18 @@ class LECController extends Controller
 
     public function governor(Request $request) {
 
+        $userId = Auth::user()->id;
+        $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
+        $lecId = $lec->id;
+
         $lec = new LECController;
 
         if($request->ajax()) {
 
             $provinceCode = $request->input('provinceCode');
             $requesType = $request->input('requesType');
+
+            $province = DB::table('province')->where('province_code', $provinceCode)->first();
 
             if($requesType == 'PROVINCE') {
 
@@ -425,7 +509,7 @@ class LECController extends Controller
 
                 if(count($query) > 0) {
                     foreach ($query as $rows => $row) {
-                        if($row->candidate_for == 'Governor') {
+                        if($row->candidate_for == 'Governor' && $lecId == '2018000') {
                             if ($row->signed_by_lp == 1) {
                                 $governor[] = array(
                                     'id' => $row->id,
@@ -441,7 +525,7 @@ class LECController extends Controller
                                 );
                             }
                             
-                        } else if ($row->candidate_for == 'Vice Governor') {
+                        } else if ($row->candidate_for == 'Vice Governor' && ($province->lec == $lecId || $lecId == '2018000')) {
                             if ($row->signed_by_lp == 1) {
                                 $vgovernor[] = array(
                                     'id' => $row->id,
@@ -1398,7 +1482,7 @@ class LECController extends Controller
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lec_name = $lec->name;
-        if($lec_name === 'HQ') {
+        if($lec_name === 'Francis N. Pangilinan') {
             $senators = DB::table('candidates')
                 ->where('candidate_for','Senator')
                 ->where('signed_by_lec','!=',2)

@@ -18,7 +18,7 @@
                 <li class="pl-2">
                     <a href="/lec"><i class="far fa-address-card pr-4"></i><span>&nbsp;Profile</span></a>
                 </li>
-                @if($lec_name === 'Francis Pangilinan')
+                @if($lec_name === 'Francis N. Pangilinan')
                     <li class="pl-2">
                         <a href="/lec/senators"><i class="fas fa-user-alt pr-4"></i>&nbsp;Senators </a>
                     </li>

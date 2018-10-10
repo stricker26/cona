@@ -67,7 +67,7 @@ $(document).ready( function () {
     	else if (urlType == 'HUC') {
 			$('#locationModal').html(urlName);
     		$('.screenLocation').html(urlName);
-    		ajaxGet(urlCode, urlName, urlType, urlRegion, part);
+    		ajaxGet(urlCode, urlName, urlType, urlRegion, 1);
     		getCityCandidate(urlCode, urlType, part, urlName, urlRegion);
     		//$('#huc-councilors').parent().parent().hide(500);
     		$('.list-candidates').show();
@@ -110,6 +110,7 @@ $(document).ready( function () {
 	    		ajaxGet(e, name, type, region);
 	    		ajaxGet(e, name, 'HUCs', region);
 	    		ajaxGet(e, name, 'CITY', region);
+	    		getProvinceCandidate(e, type, part);
 	    		$('#locationModal').html(name);
 	    		$('.screenLocation').html(name);
 	    		$('.list-candidates').show();
@@ -295,6 +296,7 @@ $(document).ready( function () {
 				url: './screening/' + type + '/' + e,
 				success:function(data)  
 		    	{
+		    		console.log(data);
 		    		if (data == '') {
 		    			if (type == 'PROVINCE' || (type == 'HUC' && region == 'NCR') || type == 'ICC') {
     						if (region != undefined) {
@@ -373,7 +375,6 @@ function loadTable(e, data) {
 						<td>` + data[x].pending + `</td>
 						<td>` + data[x].approved + `</td>
 						<td>` + data[x].rejected + `</td>
-						<td>` + lec + `</td>
 						<td class="type">` + type + `</td>
 						<td class="region" style="display:none;">` + data[x].region + `</td>
 					</tr>
@@ -475,7 +476,6 @@ function printRow(data, x, name, type, districts) {
 				<td>` + data[x].pending + `</td>
 				<td>` + data[x].approved + `</td>
 				<td>` + data[x].rejected + `</td>
-				<td>` + lec + `</td>
 				<td class="type">` + type + `</td>
 			</tr>
 	`);
