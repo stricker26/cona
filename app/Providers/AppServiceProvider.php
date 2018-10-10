@@ -602,7 +602,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('lec.lec', function($view){
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
-            if(count($lec) > 0) {
+            if($lec) {
                 $lecId = $lec->id;
                 $lec_name = $lec->name;
                 $lec_des = $lec->designation_gov;

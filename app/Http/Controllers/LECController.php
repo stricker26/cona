@@ -573,7 +573,14 @@ class LECController extends Controller
         $userId = Auth::user()->id;
         $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
         $lecId = $lec->id;
-        $province_table = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+
+        if ($lecId == '2018000') {
+            $province_table = DB::table('province')->where('province_code','!=','1374')->get();
+        }
+        else {
+            $province_table = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+        }
+
         $province_arr = array();
         foreach($province_table as $prov) {
             array_push($province_arr, $prov->province_code);
@@ -716,9 +723,23 @@ class LECController extends Controller
                     }
                 } elseif($candidate->candidate_for == 'Municipal Mayor' ||
                     $candidate->candidate_for == 'Municipal Vice Mayor' ||
-                    $candidate->candidate_for == 'Municipal Councilor' ||
-                    $candidate->candidate_for == 'Congressman')
+                    $candidate->candidate_for == 'Municipal Councilor')
                 {
+                    $lec_id_province = DB::table('municipality')
+                        ->where('province_code',$candidate->province_id)
+                        ->where('district',$candidate->district_id)
+                        ->where('municipality',strtoupper($candidate->city_id))
+                        ->first();
+                        
+                    if(is_numeric($lec_id_province->lec)) {
+                        $lec_id = DB::table('lec')
+                            ->where('id',$lec_id_province->lec)
+                            ->first();
+                        $candidate->lec = $lec_id->name;
+                    } else {
+                        $candidate->lec = $lec_id_province->lec;
+                    }
+                } elseif($candidate->candidate_for == 'Congressman') {
                     $lec_id_province = DB::table('municipality')
                         ->where('province_code',$candidate->province_id)
                         ->where('district',$candidate->district_id)
@@ -816,10 +837,19 @@ class LECController extends Controller
         } elseif($province === 'empty') {
             //region sidebar clicked
             $location = "Region ".$region;
-            $province_region = DB::table('province')
+
+            if ($lecId == '2018000') {
+                $province_region = DB::table('province')
+                                    ->where('province_code','!=','1374')
+                                    ->where('region',$region)
+                                    ->get();
+            } else {
+                $province_region = DB::table('province')
                                     ->where('region',$region)
                                     ->where('lec', 'like', '%'.$lecId.'%')
                                     ->get();
+            }
+
             $provinces_id = array();
             foreach($province_region as $prov_regs){
                 array_push($provinces_id, $prov_regs->province_code);
@@ -1057,10 +1087,16 @@ class LECController extends Controller
             }
         } else {
             //province sidebar clicked
-            $province_table = DB::table('province')
-                                ->where('province_code',$province)
-                                ->where('lec', 'like', '%'.$lecId.'%')
-                                ->first();
+            if ($lecId == '2018000') {
+                $province_table = DB::table('province')
+                                    ->where('province_code',$province)
+                                    ->first();
+            } else {
+                $province_table = DB::table('province')
+                                    ->where('province_code',$province)
+                                    ->where('lec', 'like', '%'.$lecId.'%')
+                                    ->first();
+            }
             $location = ucwords(strtolower($province_table->lgu));
             $location_type = $province_table->type;
             $candidates = DB::table('candidates')
