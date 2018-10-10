@@ -221,70 +221,67 @@ class AppServiceProvider extends ServiceProvider
             $pending_count_all = 0;
             $approved_count_all = 0;
             $rejected_count_all = 0;
-
-                foreach($provinces as $province_id) {
+            foreach($provinces as $province_id) {
+                if ($lecId == '2018000') {
                     $pending_a = count(DB::table('candidates')
-                                        ->where('signed_by_lec',0)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->get());
-                    $pending_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
-                        $pending_a_HQ = count(DB::table('candidates')
-                                        ->where('signed_by_lec',0)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->where(function($query) {
-                                            $query->where('candidate_for', 'City Mayor')
-                                                ->orWhere('candidate_for', 'Congressman')
-                                                ->orWhere('candidate_for', 'HUC Congressman')
-                                                ->orWhere('candidate_for', 'Governor');
-                                        })
-                                        ->get());
-                    }
-
-                    $pending_count_all = $pending_count_all + $pending_a + $pending_a_HQ;
-
-                    $approved_a = count(DB::table('candidates')
-                                        ->where('signed_by_lec',1)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->get());
-
-                    $approved_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
-                        $approved_a_HQ = count(DB::table('candidates')
-                                        ->where('signed_by_lec',1)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->where(function($query) {
-                                            $query->where('candidate_for', 'City Mayor')
-                                                ->orWhere('candidate_for', 'Congressman')
-                                                ->orWhere('candidate_for', 'HUC Congressman')
-                                                ->orWhere('candidate_for', 'Governor');
-                                        })
-                                        ->get());
-                    }
-
-                    $approved_count_all = $approved_count_all + $approved_a + $approved_a_HQ;
-
-                    $rejected_a = count(DB::table('candidates')
-                                        ->where('signed_by_lec',2)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->get());
-
-                    $rejected_a_HQ = 0;
-                    if (strpos($province_id->lec, '2018000') === false && $lecId == '2018000') {
-                        $rejected_a_HQ = count(DB::table('candidates')
-                                        ->where('signed_by_lec',2)
-                                        ->where('province_id',$province_id->province_code)
-                                        ->where(function($query) {
-                                            $query->where('candidate_for', 'City Mayor')
-                                                ->orWhere('candidate_for', 'Congressman')
-                                                ->orWhere('candidate_for', 'HUC Congressman')
-                                                ->orWhere('candidate_for', 'Governor');
-                                        })
-                                        ->get());
-                    }
-
-                    $rejected_count_all = $rejected_count_all + $rejected_a + $rejected_a_HQ;
+                                    ->where('signed_by_lec',0)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->get());
+                } else {
+                    $pending_a = count(DB::table('candidates')
+                                    ->where('signed_by_lec',0)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->get());
                 }
+
+                $pending_count_all = $pending_count_all + $pending_a;
+
+                if ($lecId == '2018000') {
+                    $approved_a = count(DB::table('candidates')
+                                    ->where('signed_by_lec',1)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->get());
+                } else {
+                    $approved_a = count(DB::table('candidates')
+                                    ->where('signed_by_lec',1)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->get());
+                }
+
+                $approved_count_all = $approved_count_all + $approved_a;
+
+                if ($lecId == '2018000') {
+                    $rejected_a = count(DB::table('candidates')
+                                    ->where('signed_by_lec',2)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->get());
+                } else {
+                    $rejected_a = count(DB::table('candidates')
+                                    ->where('signed_by_lec',2)
+                                    ->where('province_id',$province_id->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->get());
+                }
+
+                $rejected_count_all = $rejected_count_all + $rejected_a;
+            }
 
             //regional status
             $pending_count_region = (object)[];
@@ -293,79 +290,76 @@ class AppServiceProvider extends ServiceProvider
             foreach($regions as $region){
                 foreach($provinces as $province) {
                     if($province->region === $region) {
-                        $count_p = count(DB::table('candidates')
-                                    ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lec',0)
-                                    ->get());
-
-                        $count_p_HQ = 0;
-                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                            $count_p_HQ = count(DB::table('candidates')
+                        if ($lecId == '2018000') {
+                            $count_p = count(DB::table('candidates')
                                             ->where('signed_by_lec',0)
                                             ->where('province_id',$province->province_code)
-                                            ->where(function($query) {
-                                                $query->where('candidate_for', 'City Mayor')
-                                                    ->orWhere('candidate_for', 'Congressman')
-                                                    ->orWhere('candidate_for', 'HUC Congressman')
-                                                    ->orWhere('candidate_for', 'Governor');
-                                            })
                                             ->get());
+                        } else {
+                            $count_p = count(DB::table('candidates')
+                                    ->where('province_id',$province->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->where('signed_by_lec',0)
+                                    ->get());
                         }
 
                         if(!isset($pending_count_region->$region)) {
-                            $pending_count_region->$region = $count_p + $count_p_HQ;
+                            $pending_count_region->$region = $count_p;
                         } else {
-                            $pending_count_region->$region += $count_p + $count_p_HQ;
+                            $pending_count_region->$region += $count_p;
                         }
 
-                        $count_a = count(DB::table('candidates')
-                                    ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lec',1)
-                                    ->get());
-
-                        $count_a_HQ = 0;
-                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                            $count_a_HQ = count(DB::table('candidates')
+                        if ($lecId == '2018000') {
+                            $count_a = count(DB::table('candidates')
                                             ->where('signed_by_lec',1)
                                             ->where('province_id',$province->province_code)
-                                            ->where(function($query) {
-                                                $query->where('candidate_for', 'City Mayor')
-                                                    ->orWhere('candidate_for', 'Congressman')
-                                                    ->orWhere('candidate_for', 'HUC Congressman')
-                                                    ->orWhere('candidate_for', 'Governor');
-                                            })
                                             ->get());
+                        } else {
+                            $count_a = count(DB::table('candidates')
+                                    ->where('province_id',$province->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->where('signed_by_lec',1)
+                                    ->get());
                         }
 
                         if(!isset($approved_count_region->$region)) {
-                            $approved_count_region->$region = $count_a + $count_a_HQ;
+                            $approved_count_region->$region = $count_a;
                         } else {
-                            $approved_count_region->$region += $count_a + $count_a_HQ;
+                            $approved_count_region->$region += $count_a;
                         }
 
-                        $count_r = count(DB::table('candidates')
-                                    ->where('province_id',$province->province_code)
-                                    ->where('signed_by_lec',2)
-                                    ->get());
-
-                        $count_r_HQ = 0;
-                        if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                            $count_r_HQ = count(DB::table('candidates')
+                        if ($lecId == '2018000') {
+                            $count_r = count(DB::table('candidates')
                                             ->where('signed_by_lec',2)
                                             ->where('province_id',$province->province_code)
-                                            ->where(function($query) {
-                                                $query->where('candidate_for', 'City Mayor')
-                                                    ->orWhere('candidate_for', 'Congressman')
-                                                    ->orWhere('candidate_for', 'HUC Congressman')
-                                                    ->orWhere('candidate_for', 'Governor');
-                                            })
                                             ->get());
+                        } else {
+                            $count_r = count(DB::table('candidates')
+                                    ->where('province_id',$province->province_code)
+                                    ->where(function($query){
+                                        $query->where('candidate_for', '!=', 'City Mayor')
+                                            ->where('candidate_for', '!=', 'Congressman')
+                                            ->where('candidate_for', '!=', 'HUC Congressman')
+                                            ->where('candidate_for', '!=', 'Governor');
+                                    })
+                                    ->where('signed_by_lec',2)
+                                    ->get());
                         }
 
                         if(!isset($rejected_count_region->$region)) {
-                            $rejected_count_region->$region = $count_r + $count_r_HQ;
+                            $rejected_count_region->$region = $count_r;
                         } else {
-                            $rejected_count_region->$region += $count_r + $count_r_HQ;
+                            $rejected_count_region->$region += $count_r;
                         }
                     }
                 }
@@ -379,204 +373,193 @@ class AppServiceProvider extends ServiceProvider
                 foreach($provinces as $province) {
                     if($province->region === $region) {
                         if($province->type === 'HUC' && $region !== 'NCR') {
-                            $candidates_HUC = DB::table('candidates')
-                                ->where('province_id',$province->province_code)
-                                ->where('signed_by_lec',0)
-                                ->get();
-                            foreach($candidates_HUC as $candidate_HUC) {
-                                $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
-                                $province_key = DB::table('province')
-                                    ->where('province_code',$candidate_HUC_array[0])
-                                    ->first()->lgu;
-                                if(!isset($pending_count_province->$province_key)) {
-                                    $pending_count_province->$province_key = 1;
-                                } else {
-                                    $pending_count_province->$province_key += 1;
-                                }
-
-                            }
-
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
+                            if ($lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',0)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get();
                                 foreach($candidates_HUC as $candidate_HUC) {
                                     $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
                                     $province_key = DB::table('province')
-                                        ->where('province_code',$candidate_HUC_array[0])
-                                        ->first()->lgu;
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
                                     if(!isset($pending_count_province->$province_key)) {
                                         $pending_count_province->$province_key = 1;
                                     } else {
                                         $pending_count_province->$province_key += 1;
                                     }
-
                                 }
-                            }
 
-                            $candidates_HUC = DB::table('candidates')
-                                ->where('province_id',$province->province_code)
-                                ->where('signed_by_lec',1)
-                                ->get();
-                            foreach($candidates_HUC as $candidate_HUC) {
-                                $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
-                                $province_key = DB::table('province')
-                                    ->where('province_code',$candidate_HUC_array[0])
-                                    ->first()->lgu;
-                                if(!isset($approved_count_province->$province_key)) {
-                                    $approved_count_province->$province_key = 1;
-                                } else {
-                                    $approved_count_province->$province_key += 1;
-                                }
-                            }
-
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',1)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get();
                                 foreach($candidates_HUC as $candidate_HUC) {
                                     $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
                                     $province_key = DB::table('province')
-                                        ->where('province_code',$candidate_HUC_array[0])
-                                        ->first()->lgu;
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
                                     if(!isset($pending_count_province->$province_key)) {
                                         $approved_count_province->$province_key = 1;
                                     } else {
                                         $approved_count_province->$province_key += 1;
                                     }
-
                                 }
-                            }
 
-                            $candidates_HUC = DB::table('candidates')
-                                ->where('province_id',$province->province_code)
-                                ->where('signed_by_lec',2)
-                                ->get();
-                            foreach($candidates_HUC as $candidate_HUC) {
-                                $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
-                                $province_key = DB::table('province')
-                                    ->where('province_code',$candidate_HUC_array[0])
-                                    ->first()->lgu;
-                                if(!isset($rejected_count_province->$province_key)) {
-                                    $rejected_count_province->$province_key = 1;
-                                } else {
-                                    $rejected_count_province->$province_key += 1;
-                                }
-                            }
-
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
                                 $candidates_HUC = DB::table('candidates')
                                                 ->where('signed_by_lec',2)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get();
                                 foreach($candidates_HUC as $candidate_HUC) {
                                     $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
                                     $province_key = DB::table('province')
-                                        ->where('province_code',$candidate_HUC_array[0])
-                                        ->first()->lgu;
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
                                     if(!isset($pending_count_province->$province_key)) {
                                         $rejected_count_province->$province_key = 1;
                                     } else {
                                         $rejected_count_province->$province_key += 1;
                                     }
+                                }
+                            } else {
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query){
+                                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                                        ->where('candidate_for', '!=', 'Congressman')
+                                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                                        ->where('candidate_for', '!=', 'Governor');
+                                                })
+                                                ->where('signed_by_lec',0)
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
+                                    if(!isset($pending_count_province->$province_key)) {
+                                        $pending_count_province->$province_key = 1;
+                                    } else {
+                                        $pending_count_province->$province_key += 1;
+                                    }
+                                }
 
+
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query){
+                                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                                        ->where('candidate_for', '!=', 'Congressman')
+                                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                                        ->where('candidate_for', '!=', 'Governor');
+                                                })
+                                                ->where('signed_by_lec',1)
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
+                                    if(!isset($approved_count_province->$province_key)) {
+                                        $approved_count_province->$province_key = 1;
+                                    } else {
+                                        $approved_count_province->$province_key += 1;
+                                    }
+                                }
+
+                                $candidates_HUC = DB::table('candidates')
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query){
+                                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                                        ->where('candidate_for', '!=', 'Congressman')
+                                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                                        ->where('candidate_for', '!=', 'Governor');
+                                                })
+                                                ->where('signed_by_lec',2)
+                                                ->get();
+                                foreach($candidates_HUC as $candidate_HUC) {
+                                    $candidate_HUC_array = explode("-", $candidate_HUC->province_id);
+                                    $province_key = DB::table('province')
+                                                ->where('province_code',$candidate_HUC_array[0])
+                                                ->first()->lgu;
+                                    if(!isset($rejected_count_province->$province_key)) {
+                                        $rejected_count_province->$province_key = 1;
+                                    } else {
+                                        $rejected_count_province->$province_key += 1;
+                                    }
                                 }
                             }
                         } else {
                             $count = count(DB::table('candidates')
-                                ->where('province_id',$province->province_code)
-                                ->where('signed_by_lec',0)
-                                ->get());
+                                                ->where('province_id',$province->province_code)
+                                                ->where(function($query){
+                                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                                        ->where('candidate_for', '!=', 'Congressman')
+                                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                                        ->where('candidate_for', '!=', 'Governor');
+                                                })
+                                                ->where('signed_by_lec',0)
+                                                ->get());
                             $province_key = $province->lgu;
 
-                            $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                                $count_HQ = count(DB::table('candidates')
+                            if ($lecId == '2018000') {
+                                $count = count(DB::table('candidates')
                                                 ->where('signed_by_lec',0)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get());
                             }
                             if(!isset($pending_count_province->$province_key)) {
-                                $pending_count_province->$province_key = $count + $count_HQ;
+                                $pending_count_province->$province_key = $count;
                             } else {
-                                $pending_count_province->$province_key += $count + $count_HQ;
+                                $pending_count_province->$province_key += $count;
                             }
 
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
+                                ->where(function($query){
+                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                        ->where('candidate_for', '!=', 'Congressman')
+                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                        ->where('candidate_for', '!=', 'Governor');
+                                })
                                 ->where('signed_by_lec',1)
                                 ->get());
                             $province_key = $province->lgu;
 
-                            $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                                $count_HQ = count(DB::table('candidates')
+                            if ($lecId == '2018000') {
+                                $count = count(DB::table('candidates')
                                                 ->where('signed_by_lec',1)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get());
                             }
                             if(!isset($approved_count_province->$province_key)) {
-                                $approved_count_province->$province_key = $count + $count_HQ;
+                                $approved_count_province->$province_key = $count;
                             } else {
-                                $approved_count_province->$province_key += $count + $count_HQ;
+                                $approved_count_province->$province_key += $count;
                             }
-
 
                             $count = count(DB::table('candidates')
                                 ->where('province_id',$province->province_code)
+                                ->where(function($query){
+                                    $query->where('candidate_for', '!=', 'City Mayor')
+                                        ->where('candidate_for', '!=', 'Congressman')
+                                        ->where('candidate_for', '!=', 'HUC Congressman')
+                                        ->where('candidate_for', '!=', 'Governor');
+                                })
                                 ->where('signed_by_lec',2)
                                 ->get());
                             $province_key = $province->lgu;
 
-                            $count_HQ = 0;
-                            if (strpos($province->lec, '2018000') === false && $lecId == '2018000') {
-                                $count_HQ = count(DB::table('candidates')
+                            if ($lecId == '2018000') {
+                                $count = count(DB::table('candidates')
                                                 ->where('signed_by_lec',2)
                                                 ->where('province_id',$province->province_code)
-                                                ->where(function($query) {
-                                                    $query->where('candidate_for', 'City Mayor')
-                                                        ->orWhere('candidate_for', 'Congressman')
-                                                        ->orWhere('candidate_for', 'HUC Congressman')
-                                                        ->orWhere('candidate_for', 'Governor');
-                                                })
                                                 ->get());
                             }
                             if(!isset($rejected_count_province->$province_key)) {
-                                $rejected_count_province->$province_key = $count + $count_HQ;
+                                $rejected_count_province->$province_key = $count;
                             } else {
-                                $rejected_count_province->$province_key += $count + $count_HQ;
+                                $rejected_count_province->$province_key += $count;
                             }
                         }
                     }
