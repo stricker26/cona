@@ -566,6 +566,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
 
+
             $view->with(compact(
                 'provinces',
                 'regions',
