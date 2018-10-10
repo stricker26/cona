@@ -67,10 +67,13 @@ class CertificateController extends Controller
             $lec_id = $prov[0]->lec;
             $region = $prov[0]->region;
 
-            if($cand->candidate_for == 'Governor' || $cand->candidate_for == 'Congressman' || $cand->candidate_for == 'HUC Congressman' || $cand->candidate_for == 'City Mayor') {
+            if($cand->candidate_for == 'Senator' || $cand->candidate_for == 'Governor' || $cand->candidate_for == 'Congressman' || $cand->candidate_for == 'HUC Congressman' || $cand->candidate_for == 'City Mayor') {
                 $lec = DB::table('lec')->where('id','=','2018000')->get();
             } else {
                 $lec = DB::table('lec')->where('id','=',$lec_id)->get();
+                if(count($lec) < 1) {
+                    $lec = DB::table('lec')->where('id','=','2018000')->get();
+                }
             }
             
             $c = new stdClass();
@@ -123,7 +126,7 @@ class CertificateController extends Controller
                 }
 
                 if($cand->candidate_for == 'Governor' || 
-                    $cand->candidate_for == 'Vice-Governor' || 
+                    $cand->candidate_for == 'Vice Governor' || 
                     $cand->candidate_for == 'Board Member'){
 
                     $c->administrative_address = $provinces;

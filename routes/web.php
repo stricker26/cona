@@ -20,6 +20,11 @@ Route::post('/candidate/add', [
 	'as' => 'candidate.register',
 ]);
 
+Route::get('/access-denied', [
+	'as' => 'access-denied',
+	'uses' => 'HomeController@denied'
+]);
+
 Route::group(['prefix' => 'hq', 'middleware' => 'admin'], function() {
 	Route::get('/dashboard', [
 		'uses' => 'dashboardPageController@hq_dashboard',

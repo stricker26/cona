@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
         //URL::forceScheme('https');
 
         //hq sidebar
-        view()->composer('dashboard.layouts.sidebar', function($view){
+        view()->composer('dashboard.layouts.sidebar', function($view) {
             $provinces = DB::table('province')->where('province_code', '!=', '1374')->get();
             $regions = array();
             foreach($provinces as $prov_region) {
@@ -602,26 +602,32 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('lec.lec', function($view){
             $userId = Auth::user()->id;
             $lec = DB::table('lec')->where('user', '=', $userId)->orWhere('user_2', '=', $userId)->first();
-            $lecId = $lec->id;
-            $lec_name = $lec->name;
-            $lec_des = $lec->designation_gov;
-            $lec_user1 = DB::table('users')->where('id',$lec->user)->first();
-            $lec_user2 = DB::table('users')->where('id',$lec->user_2)->first();
-            // $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
-            // $regions = array();
-            // foreach($provinces as $prov_region) {
-            //     if(!in_array($prov_region->region, $regions)) {
-            //         array_push($regions, $prov_region->region);
-            //     }
-            // }
-            // sort($regions);
+            if(count($lec) > 0) {
+                $lecId = $lec->id;
+                $lec_name = $lec->name;
+                $lec_des = $lec->designation_gov;
+                $lec_user1 = DB::table('users')->where('id',$lec->user)->first();
+                $lec_user2 = DB::table('users')->where('id',$lec->user_2)->first();
+                // $provinces = DB::table('province')->where('lec', 'like', '%'.$lecId.'%')->get();
+                // $regions = array();
+                // foreach($provinces as $prov_region) {
+                //     if(!in_array($prov_region->region, $regions)) {
+                //         array_push($regions, $prov_region->region);
+                //     }
+                // }
+                // sort($regions);
 
-            $view->with(compact(
-                'lec_name',
-                'lec_user1',
-                'lec_user2',
-                'lec_des'
-            ));
+                $view->with(compact(
+                    'lec_name',
+                    'lec_user1',
+                    'lec_user2',
+                    'lec_des'
+                ));
+            } else {
+
+                redirect()->route('access-denied')->send();
+            
+            }
         });
 
         view()->composer('lec.screening.screening', function($view){

@@ -461,7 +461,7 @@
 				<div class="d-inline pr-2">
 					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalReject" id="reject_btn_1">Reject</button>
 				</div>
-			@elseif ($candidate->signed_by_lp == 1)
+			@elseif ($candidate->signed_by_lp == 1 && $candidate->candidate_for != 'Senator')
 				<div class="d-inline pr-2">
 					<a href="{{url('/hq/status/export')}}/{{ $candidate->id }}" type="button" class="btn btn-warning" id="download_btn"target="blank">Download CONA</a>
 				</div>
