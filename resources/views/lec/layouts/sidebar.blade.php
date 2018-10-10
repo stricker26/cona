@@ -67,6 +67,7 @@
                                     @if(($region === $province->region && $province->type != 'HUC') ||
                                         ($region === $province->region &&
                                         $region == 'NCR'))
+                                    @if($province->province_code != '1374')
                                     <div>
                                         <div class="float-right reg-stat">
                                             <div class="d-inline pr-2">
@@ -81,6 +82,7 @@
                                         </div>
                                     </div>
                                     <a data-value="{{$province->province_code}},{{$province->type}},{{$province->lgu}},{{$province->region}}" class="d-inline"><i class="far fa-map align-top pt-2"></i><div class="d-inline-block pl-3 prov-part">{{ ucwords(mb_strtolower($province->lgu, 'UTF-8')) }}</div></a>
+                                    @endif
                                     @php
                                         $key_p++;
                                     @endphp
