@@ -763,15 +763,15 @@ class LECController extends Controller
                         ->first();
                     if($candidate->city_id) {
                         if($candidate->district_id) {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                 .ucwords(strtolower($candidate->city_id)).', '
                                 .$candidate->district_id;
                         } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                 .ucwords(strtolower($candidate->city_id));
                         }
                     } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8'));
                     }
                 }
             }
@@ -1014,15 +1014,15 @@ class LECController extends Controller
                         ->first();
                     if($candidate->city_id) {
                         if($candidate->district_id) {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                 .ucwords(strtolower($candidate->city_id)).', '
                                 .$candidate->district_id;
                         } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                 .ucwords(strtolower($candidate->city_id));
                         }
                     } else {
-                        $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                        $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8'));
                     }
                 }
             }
@@ -1228,15 +1228,15 @@ class LECController extends Controller
                             ->first();
                         if($candidate->city_id) {
                             if($candidate->district_id) {
-                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                     .ucwords(strtolower($candidate->city_id)).', '
                                     .$candidate->district_id;
                             } else {
-                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                     .ucwords(strtolower($candidate->city_id));
                             }
                         } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8'));
                         }
                     }
                 }
@@ -1439,15 +1439,15 @@ class LECController extends Controller
                             ->first();
                         if($candidate->city_id) {
                             if($candidate->district_id) {
-                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                     .ucwords(strtolower($candidate->city_id)).', '
                                     .$candidate->district_id;
                             } else {
-                                $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu)).', '
+                                $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8')).', '
                                     .ucwords(strtolower($candidate->city_id));
                             }
                         } else {
-                            $candidate->location = ucwords(strtolower($candidate_provinceLGU->lgu));
+                            $candidate->location = ucwords(mb_strtolower($candidate_provinceLGU->lgu, 'UTF-8'));
                         }
                     }
                 }
